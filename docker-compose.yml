@@ -11,7 +11,8 @@ services:
       - POSTGRES_DB=postgres
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
-    
+    ports:
+      - "5432:5432"    
   backend:
     build:
       context: .
@@ -19,8 +20,10 @@ services:
     volumes:
       - ./core:/usr/src/app
     working_dir: /usr/src/app
-    command: django-admin startproject core .
-    # restart: always
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    restart: always
     container_name: backend
     environment:
       - DEBUG=True
