@@ -11,8 +11,9 @@ services:
       - POSTGRES_DB=postgres
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"    
+    expose:
+      - 5432
+      
   backend:
     build:
       context: .
@@ -27,6 +28,8 @@ services:
     container_name: backend
     environment:
       - DEBUG=True
+    env_file:
+      - ./envs/dev/django/.env
     depends_on:
       - db  
 
