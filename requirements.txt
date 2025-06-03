@@ -1,5 +1,5 @@
 asgiref==3.8.1
-Django==4.2.21
+Django>4.2,<4.3
 psycopg==3.2.9
 psycopg-binary==3.2.9
 python-decouple==3.8
