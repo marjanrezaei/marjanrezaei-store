@@ -6,6 +6,8 @@ from django.contrib.auth.models import (
 )
 from django.utils.translation import gettext_lazy as _
 from .validators import validate_iranian_phone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 class UserType(models.IntegerChoices):
@@ -83,4 +85,8 @@ class Profile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-  
+
+@receiver(post_save, sender=User)
+def create_profile(sender, instance, created, **kwargs):
+    if created and instance.type == UserType.customer.value:
+        Profile.objects.create(user=instance)

@@ -159,3 +159,4 @@ DEBUG_TOOLBAR_CONFIG = {
 
 
 
+AUTH_USER_MODEL = 'accounts.User'
