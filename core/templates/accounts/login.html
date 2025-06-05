@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{{ request.user.email }} <!-- for check login -->
     <!-- Form -->
     <div class="container content-space-3 content-space-t-lg-4 content-space-b-lg-3">
       <div class="flex-grow-1 mx-auto" style="max-width: 28rem;">
@@ -12,11 +13,12 @@
         <!-- End Heading -->
 
         <!-- Form -->
-        <form  class="js-validate needs-validation" novalidate>
+        <form action="{% url 'accounts:login' %}" method="post" >
+        {% csrf_token %}
           <!-- Form -->
           <div class="mb-4">
             <label class="form-label" for="signupSimpleLoginEmail">ایمیل شما</label>
-            <input type="email" class="form-control form-control-lg text-center" name="email"
+            <input type="email" class="form-control form-control-lg text-center" name="username "
               id="signupSimpleLoginEmail" placeholder="email@site.com" aria-label="email@site.com" required>
             <span class="invalid-feedback">لطفا یک آدرس ایمیل معتبر وارد کنید.</span>
           </div>
@@ -29,15 +31,10 @@
 
             </div>
 
-            <div class="input-group input-group-merge" data-hs-validation-validate-class>
-              <input type="password" class="js-toggle-password form-control form-control-lg text-center" name="password"
+            <div class="input-group input-group-merge">
+              <input type="password" class="form-control form-control-lg text-center" name="password"
                 id="signupSimpleLoginPassword" placeholder="8+ characters required" aria-label="8+ characters required"
-                required minlength="8" data-hs-toggle-password-options='{
-                "target": "#changePassTarget",
-                "defaultClass": "bi-eye-slash",
-                "showClass": "bi-eye",
-                "classChangeTarget": "#changePassIcon"
-              }'>
+                required>
               <a id="changePassTarget" class="input-group-append input-group-text" href="javascript:;">
                 <i id="changePassIcon" class="bi-eye"></i>
               </a>
