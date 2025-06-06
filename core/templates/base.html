@@ -143,11 +143,16 @@
               </button>
               <!-- End Shopping Cart -->
               {% if request.user.is_authenticated %}
-                  <a class="" href="{% url 'accounts:logout' %}">
-                <span class="avatar avatar-sm avatar-circle">
-                  <img class="avatar-img" src="{% static 'img/160x160/img10.jpg' %}" alt="Image Description">
-                </span>
-              </a>
+                  <a class="btn btn-ghost-secondary btn-icon" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <span class="avatar avatar-sm avatar-circle">
+                          <img class="avatar-img" src="{% static 'img/160x160/img10.jpg' %}" alt="Image Description">
+                      </span>
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">پروفایل</a></li>
+                      <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">خروج</a></li>
+                  </ul>
+
               {% else %}
               <a class="btn btn-primary btn-transition" href="{% url 'accounts:login' %}">ورود</a>
               {% endif %}
