@@ -14,11 +14,11 @@
 
         <!-- Form -->
         <form action="{% url 'accounts:login' %}" method="post" >
-        {% csrf_token %}
+          {% csrf_token %} 
           <!-- Form -->
           <div class="mb-4">
             <label class="form-label" for="signupSimpleLoginEmail">ایمیل شما</label>
-            <input type="email" class="form-control form-control-lg text-center" name="username "
+            <input type="email" class="form-control form-control-lg text-center" name="username"
               id="signupSimpleLoginEmail" placeholder="email@site.com" aria-label="email@site.com" required>
             <span class="invalid-feedback">لطفا یک آدرس ایمیل معتبر وارد کنید.</span>
           </div>

@@ -158,5 +158,6 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 
 
-
+# accounts model settings
 AUTH_USER_MODEL = 'accounts.User'
+LOGIN_REDIRECT_URL = '/'

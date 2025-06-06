@@ -1,0 +1,40 @@
+{% if messages %}
+    {% for message in messages %}
+    <script>
+        Toastify({
+            text: "{{ message|safe }}",
+            className: "{{ message.tags }}",
+            style: {
+                background: "blue",
+            }
+        }).showToast();
+    </script>
+    {% endfor %}
+{% endif %}
+
+{% if form.errors %}
+    {% for field in form %}
+        {% if field.errors %}
+            <script>
+                Toastify({
+                    text: "{{ field.label }} - {{ field.errors.0|escape }}",
+                    className: "error",
+                    style: {
+                        background: "red",
+                    }
+                }).showToast();
+            </script>
+        {% endif %}
+    {% endfor %}
+    {% if form.non_field_errors %}
+        <script>
+            Toastify({
+                text: "{{ form.non_field_errors.0|escape }}",
+                className: "error",
+                style: {
+                    background: "red",
+                }
+            }).showToast();
+        </script>
+    {% endif %}
+{% endif %}

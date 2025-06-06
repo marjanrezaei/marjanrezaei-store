@@ -6,4 +6,7 @@ class AuthenticationForm(auth_forms.AuthenticationForm):
         super(AuthenticationForm, self).confirm_login_allowed(user)
         
         if not user.is_verified:
-            raise ValidationError("user is not verified") 
+            raise ValidationError(
+                self.error_messages["inactive"],
+                code="inactive",
+            )
