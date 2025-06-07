@@ -5,3 +5,11 @@ psycopg-binary==3.2.9
 python-decouple==3.8
 sqlparse==0.5.3
 typing_extensions==4.14.0
+djangorestframework==3.14
+django-debug-toolbar
+django-mail-templated==2.6.5
+redis
+celery
+
+django_celery_beat
+djangorestframework-simplejwt

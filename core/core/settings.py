@@ -39,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    
+    'mail_templated',
     'website',
     'accounts',
+    'django_celery_beat',
 
 ]
 
@@ -162,3 +163,12 @@ DEBUG_TOOLBAR_CONFIG = {
 AUTH_USER_MODEL = 'accounts.User'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+
+CELERY_BROKER_URL = "redis://redis:6379/1"
+CELERY_RESULT_BACKEND = "redis://redis:6379/1"
+
+
+FRONTEND_URL = 'http://127.0.0.1:8080'
+DEFAULT_FROM_EMAIL = 'rezaei.marjann@gmail.com'
+
