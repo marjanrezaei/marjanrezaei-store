@@ -6,7 +6,9 @@
             className: "{{ message.tags }}",
             style: {
                 background: "blue",
-            }
+            },
+        gravity: "center", 
+        position: "center",
         }).showToast();
     </script>
     {% endfor %}
@@ -21,7 +23,9 @@
                     className: "error",
                     style: {
                         background: "red",
-                    }
+                    },
+                    gravity: "center", 
+                    position: "center",
                 }).showToast();
             </script>
         {% endif %}
@@ -33,7 +37,9 @@
                 className: "error",
                 style: {
                     background: "red",
-                }
+                },
+                gravity: "center", 
+                position: "center",
             }).showToast();
         </script>
     {% endif %}
