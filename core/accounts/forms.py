@@ -1,5 +1,8 @@
 from django.contrib.auth import forms as auth_forms
 from django.core.exceptions import ValidationError
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class AuthenticationForm(auth_forms.AuthenticationForm):
     def confirm_login_allowed(self, user):
@@ -10,3 +13,4 @@ class AuthenticationForm(auth_forms.AuthenticationForm):
                 self.error_messages["inactive"],
                 code="inactive",
             )
+
