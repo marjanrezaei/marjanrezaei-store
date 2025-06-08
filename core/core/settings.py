@@ -40,11 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'mail_templated',
+    'django_celery_beat',
     'website',
     'accounts',
-    'django_celery_beat',
+    'shop',  
 
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -165,8 +167,8 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 
-CELERY_BROKER_URL = "redis://redis:6379/1"
-CELERY_RESULT_BACKEND = "redis://redis:6379/1"
+CELERY_BROKER_URL = "redis://redis:6379/0"
+CELERY_RESULT_BACKEND = "redis://redis:6379/0"
 
 
 FRONTEND_URL = 'http://127.0.0.1:8080'
