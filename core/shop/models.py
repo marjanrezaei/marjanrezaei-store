@@ -11,6 +11,9 @@ class ProductCategoryModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+    def __str__(self):
+        return self.title
+    
 class ProductModel(models.Model):
     user = models.ForeignKey("accounts.User", on_delete=models.PROTECT)
     category = models.ManyToManyField(ProductCategoryModel)
@@ -29,6 +32,12 @@ class ProductModel(models.Model):
     class Meta:
         ordering = ["-created_at"]
     
+    def __str__(self):
+        return self.title
+    
 class ProductImageModel(models.Model):
     product = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
     file = models.ImageField(upload_to="product/extra-img/")
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

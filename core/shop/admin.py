@@ -9,8 +9,8 @@ class ProductModelAdmin(admin.ModelAdmin):
     
 @admin.register(ProductImageModel)
 class ProductImageModelAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "created_at")
+    list_display = ("id", "file", "created_at")
     
 @admin.register(ProductCategoryModel)
 class ProductCategoryModelAdmin(admin.ModelAdmin):
-    list_display = ("id", "file", "created_at")
+    list_display = ("id", "title", "created_at")
