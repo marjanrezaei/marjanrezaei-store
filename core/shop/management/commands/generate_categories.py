@@ -13,7 +13,7 @@ class Command(BaseCommand):
             title = fake.word().capitalize() + " " + fake.word().capitalize()
             slug = slugify(title, allow_unicode=True)
 
-            ProductCategoryModel.objects.get_or_create(
+            ProductCategoryModel.objects.create(
                 title=title,
                 slug=slug
             )

@@ -15,4 +15,3 @@ django_celery_beat
 djangorestframework-simplejwt
 
 pillow==11.2.1
-faker==37.3.0
