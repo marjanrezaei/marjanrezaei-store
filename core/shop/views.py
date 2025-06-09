@@ -10,6 +10,7 @@ from .models import ProductModel, ProductStatusType
 class ShopProductGridView(ListView):
     template_name = "shop/product-grid.html"
     model = ProductModel
+    paginate_by = 9
 
     def get_queryset(self):
         return super().get_queryset().filter(status=ProductStatusType.publish.value)
