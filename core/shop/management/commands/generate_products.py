@@ -40,7 +40,7 @@ class Command(BaseCommand):
             description = fake.paragraph()
             stock = fake.random_int(min=1, max=500)
             status = random.choice([choice[0] for choice in ProductModel.status.field.choices])
-            price = fake.random_int(min=10, max=1000)
+            price = fake.random_int(min=1000, max=10000000)
             discount_percent = fake.random_int(min=0, max=50)
            
             selected_image = random.choice(image_list)

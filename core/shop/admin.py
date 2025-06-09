@@ -5,7 +5,7 @@ from .models import ProductModel, ProductImageModel, ProductCategoryModel
 
 @admin.register(ProductModel)
 class ProductModelAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "stock", "status", "created_at")
+    list_display = ("id", "title", "stock", "price", "discount_percent",  "status", "created_at")
     
 @admin.register(ProductImageModel)
 class ProductImageModelAdmin(admin.ModelAdmin):

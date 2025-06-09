@@ -1,4 +1,6 @@
 from django.db import models
+from decimal import Decimal
+
 
 class ProductStatusType(models.IntegerChoices):
     publish = 1 ,("نمایش")
@@ -34,6 +36,12 @@ class ProductModel(models.Model):
     
     def __str__(self):
         return self.title
+    
+    def get_show_price(self):
+        discount_amount = self.price * Decimal(self.discount_percent / 100)
+        final_price = self.price - discount_amount
+        return '{:,}'.format(round(final_price))
+    
     
 class ProductImageModel(models.Model):
     product = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
