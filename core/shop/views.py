@@ -5,6 +5,7 @@ from django.views.generic import (
     DetailView,
 )
 from .models import ProductModel, ProductStatusType
+from django.shortcuts import get_object_or_404
 
 
 class ShopProductGridView(ListView):
@@ -19,3 +20,11 @@ class ShopProductGridView(ListView):
         context = super().get_context_data(**kwargs)
         context["total_items"] = self.get_queryset().count()
         return context
+    
+    
+class ShopProductDetailView(DetailView):
+    template_name = "shop/product-detail.html"
+    queryset = ProductModel.objects.filter(
+        status = ProductStatusType.publish.value
+    )
+

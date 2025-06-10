@@ -354,10 +354,15 @@
                   </div>
 
                   <h4 class="card-title">
-                    <a class="text-dark" href="#">{{object.title}}</a>
-                  </h4>
-                  <p class="card-text text-dark">{{object.get_show_price}} تومان</p>
-                </div>
+                    <a class="text-dark" href="{% url 'shop:product-detail' slug=object.slug %}">{{object.title}}</a>
+                  </h4> 
+                     {% if object.is_discounted %}
+                    <h3 class="card-text text-dark">${{object.get_show_price}}</h3>
+                    <span class="text-body ms-1"><del>${{object.get_show_raw_price}}</del></span>
+                    {% else %}
+                    <h3 class="card-text text-dark">${{object.get_show_price}}</h3> 
+                    {% endif %}
+                 </div>
 
                 <div class="card-footer pt-0">
                   <!-- Rating -->
@@ -397,9 +402,15 @@
                   {% endif %}
 
                   {% for num in page_obj.paginator.page_range %}
-                  <li class="page-item {% if num == page_obj.number %}active{% endif %}">
+                   {% if num == page_obj.number %}
+                  <li class="page-item active">
                       <a class="page-link" href="?page={{ num }}">{{ num }}</a>
                   </li>
+                   {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %}
+                  <li class="page-item">
+                      <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                  </li>             
+                   {% endif %}
                   {% endfor %}
 
                   {% if page_obj.has_next %}
