@@ -71,7 +71,8 @@
                     <div class="d-grid gap-2">
                       <div class="form-group">
                         <label class="form-label d-flex" for="searchQuery">جستجوی</label>
-                        <input class="form-control" placeholder="واژه مورد نظر را وارد نمایید" type="text" name="q" id="searchQuery">
+                          <!-- send q for view -->
+                        <input class="form-control" placeholder="واژه مورد نظر را وارد نمایید" type="text" name="q" id="searchQuery"> 
                       </div>
                     </div>
                   </div>
@@ -103,9 +104,11 @@
                     <div class="d-grid gap-2">
                     
                       <div class="mb-2 mb-sm-0 me-sm-2">
-                         <select class="fprm-select form-select-sm" name="category">
+                         <select class="fprm-select form-select-sm" name="category_id">
                                   <option value="" selected>انتخاب دسته بندی</option>
-                                  <option value="" selected> دیجیتال </option>
+                                  {% for category in categories %}
+                                  <option value="{{category.id}}"> {{category.title}} </option>
+                                  {% endfor %}
                          </select>  
                       </div>
               
