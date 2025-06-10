@@ -9,12 +9,11 @@ from django.core.files import File
 
 BASE_DIR = Path(__file__).resolve().parent
 
-
 class Command(BaseCommand):
-    help = "Generate fake products with images"
+    help = "Generate fake products with language support"
 
     def handle(self, *args, **kwargs):
-        fake = Faker()
+        fake = Faker("fa_IR") 
         users = User.objects.all()
         categories = ProductCategoryModel.objects.all()
 
@@ -35,22 +34,24 @@ class Command(BaseCommand):
         
         for _ in range(20):  # Generate 20 fake products
             user = random.choice(users)
-            title = fake.word()
-            slug = slugify(title)
-            description = fake.paragraph()
+            title = ' '.join([fake.word() for _ in range(1,3)])
+            slug = slugify(title, allow_unicode=True)
+            description = fake.paragraph(nb_sentences=10)
+            breif_description = fake.paragraph(nb_sentences=1)
             stock = fake.random_int(min=1, max=500)
             status = random.choice([choice[0] for choice in ProductModel.status.field.choices])
             price = fake.random_int(min=1000, max=10000000)
             discount_percent = fake.random_int(min=0, max=50)
            
             selected_image = random.choice(image_list)
-            image_obj = File(file=open(BASE_DIR / selected_image, "rb"), name = Path(selected_image).name)
+            image_obj = File(file=open(BASE_DIR / selected_image, "rb"), name=Path(selected_image).name)
 
             product = ProductModel.objects.create(
                 user=user,
                 title=title,
                 slug=slug,
                 description=description,
+                breif_description= breif_description,
                 stock=stock,
                 status=status,
                 price=price,
