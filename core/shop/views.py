@@ -6,6 +6,7 @@ from django.views.generic import (
 )
 from .models import ProductModel, ProductStatusType, ProductCategoryModel
 from django.shortcuts import get_object_or_404
+from django.core.exceptions import FieldError
 
 
 class ShopProductGridView(ListView):
@@ -16,15 +17,28 @@ class ShopProductGridView(ListView):
     )
     paginate_by = 9
 
+    def get_paginate_by(self, queryset):
+        return self.request.GET.get('page-size', self.paginate_by)
 
     def get_queryset(self):
-      queryset= ProductModel.objects.filter(
-          status=ProductStatusType.publish.value)
-      if search_q:=self.request.GET.get("q"):
-          queryset = queryset.filter(title__icontains=search_q)
-      if category_id:=self.request.GET.get("category_id"):
-          queryset = queryset.filter(category__id=category_id)
-      return queryset
+        queryset= ProductModel.objects.filter(
+            status=ProductStatusType.publish.value)
+        if search_q:=self.request.GET.get("q"):
+            queryset = queryset.filter(title__icontains=search_q)
+        if category_id:=self.request.GET.get("category_id"):
+            queryset = queryset.filter(category__id=category_id)
+        if  min_price:=self.request.GET.get("min_price"):
+            queryset = queryset.filter(price__gte=min_price)
+        if  max_price:=self.request.GET.get("max_price"):
+            queryset = queryset.filter(price__lte=max_price)
+        if  order_by:=self.request.GET.get("order_by"):
+            try:
+                queryset = queryset.order_by(order_by)
+            except FieldError:
+                pass
+        
+            
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
