@@ -18,7 +18,7 @@ class ShopProductGridView(ListView):
     paginate_by = 9
 
     def get_paginate_by(self, queryset):
-        return self.request.GET.get('page-size', self.paginate_by)
+        return self.request.GET.get('page_size', self.paginate_by)
 
     def get_queryset(self):
         queryset= ProductModel.objects.filter(

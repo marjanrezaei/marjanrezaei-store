@@ -139,7 +139,7 @@
               <div class="d-sm-flex justify-content-sm-end align-items-center">
                 <!-- Select -->
                 <div class="mb-2 mb-sm-0 me-sm-2">
-                  <select class="form-select form-select-sm" name="order_by" id="order-by-filter">
+                  <select class="form-select form-select-sm" id="order-by-filter">
                     <option value="" selected>مرتب سازی</option>
                     <option value="-created_at">جدیدترین</option>
                     <option value="created_at">قدیمی ترین</option>
@@ -252,29 +252,29 @@
               <ul class="pagination justify-content-center">
                   {% if page_obj.has_previous %}
                   <li class="page-item">
-                      <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                      <button class="page-link" onclick="changePage('{{ page_obj.previous_page_number }}')" aria-label="Previous">
                           <i class="bi-chevron-double-right small"></i>
-                      </a>
+                      </button>
                   </li>
                   {% endif %}
 
                   {% for num in page_obj.paginator.page_range %}
                    {% if num == page_obj.number %}
                   <li class="page-item active">
-                      <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                      <button class="page-link" onclick="changePage('{{num}}')">{{ num }}</button>
                   </li>
                    {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %}
                   <li class="page-item">
-                      <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                      <button class="page-link" onclick="changePage('{{num}}')">{{ num }}</button>
                   </li>             
                    {% endif %}
                   {% endfor %}
 
                   {% if page_obj.has_next %}
                   <li class="page-item">
-                      <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                      <button class="page-link" onclick="changePage('{{ page_obj.next_page_number }}')" aria-label="Next">
                           <i class="bi-chevron-double-left small"></i>
-                      </a>
+                      </button>
                   </li>
                   {% endif %}
               </ul>
@@ -364,7 +364,7 @@
 <script>
 $(document).ready(function() {
   let current_url_params = new URLSearchParams(window.location.search)
-  $("#page-size-filter").val(current_url_params.get('page-size') || "")
+  $("#page-size-filter").val(current_url_params.get('page_size') || "")
   $("#search-query-filter").val(current_url_params.get('q') || "")
   $("#min-price-filter").val(current_url_params.get('min_price') || "")
   $("#max-price-filter").val(current_url_params.get('max_price') || "")
@@ -389,5 +389,14 @@ $('#order-by-filter').change(function() {
   window.location.href = new_url
 });
 </script>  
+<script>
+function changePage(page_number){
+  let current_url_params = new URLSearchParams(window.location.search)
+  current_url_params.set('page', page_number)
+  let new_url = window.location.pathname + "?" + current_url_params.toString()
+  window.location.href = new_url
+}
+
+</script>
 
 {% endblock extra_js %} 
