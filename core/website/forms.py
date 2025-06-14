@@ -1,5 +1,6 @@
 from django import forms
 from accounts.validators import validate_iranian_phone
+from .models import NewsLetter
 
 class ContactForm(forms.Form):
     first_name = forms.CharField(max_length=255)
@@ -10,3 +11,10 @@ class ContactForm(forms.Form):
     email = forms.EmailField(required=True)
     details = forms.CharField(widget=forms.Textarea, required=True)
     
+    
+class NewsLetterForm(forms.ModelForm):
+    class Meta:
+        model = NewsLetter
+        fields = '__all__'
+        
+         

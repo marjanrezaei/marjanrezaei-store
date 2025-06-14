@@ -1,12 +1,10 @@
-from django.views.generic.edit import FormView
-from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, FormView
 from django.core.mail import send_mail
-from .forms import ContactForm
-from django.http import JsonResponse
 from django.contrib import messages
 from django.shortcuts import redirect
-import random
+from django.http import HttpResponseRedirect
+from .forms import NewsLetterForm, ContactForm
+
 
 # Create your views here.
 
@@ -38,3 +36,17 @@ class ContactView(FormView):
     def form_invalid(self, form):
         messages.error(self.request, "لطفاً اطلاعات را به درستی وارد کنید.")
         return self.render_to_response(self.get_context_data(form=form))
+
+
+class NewsletterView(FormView):
+    form_class = NewsLetterForm
+    success_url = '/'  # Redirect after successful form submission
+
+    def form_valid(self, form):
+        form.save()  # Save the form data
+        messages.success(self.request, "ایمیل شما با موفقعیت ثبت شد.")
+        return redirect(self.success_url)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "لطفا یک ایمیل معتبر وارد نمایید.")
+        return HttpResponseRedirect(self.success_url)  # Redirect on invalid form
