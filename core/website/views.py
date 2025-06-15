@@ -28,7 +28,7 @@ class ContactView(FormView):
             from_email=form.cleaned_data['email'],
             recipient_list=["your_email@example.com"],
         )
-
+        form.save()
         messages.success(self.request, "پیام شما با موفقیت ارسال شد!")
         # Redirect user back to contact page
         return redirect(self.success_url)

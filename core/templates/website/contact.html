@@ -127,7 +127,7 @@
                         <!-- End Heading -->
 
                         <!-- Form -->
-                            <form id="contact-form" method="post">
+                            <form id="contact-form" action="{% url 'website:contact' %}" method="post">
                             {% csrf_token %}
                             <div class="row gx-3">
                                 <div class="col-sm-6">
@@ -148,7 +148,7 @@
                                 <div class="col-sm-6">
                                     <div class="mb-3">
                                         <label class="form-label" for="hireUsFormWorkEmail">آدرس ایمیل</label>
-                                        <input type="email" class="form-control form-control-lg" name="email" id="hireUsFormWorkEmail" placeholder="email@site.com">
+                                        <input type="email" class="form-control form-control-lg" name="email" id="hireUsFormWorkEmail" placeholder="email@site.com" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -161,7 +161,7 @@
 
                             <div class="mb-3">
                                 <label class="form-label" for="hireUsFormDetails">توضیحات</label>
-                                <textarea class="form-control form-control-lg" name="details" id="hireUsFormDetails" rows="4"></textarea>
+                                <textarea class="form-control form-control-lg" name="details" id="hireUsFormDetails" rows="4" required></textarea>
                             </div>
 
                             <div class="d-grid">
