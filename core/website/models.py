@@ -2,7 +2,7 @@ from django.db import models
 from accounts.validators import validate_iranian_phone
 
 # Create your models here.
-class NewsLetter(models.Model):
+class NewsLetterModel(models.Model):
     email = models.EmailField()
     
     def __str__(self):
@@ -10,7 +10,7 @@ class NewsLetter(models.Model):
     
     
 
-class Contact(models.Model):
+class ContactModel(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     phone_number = models.CharField(
