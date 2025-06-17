@@ -409,6 +409,7 @@ function changePage(page_number){
         csrfmiddlewaretoken: '{{csrf_token}}'
       },
       success: function(response){
+        $("#total-cart-item-count").html(response.total_quantity)
         console.log(response);
       },
       error: function(jqXHR, textStatus, errorThrown){
