@@ -3,9 +3,7 @@ class CartSession:
         self.session = session
         self._cart = self.session.setdefault("cart", 
           {
-              "items":[],
-              "total_price":0,
-              "total_items":0,
+            "items":[],
           })
         
     def add_product(self, product_id):
@@ -23,11 +21,12 @@ class CartSession:
 
     def Clear(self):
         self._cart = self.session["cart"] = {
-              "items":[],
-              "total_price":0,
-              "total_items":0,
+            "items":[],
           }
         self.save()
+    
+    def get_cart_dict(self):
+        return self._cart
         
     def save(self):
         self.session.modified = True
