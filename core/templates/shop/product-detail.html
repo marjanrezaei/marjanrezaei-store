@@ -92,16 +92,11 @@
           <div class="mb-5">
             <span class="d-block mb-2">قیمت کل:</span>
             {% if object.is_discounted %}
-            <div class="d-flex align-items-center">
-              <h3 class="mb-0">${{object.get_show_price}}</h3>
-              <span class="ms-2"><del>${{object.get_show_raw_price}}</del></span>
-            </div>
-         
-           {% else %}
-            <div class="d-flex align-items-center">
-              <h3 class="mb-0">${{object.get_show_price}}</h3> 
-            </div>
-           {% endif %}
+              <h3 class="card-text text-dark">${{object.get_price}}</h3>
+              <span class="text-body ms-1"><del>${{object.get_show_raw_price}}</del></span>
+            {% else %}
+              <h3 class="card-text text-dark">${{object.get_price}}</h3> 
+            {% endif %}
          </div>
           <!-- End Price -->
 

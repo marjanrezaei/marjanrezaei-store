@@ -39,10 +39,10 @@ class ProductModel(models.Model):
     def __str__(self):
         return self.title
     
-    def get_show_price(self):
+    def get_price(self):
         discount_amount = self.price * Decimal(self.discount_percent / 100)
         final_price = self.price - discount_amount
-        return '{:,}'.format(round(final_price))
+        return round(final_price)
 
     def get_show_raw_price(self):
         return '{:,}'.format(self.price)

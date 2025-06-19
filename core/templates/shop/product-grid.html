@@ -210,10 +210,10 @@
                     <a class="text-dark" href="{% url 'shop:product-detail' slug=object.slug %}">{{object.title}}</a>
                   </h4> 
                      {% if object.is_discounted %}
-                    <h3 class="card-text text-dark">${{object.get_show_price}}</h3>
+                    <h3 class="card-text text-dark">${{object.get_price}}</h3>
                     <span class="text-body ms-1"><del>${{object.get_show_raw_price}}</del></span>
                     {% else %}
-                    <h3 class="card-text text-dark">${{object.get_show_price}}</h3> 
+                    <h3 class="card-text text-dark">${{object.get_price}}</h3> 
                     {% endif %}
                  </div>
 
