@@ -8,7 +8,7 @@
       <!-- End Title -->
 
       <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-  {% for similar_product in similar_products %}
+            {% for similar_product in similar_products %}
             <div class="col mb-4">
               <!-- Card -->
               <div class="card card-bordered shadow-none text-center h-100">
@@ -36,10 +36,10 @@
                     <a class="text-dark" href="{% url 'shop:product-detail' slug=similar_product.slug %}">{{similar_product.title}}</a>
                   </h4> 
                      {% if similar_product.is_discounted %}
-                    <h3 class="card-text text-dark">${{similar_product.get_show_price}}</h3>
-                    <span class="text-body ms-1"><del>${{similar_product.get_show_raw_price}}</del></span>
+                    <h3 class="card-text text-dark formatted-price">{{similar_product.get_price}}</h3>
+                    <span class="text-body ms-1 formatted-price text-decoration-line-through">{{similar_product.price}}</span>
                     {% else %}
-                    <h3 class="card-text text-dark">${{similar_product.get_show_price}}</h3> 
+                    <h3 class="card-text text-dark formatted-price">{{similar_product.price}}</h3> 
                     {% endif %}
                  </div>
 

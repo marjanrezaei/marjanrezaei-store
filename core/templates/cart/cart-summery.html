@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+
 {% block content %} 
     <!-- Content -->
     <div class="container content-space-1 content-space-lg-2">
@@ -34,7 +35,7 @@
                           </a>
                         </h5>
                         <div class="d-block d-sm-none">
-                          <h5 class="mb-1"> {{item.total_price}}تومان</h5>
+                          <h5 class="mb-1 formatted-price"> {{item.total_price}}</h5>
                         </div>
 
                         <div class="d-grid gap-1">
@@ -87,7 +88,7 @@
                       <!-- End Col -->
 
                       <div class="col-4 col-sm-2 d-none d-sm-inline-block text-right">
-                        <span class="h5 d-block mb-1">{{item.total_price}}تومان</span>
+                        <span class="h5 d-block mb-1 formatted-price">{{item.total_price}}</span>
                       </div>
                       <!-- End Col -->
                     </div>
@@ -129,7 +130,7 @@
 
                     <dl class="row">
                       <dt class="col-sm-6">جمع</dt>
-                      <dd class="col-sm-12 text-sm-end mb-0">{{total_payment_price}} تومان</dd>
+                      <dd class="col-sm-12 text-sm-end mb-0 formatted-price">{{total_payment_price}}</dd>
                     </dl>
                     <!-- End Row -->
                   </div>

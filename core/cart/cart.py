@@ -1,13 +1,9 @@
 from shop.models import ProductModel, ProductStatusType
 
 class CartSession:
-    total_payment_price = 0
     def __init__(self, session):
         self.session = session
-        self._cart = self.session.setdefault("cart", 
-          {
-            "items":[],
-          })
+        self._cart = self.session.setdefault("cart", {"items":[]})
         
     def add_product(self, product_id):
         for item in self._cart["items"]:
@@ -32,27 +28,16 @@ class CartSession:
         return self._cart
     
     def get_cart_items(self):
-        cart_items = self._cart["items"]
-        self.total_payment_price = 0
-        for item in cart_items:
+        for item in self._cart["items"]:
             product_obj = ProductModel.objects.get(id=item["product_id"], status=ProductStatusType.publish.value)
-            item["product_obj"] = product_obj
-            total_price = int(item["quantity"]) * product_obj.get_price()
-            item["total_price"] = round(total_price)
-            self.total_payment_price += total_price
-        return cart_items
+            item.update({"product_obj":product_obj, "total_price": item["quantity"] * product_obj.get_price()})
+        return self._cart["items"]
     
     def get_total_payment_amount(self):
-        return round(self.total_payment_price)
+        return sum(item["total_price"] for item in self._cart["items"])
     
     def get_total_quantity(self):
-        total_quantity = 0
-        for item in self._cart["items"]:
-            total_quantity += item["quantity"]
-        
-        # total_quantity = len(self._cart["items"]) # guantity for number kinds product
-        return total_quantity
-       
+        return sum(item["quantity"] for item in self._cart["items"])
         
     def save(self):
         self.session.modified = True

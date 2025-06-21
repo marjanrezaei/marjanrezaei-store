@@ -37,10 +37,10 @@
                     <a class="text-dark" href="{% url 'shop:product-detail' slug=latest_product.slug %}">{{latest_product.title}}</a>
                   </h4> 
                      {% if latest_product.is_discounted %}
-                    <h3 class="card-text text-dark">${{latest_product.get_show_price}}</h3>
-                    <span class="text-body ms-1"><del>${{latest_product.get_show_raw_price}}</del></span>
+                    <h3 class="card-text text-dark formatted-price">{{latest_product.get_price}}</h3>
+                    <span class="text-body ms-1 formatted-price text-decoration-line-through">{{latest_product.price}}</span>
                     {% else %}
-                    <h3 class="card-text text-dark">${{latest_product.get_show_price}}</h3> 
+                    <h3 class="card-text text-dark formatted-price">{{latest_product.price}}</h3> 
                     {% endif %}
                  </div>
 

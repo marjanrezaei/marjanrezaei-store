@@ -210,10 +210,10 @@
                     <a class="text-dark" href="{% url 'shop:product-detail' slug=object.slug %}">{{object.title}}</a>
                   </h4> 
                      {% if object.is_discounted %}
-                    <h3 class="card-text text-dark">${{object.get_price}}</h3>
-                    <span class="text-body ms-1"><del>${{object.get_show_raw_price}}</del></span>
-                    {% else %}
-                    <h3 class="card-text text-dark">${{object.get_price}}</h3> 
+                    <h3 class="card-text text-dark formatted-price">{{object.get_price}}</h3>
+                    <span class="text-body ms-1 formatted-price text-decoration-line-through">{{object.price}}</span>
+                    {% else %} 
+                    <h3 class="card-text text-dark formatted-price">{{object.price}}</h3> 
                     {% endif %}
                  </div>
 
@@ -390,14 +390,6 @@ $('#order-by-filter').change(function() {
   window.location.href = new_url
 });
 </script>  
-<script>
-function changePage(page_number){
-  let current_url_params = new URLSearchParams(window.location.search)
-  current_url_params.set('page', page_number)
-  let new_url = window.location.pathname + "?" + current_url_params.toString()
-  window.location.href = new_url
-}
-</script>
 <script>
   function addToCart(product_id){
     console.log(product_id)
