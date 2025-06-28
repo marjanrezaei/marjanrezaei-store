@@ -46,7 +46,16 @@
                                 {% if not forloop.last %} , {% endif %}{% endfor %}
                             </span>
                           </div>
+                        </div>        
+                        <div class="d-grid gap-1">
+                          <div class="text-body">
+                            <span class="small">قیمت هر واحد:</span>
+                            <span class="fw-semibold formatted-price small">
+                            {{item.product_obj.get_price}}
+                            </span>
+                          </div>
                         </div>
+
                       </div>
                       <!-- End Col -->
 
@@ -55,10 +64,12 @@
                           <div class="col-auto">
                             <!-- Select -->
                           {% if item.product_obj.stock %}
-                            <select class="form-select form-select-sm mb-3">
+                            <select class="form-select form-select-sm mb-3" onchange="changeProductQuantity('{{item.product_id}}', this.value)">
                               {% with ''|center:item.product_obj.stock as range %}
                                 {% for _ in range %}
-                                  <option value="{{ forloop.counter }}">{{ forloop.counter }}</option>
+                                  <option value="{{ forloop.counter }}"
+                                    {% if forloop.counter == item.quantity %}
+                                    selected {% endif %}>{{ forloop.counter }}</option>
                                 {% endfor %}
                               {% endwith %}
                             </select>
@@ -171,4 +182,29 @@
       <!-- End Row -->
     </div>
     <!-- End Content -->
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  function changeProductQuantity(product_id, quantity){
+    console.log(product_id, quantity)
+        $.ajax({
+      url:"{% url 'cart:session-update-product-quantity' %}",
+      method:'POST',
+      data:{
+        product_id:product_id,
+        quantity:quantity,
+        csrfmiddlewaretoken: '{{csrf_token}}'
+      },
+      success: function(response){
+        console.log(response);
+        window.location.reload();
+      },
+      error: function(jqXHR, textStatus, errorThrown){
+        console.log(errorThrown);
+      }
+    });
+  }
+
+</script>
 {% endblock %}

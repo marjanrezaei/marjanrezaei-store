@@ -17,6 +17,15 @@ class CartSession:
                 }
             self._cart["items"].append(new_item)
         self.save()
+        
+    def update_product_quantity(self, product_id, quantity):
+        for item in self._cart["items"]:
+            if product_id == item["product_id"]:
+                item["quantity"] = int(quantity)
+                break
+        else:
+            return
+        self.save()
 
     def Clear(self):
         self._cart = self.session["cart"] = {
