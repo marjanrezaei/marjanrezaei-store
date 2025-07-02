@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'cart.middleware.CartMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -73,7 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'cart.context_processors.cart_processor',
+                'cart.context_processors.cart_total_quantity',
             ],
         },
     },
@@ -176,3 +177,4 @@ CELERY_RESULT_BACKEND = "redis://redis:6379/0"
 FRONTEND_URL = 'http://127.0.0.1:8080'
 DEFAULT_FROM_EMAIL = 'rezaei.marjann@gmail.com'
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'

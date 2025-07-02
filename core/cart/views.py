@@ -1,48 +1,72 @@
-from django.shortcuts import render
-from django.views.generic import View, TemplateView
+from django.shortcuts import get_object_or_404
+from django.views import View
+from django.views.generic import TemplateView
 from django.http import JsonResponse
-from .cart import CartSession
+from django.shortcuts import get_object_or_404
 
-# Create your views here.
-class SessionAddProductView(View):
-    
+from shop.models import ProductModel
+from .cart import CartDB  # This uses CartItemModel internally
+
+
+class CartActionView(View):
+    """Base view for cart operations"""
+
+    def dispatch(self, request, *args, **kwargs):
+        self.cart = CartDB(request.cart)  # From CartMiddleware
+        return super().dispatch(request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
-        cart = CartSession(request.session)
-        product_id = request.POST.get("product_id")
-        if product_id:
-            cart.add_product(product_id)
-        return JsonResponse({"cart":cart.get_cart_dict(), "total_quantity":cart.get_total_quantity()})
-
-
-class SessionRemoveProductView(View):
-    
-     def post(self, request, *args, **kwargs):
-        cart = CartSession(request.session)
-        product_id = request.POST.get("product_id")
-        if product_id:
-            cart.remove_product(product_id)
-        return JsonResponse({"cart":cart.get_cart_dict(), "total_quantity":cart.get_total_quantity()})
-    
-    
-class SessionUpdateProductQuantityView(View):
-    
-    def post(self, request, *args, **kwargs):
-        cart = CartSession(request.session)
         product_id = request.POST.get("product_id")
         quantity = request.POST.get("quantity")
-        if product_id and quantity:
-            cart.update_product_quantity(product_id, quantity)
-        return JsonResponse({"cart":cart.get_cart_dict(), "total_quantity":cart.get_total_quantity()})
-    
-    
-class SessionCartSummaryView(TemplateView):
-    template_name = "cart/cart-summery.html"
-    
+
+        if not product_id:
+            return JsonResponse({"error": "Product ID is required"}, status=400)
+
+        try:
+            self.perform_action(product_id, quantity)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
+
+        return JsonResponse({
+            "total_quantity": self.cart.total_quantity,
+            "cart_items": self.cart.serialize_items(),  # Optional: structured cart data
+        })
+
+    def perform_action(self, product_id, quantity):
+        raise NotImplementedError("Subclasses must implement this method.")
+
+
+class AddToCartView(CartActionView):
+    def perform_action(self, product_id, quantity=None):
+        product = get_object_or_404(ProductModel, id=product_id)
+        self.cart.add_product(product.id)
+
+
+class RemoveProductView(CartActionView):
+    def perform_action(self, product_id, quantity):
+        self.cart.remove_product(product_id)
+
+
+class UpdateProductQuantityView(CartActionView):
+    def perform_action(self, product_id, quantity):
+        if quantity is None:
+            raise ValueError("Quantity is required")
+        qty = int(quantity)
+        self.cart.update_product_quantity(product_id, qty)
+
+
+class CartSummaryView(TemplateView):
+    template_name = "cart/cart-summary.html"
+
+    def get_cart(self):
+        return CartDB(self.request.cart)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        cart = CartSession(self.request.session)
-        cart_items = cart.get_cart_items()
-        context["cart_items"] = cart_items
-        context["total_quantity"] = cart.get_total_quantity()
-        context["total_payment_price"] = cart.get_total_payment_amount()
+        cart = self.get_cart()
+        context.update({
+            "cart_items": cart.get_cart_items(),
+            "total_quantity": cart.total_quantity,
+            "total_payment_price": cart.get_total_payment_amount(),
+        })
         return context

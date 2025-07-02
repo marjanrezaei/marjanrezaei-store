@@ -82,9 +82,9 @@
                 <i class="bi-basket"></i>
                 <span class="cart-item-count ">3</span>
               </button> -->
-               <a href="{% url 'cart:session-cart-summary' %}"  class="btn btn-ghost-secondary btn-icon">
+               <a href="{% url 'cart:db-cart-summary' %}"  class="btn btn-ghost-secondary btn-icon">
                 <i class="bi-basket"></i>
-                <span class="cart-item-count " id="total-cart-item-count">{{cart.get_total_quantity}}</span>
+                <span id="total-cart-item-count"> {{ total_quantity }} </span>
                </a>
               <!-- End Shopping Cart -->
               {% if request.user.is_authenticated %}
@@ -421,6 +421,12 @@
 
   <!-- JS Jquery -->
   <script src="{% static 'js/Jquery.min.js' %}"></script>
+  <script>
+  window.cartAddProductUrlTemplate = "{% url 'cart:db-add-product' 0 %}";
+  window.removeUrl = "{% url 'cart:db-remove-product' %}";
+  window.cartUpdateUrl = "{% url 'cart:db-update-product-quantity' %}";
+  window.csrfToken = "{{ csrf_token }}";
+  </script>
   <script src="{% static 'js/custom.js' %}"></script>
   <!-- JS Implementing Plugins -->
   <script src="{% static 'js/vendor.min.js' %}"></script>

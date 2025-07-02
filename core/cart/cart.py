@@ -1,63 +1,82 @@
-from shop.models import ProductModel, ProductStatusType
+from shop.models import ProductStatusType
+from django.db.models import Sum, F
+from .models import CartItemModel
 
-class CartSession:
-    def __init__(self, session):
-        self.session = session
-        self._cart = self.session.setdefault("cart", {"items":[]})
-        
+class CartDB:
+    def __init__(self, cart_model_instance):
+        self.cart = cart_model_instance
+
     def add_product(self, product_id):
-        for item in self._cart["items"]:
-            if product_id == item["product_id"]:
-                item["quantity"] += 1
-                break
-        else:
-            new_item = {
-                "product_id" : product_id,
-                "quantity" : 1,
-                }
-            self._cart["items"].append(new_item)
-        self.save()
-    
-    def remove_product(self, product_id):
-        for item in self._cart["items"]:
-            if product_id == item["product_id"]:
-                self._cart["items"].remove(item)
-                break
-        else:
-            return
-        self.save()
+        product_id = int(product_id)
+        cart_item, created = CartItemModel.objects.get_or_create(
+            cart=self.cart,
+            product_id=product_id,
+            defaults={"quantity": 1}
+        )
+        if not created:
+            cart_item.quantity = F('quantity') + 1
+            cart_item.save(update_fields=['quantity'])
+            cart_item.refresh_from_db()
         
-        
-    def update_product_quantity(self, product_id, quantity):
-        for item in self._cart["items"]:
-            if product_id == item["product_id"]:
-                item["quantity"] = int(quantity)
-                break
-        else:
-            return
-        self.save()
 
-    def Clear(self):
-        self._cart = self.session["cart"] = {
-            "items":[],
-          }
-        self.save()
-    
-    def get_cart_dict(self):
-        return self._cart
-    
+    def remove_product(self, product_id):
+        product_id = int(product_id)
+        CartItemModel.objects.filter(cart=self.cart, product_id=product_id).delete()
+
+    def update_product_quantity(self, product_id, quantity):
+        product_id = int(product_id)
+        quantity = int(quantity)
+        if quantity <= 0:
+            self.remove_product(product_id)
+        else:
+            cart_item, created = CartItemModel.objects.get_or_create(
+                cart=self.cart,
+                product_id=product_id,
+                defaults={"quantity": quantity}
+            )
+            if not created:
+                cart_item.quantity = quantity
+                cart_item.save(update_fields=['quantity'])
+
+    def clear(self):
+        CartItemModel.objects.filter(cart=self.cart).delete()
+
+    @property
+    def total_quantity(self):
+        return CartItemModel.objects.filter(cart=self.cart).aggregate(
+             total=Sum('quantity')
+        )['total'] or 0
+
     def get_cart_items(self):
-        for item in self._cart["items"]:
-            product_obj = ProductModel.objects.get(id=item["product_id"], status=ProductStatusType.publish.value)
-            item.update({"product_obj":product_obj, "total_price": item["quantity"] * product_obj.get_price()})
-        return self._cart["items"]
-    
+        cart_items = CartItemModel.objects.filter(cart=self.cart).select_related('product')
+        items = []
+        for item in cart_items:
+            product = item.product
+            if product.status != ProductStatusType.publish.value:
+                continue
+            total_price = item.quantity * product.get_price()
+            items.append({
+                "product_obj": product,
+                "quantity": item.quantity,
+                "total_price": total_price,
+            })
+        return items
+
     def get_total_payment_amount(self):
-        return sum(item["total_price"] for item in self._cart["items"])
-    
-    def get_total_quantity(self):
-        return sum(item["quantity"] for item in self._cart["items"])
-        
-    def save(self):
-        self.session.modified = True
-        
+        return sum(item["total_price"] for item in self.get_cart_items())
+
+    def serialize_items(self):
+        cart_items = CartItemModel.objects.filter(cart=self.cart).select_related('product')
+        serialized = []
+        for item in cart_items:
+            product = item.product
+            if product.status != ProductStatusType.publish.value:
+                continue
+            serialized.append({
+                "product_id": product.id,
+                "product_name": product.title,
+                "quantity": item.quantity,
+                "unit_price": product.get_price(),
+                "total_price": item.quantity * product.get_price(),
+            })
+        return serialized

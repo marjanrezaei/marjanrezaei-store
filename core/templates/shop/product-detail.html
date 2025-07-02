@@ -186,7 +186,10 @@
           <!-- End Accordion -->
 
           <div class="d-grid mb-4">
-            <button type="button" class="btn btn-primary btntransition">افزودن به سبد خرید</button>
+            <button type="button" class="btn btn-outline-primary btn-sm btn-add-to-cart" data-product-id="{{ object.id }}">
+             افزودن به سبد خرید
+            </button>
+
           </div>
 
           <!-- Media -->
@@ -632,3 +635,7 @@
     </div>
     <!-- End Subscribe -->
 {% endblock content %} 
+
+{% block extra_js %} 
+
+{% endblock extra_js %} 
