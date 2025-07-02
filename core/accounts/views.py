@@ -7,7 +7,7 @@ from django.utils.timezone import now
 from datetime import timedelta
 import json
 from .tasks import send_reset_email  # Celery task
-from accounts.forms import AuthenticationForm
+from .forms import AuthenticationForm
 
 User = get_user_model()
 

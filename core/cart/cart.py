@@ -17,7 +17,6 @@ class CartDB:
             cart_item.quantity = F('quantity') + 1
             cart_item.save(update_fields=['quantity'])
             cart_item.refresh_from_db()
-        
 
     def remove_product(self, product_id):
         product_id = int(product_id)
@@ -44,39 +43,37 @@ class CartDB:
     @property
     def total_quantity(self):
         return CartItemModel.objects.filter(cart=self.cart).aggregate(
-             total=Sum('quantity')
+            total=Sum('quantity')
         )['total'] or 0
+
+    def _serialize_item(self, item):
+        product = item.product
+        price = product.get_price()
+        return {
+            "product_id": product.id,
+            "product_name": product.title,
+            "quantity": item.quantity,
+            "unit_price": price,
+            "total_price": item.quantity * price,
+            "product_obj": product,  
+        }
 
     def get_cart_items(self):
         cart_items = CartItemModel.objects.filter(cart=self.cart).select_related('product')
         items = []
         for item in cart_items:
-            product = item.product
-            if product.status != ProductStatusType.publish.value:
+            if item.product.status != ProductStatusType.publish.value:
                 continue
-            total_price = item.quantity * product.get_price()
-            items.append({
-                "product_obj": product,
-                "quantity": item.quantity,
-                "total_price": total_price,
-            })
+            items.append(self._serialize_item(item))
         return items
 
     def get_total_payment_amount(self):
         return sum(item["total_price"] for item in self.get_cart_items())
 
     def serialize_items(self):
-        cart_items = CartItemModel.objects.filter(cart=self.cart).select_related('product')
         serialized = []
-        for item in cart_items:
-            product = item.product
-            if product.status != ProductStatusType.publish.value:
-                continue
-            serialized.append({
-                "product_id": product.id,
-                "product_name": product.title,
-                "quantity": item.quantity,
-                "unit_price": product.get_price(),
-                "total_price": item.quantity * product.get_price(),
-            })
+        for item in self.get_cart_items():
+            item_copy = dict(item)
+            item_copy.pop("product_obj", None)
+            serialized.append(item_copy)
         return serialized
