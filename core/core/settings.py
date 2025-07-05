@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'mail_templated',
     'django_celery_beat',
     'website',
+    'dashboard',
     'accounts',
     'shop',  
     'cart',
