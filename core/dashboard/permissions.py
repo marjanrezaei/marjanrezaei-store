@@ -1,14 +1,20 @@
 from django.contrib.auth.mixins import AccessMixin
 from django.http import HttpResponseForbidden
+from django.shortcuts import render
+from accounts.models import UserType
 
-class UserTypeRequiredMixin(AccessMixin):
-    required_user_type = None  # override in your view, e.g. 'admin' or 'customer'
-
+class AdminRequiredMixin(AccessMixin):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            # Redirect to login or default no-permission handler
             return self.handle_no_permission()
-        if self.required_user_type and request.user.type != self.required_user_type:
-            return HttpResponseForbidden("You do not have permission to access this page.")
-        
+        if getattr(request.user, 'type', None) != UserType.admin:
+            return render(request, '403.html', status=403)
+        return super().dispatch(request, *args, **kwargs)
+
+class CustomerRequiredMixin(AccessMixin):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+        if getattr(request.user, 'type', None) != UserType.customer:
+            return render(request, '403.html', status=403)
         return super().dispatch(request, *args, **kwargs)
