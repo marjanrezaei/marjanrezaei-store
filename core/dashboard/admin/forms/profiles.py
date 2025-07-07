@@ -11,8 +11,7 @@ class AdminPasswordChangeForm(auth_forms.PasswordChangeForm):
         ),
         "password_mismatch": _(" دو پسورد ورودی با یکدیگر مطابقت ندارد "),
     }
-    
-    
+     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['old_password'].widget.attrs['class'] = 'form-control text-center'
@@ -24,6 +23,7 @@ class AdminPasswordChangeForm(auth_forms.PasswordChangeForm):
 
 
 class AdminProfileEditForm(forms.ModelForm):
+
     class Meta:
         model = Profile
         fields = [
@@ -31,6 +31,7 @@ class AdminProfileEditForm(forms.ModelForm):
             'last_name',
             'phone_number',
         ]
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['first_name'].widget.attrs['class'] = 'form-control'

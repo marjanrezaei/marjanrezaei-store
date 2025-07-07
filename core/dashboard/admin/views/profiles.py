@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, UpdateView
+from django.views.generic import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from dashboard.permissions import AdminRequiredMixin
 from django.contrib.auth import views as auth_views
@@ -12,9 +12,6 @@ from accounts.models import Profile
 
 
 
-class AdminDashboardHomeView(AdminRequiredMixin, LoginRequiredMixin, TemplateView):
-    template_name = 'dashboard/admin/home.html'
-
 class AdminSecurityEditView(AdminRequiredMixin, LoginRequiredMixin, auth_views.PasswordChangeView, SuccessMessageMixin):
     template_name = 'dashboard/admin/profile/security-edit.html'
     form_class = AdminPasswordChangeForm
@@ -26,7 +23,7 @@ class AdminSecurityEditView(AdminRequiredMixin, LoginRequiredMixin, auth_views.P
         messages.success(self.request, self.success_message)
         return response
     
-class AdminOProfileEditView(AdminRequiredMixin, LoginRequiredMixin, UpdateView, SuccessMessageMixin):
+class AdminProfileEditView(AdminRequiredMixin, LoginRequiredMixin, UpdateView, SuccessMessageMixin):
     template_name = 'dashboard/admin/profile/profile-edit.html'
     form_class = AdminProfileEditForm
     success_url = reverse_lazy('dashboard:admin:profile-edit')
