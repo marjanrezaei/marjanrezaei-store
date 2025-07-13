@@ -1,0 +1,91 @@
+{% extends 'dashboard/admin/base.html' %}
+{% block Breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-light mb-0">
+        <li class="breadcrumb-item">حساب</li>
+        <li class="breadcrumb-item">داشبورد ادمین</li>
+        <li class="breadcrumb-item">محصولات</li>
+        <li class="breadcrumb-item active" aria-current="page">
+            ایجاد محصولات
+        </li>
+    </ol>
+</nav>
+{% endblock %}
+{% block content %}
+<!-- Card -->
+<div class="card">
+    <!-- Header -->
+    <div class="card-header border-bottom">
+        <h5 class="card-header-title">ایجاد محصول</h5>
+    </div>
+    <!-- End Header -->
+
+    <!-- Body -->
+    <form action="." method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="card-body">
+            <div class="row d-flex ">
+                <div class="col-md-6 mb-3">
+                    <label>نام محصول</label>
+                    {{form.title}}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label>slug محصول</label>
+                    {{form.slug}}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label>تعداد</label>
+                    {{form.stock}}
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>وضعیت</label>
+                    {{form.status}}
+
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label>دسته بندی</label>
+                    {{form.category}}
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label>قیمت</label>
+                    {{form.price}}
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label>درصد تخفیف</label>
+                    {{form.discount_percent}}
+                </div>
+                <div class="col-md-12 mb-3">
+                    <label> توضیحات مختصر </label>
+                    {{form.breif_description}}
+
+                </div>
+                <div class="col-md-12 mb-3">
+                    <label> توضیحات </label>
+                    {{form.description}}
+
+                </div>
+            </div>
+
+            <div class="col-md-12 mb-3">
+                <labelfor="validationValidFileInput1">تصویر محصول</label>
+                    {{form.image}}
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class=" d-flex pt-5 justify-content-end">
+                <a class="btn btn-secondary ms-3" href="{% url 'dashboard:admin:product-list' %}">بازگشت</a>
+                <button class="btn btn-primary ms-3" type="submit">ایجاد محصول</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- End Body -->
+{% endblock %}
+{% block extra_js %}
+<script>
+
+</script>
+
+
+{% endblock extra_js %}
