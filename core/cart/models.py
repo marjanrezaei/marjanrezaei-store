@@ -21,7 +21,7 @@ class CartModel(models.Model):
 
 class CartItemModel(models.Model):
     cart = models.ForeignKey(CartModel, on_delete=models.CASCADE, related_name='items')
-    product = models.ForeignKey('shop.ProductModel', on_delete=models.PROTECT)
+    product = models.ForeignKey('shop.ProductModel', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -31,4 +31,4 @@ class CartItemModel(models.Model):
         unique_together = ('cart', 'product')
 
     def __str__(self):
-        return f"{self.quantity} x {self.product.name}"
+        return f"{self.product.title} - {self.cart.id}"
