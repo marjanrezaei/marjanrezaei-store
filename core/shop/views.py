@@ -44,7 +44,6 @@ class ShopProductGridView(ListView):
         context = super().get_context_data(**kwargs)
         context["total_items"] = self.queryset.count()
         context["categories"] = ProductCategoryModel.objects.all()
-        self.request.session['fav_color'] = 'blue'
         return context
     
     

@@ -2,19 +2,24 @@ from shop.models import ProductStatusType
 from django.db.models import Sum, F
 from .models import CartItemModel
 
+
 class CartDB:
     def __init__(self, cart_model_instance):
         self.cart = cart_model_instance
 
-    def add_product(self, product_id):
+    def add_product(self, product_id, quantity=1):
+        """Add product with optional quantity (default is 1)."""
         product_id = int(product_id)
+        quantity = int(quantity) if quantity else 1
+
         cart_item, created = CartItemModel.objects.get_or_create(
             cart=self.cart,
             product_id=product_id,
-            defaults={"quantity": 1}
+            defaults={"quantity": quantity}
         )
         if not created:
-            cart_item.quantity = F('quantity') + 1
+            # Use F expression and refresh to avoid race conditions
+            cart_item.quantity = F('quantity') + quantity
             cart_item.save(update_fields=['quantity'])
             cart_item.refresh_from_db()
 
@@ -25,17 +30,19 @@ class CartDB:
     def update_product_quantity(self, product_id, quantity):
         product_id = int(product_id)
         quantity = int(quantity)
+
         if quantity <= 0:
             self.remove_product(product_id)
-        else:
-            cart_item, created = CartItemModel.objects.get_or_create(
-                cart=self.cart,
-                product_id=product_id,
-                defaults={"quantity": quantity}
-            )
-            if not created:
-                cart_item.quantity = quantity
-                cart_item.save(update_fields=['quantity'])
+            return
+
+        cart_item, created = CartItemModel.objects.get_or_create(
+            cart=self.cart,
+            product_id=product_id,
+            defaults={"quantity": quantity}
+        )
+        if not created:
+            cart_item.quantity = quantity
+            cart_item.save(update_fields=['quantity'])
 
     def clear(self):
         CartItemModel.objects.filter(cart=self.cart).delete()
@@ -55,11 +62,14 @@ class CartDB:
             "quantity": item.quantity,
             "unit_price": price,
             "total_price": item.quantity * price,
-            "product_obj": product,  
+            "product_obj": product,  # optional for internal logic
         }
 
     def get_cart_items(self):
-        cart_items = CartItemModel.objects.filter(cart=self.cart).select_related('product')
+        cart_items = CartItemModel.objects.filter(
+            cart=self.cart
+        ).select_related('product')
+
         items = []
         for item in cart_items:
             if item.product.status != ProductStatusType.publish.value:
@@ -71,9 +81,7 @@ class CartDB:
         return sum(item["total_price"] for item in self.get_cart_items())
 
     def serialize_items(self):
-        serialized = []
-        for item in self.get_cart_items():
-            item_copy = dict(item)
-            item_copy.pop("product_obj", None)
-            serialized.append(item_copy)
-        return serialized
+        return [
+            {k: v for k, v in item.items() if k != "product_obj"}
+            for item in self.get_cart_items()
+        ]
