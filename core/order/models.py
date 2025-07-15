@@ -49,6 +49,12 @@ class OrderModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+    def calculate_total_price(self):
+        return sum(item.price* item.quantity for item in self.order_items.all()) 
+    
+    def __str__(self):
+        return f"{self.user.email} - {self.id}"
+    
     
 class OrderItemModel(models.Model):
     order = models.ForeignKey(OrderModel,on_delete=models.CASCADE,related_name="order_items") 

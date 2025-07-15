@@ -18,6 +18,9 @@ class CartModel(models.Model):
         if self.user:
             return f"Cart of {self.user.email}"
         return f"Cart for session {self.session_key}"
+    
+    def calculate_total_price(self):
+        return sum(item.product.get_price()* item.quantity for item in self.items.all())
 
 class CartItemModel(models.Model):
     cart = models.ForeignKey(CartModel, on_delete=models.CASCADE, related_name='items')
