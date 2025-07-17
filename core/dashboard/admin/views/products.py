@@ -6,17 +6,13 @@ from django.views.generic import (
     )
 from django.contrib.auth.mixins import LoginRequiredMixin
 from dashboard.permissions import AdminRequiredMixin
-from django.contrib.auth import views as auth_views
-from dashboard.admin.forms import AdminPasswordChangeForm, AdminProfileEditForm, ProductForm
+from dashboard.admin.forms import  ProductForm
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib import messages
 from django.core.exceptions import FieldError
 
-from accounts.models import Profile
-from shop.models import ProductModel, ProductStatusType, ProductCategoryModel
-
+from shop.models import ProductModel, ProductCategoryModel
 
 
 

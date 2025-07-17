@@ -2,102 +2,105 @@
 {% load static %}
 
 {% block content %}
-    <!-- Content -->
-    <div class="container content-space-1 content-space-lg-2">
-      <div class="row">
-        <div class="col-lg-8 mb-7 mb-lg-0">
-          <h4 class="mb-3">انتخاب آدرس </h4>
+<!-- Content -->
+<div class="container content-space-1 content-space-lg-2">
+  <div class="row">
+    <div class="col-lg-8 mb-7 mb-lg-0">
+      <h4 class="mb-3">انتخاب آدرس </h4>
 
-          <!-- Form -->
-          <form action="." method="post" id="checkout-form"> 
-            {% csrf_token %}
+      <!-- Form -->
+      <form action="." method="post" id="checkout-form">
+        {% csrf_token %}
 
-            <hr class="my-4">
+        <hr class="my-4">
 
-            <div class="d-grid gap-2">
+        <div class="d-grid gap-2">
 
-              <!-- Check -->
-              {% for address in addresses %}
-              <div class="form-check">
-                <input type="radio" class="form-check-input" name="address_id" value="{{address.id}}" required>
-                <label class="form-check-label" for="address">  {{address.state}}, {{address.city}}, {{address.address}}, {{address.zip_code}} </label>
-              </div>
-              {% endfor %}
-              <!-- End Check -->
-              <div>
-                <a class="" href="{% url 'dashboard:customer:address-list' %}">مدیریت آدرس ها</a>
-              </div>
-            </div>
-
-            <hr class="my-4">
-
-            <div class="row align-items-center">
-
-              <div class="col-sm text-center text-sm-start">
-                <a class="link" href="{% url 'cart:cart-summary' %}">
-                   بازگشت به سبد خرید <i class="bi-chevron-left small ms-1"></i>
-                </a>
-              </div>
-              <!-- End Col -->
-            </div>
-            <!-- End Row -->
-          </form>
-          <!-- End Form -->
+          <!-- Check -->
+          {% for address in addresses %}
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="address_id" id="address-{{ address.id }}" value="{{address.id}}" required>
+            <label class="form-check-label" for="address-{{ address.id }}">{{address.state}}, {{address.city}}, {{address.address}}, {{address.zip_code}} </label>
+          </div>
+          {% endfor %}
+          <!-- End Check -->
+          <div>
+            <a class="" href="{% url 'dashboard:customer:address-list' %}">مدیریت آدرس ها</a>
+          </div>
         </div>
-        <!-- End Col -->
 
-        <div class="col-lg-4">
-          <div class="ps-lg-4">
-            <!-- Card -->
-            <div class="card card-sm shadow-sm mb-4">
-              <div class="card-body">
-                <div class="border-bottom pb-4 mb-4">
-                  <h3 class="card-header-title">خلاصه سفارش</h3>
-                </div>
+        <hr class="my-4">
+
+        <div class="row align-items-center">
+
+          <div class="col-sm text-center text-sm-start">
+            <a class="link" href="{% url 'cart:cart-summary' %}">
+              بازگشت به سبد خرید <i class="bi-chevron-left small ms-1"></i>
+            </a>
+          </div>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+      </form>
+      <!-- End Form -->
+    </div>
+    <!-- End Col -->
+
+    <div class="col-lg-4">
+      <div class="ps-lg-4">
+        <!-- Card -->
+        <div class="card card-sm shadow-sm mb-4">
+          <div class="card-body">
+            <div class="border-bottom pb-4 mb-4">
+              <h3 class="card-header-title">خلاصه سفارش</h3>
+            </div>
 
 
-                  <div class="input-group border-bottom pb-4 mb-3 ">
-                    <input type="text" class="form-control text-center" name="coupon" placeholder="کد تخفیف"
-                    aria-label="کد تخفیف" form="checkout-form">
-                    <button class="btn btn-primary"> بررسی</button>
-                  </div>
+            <div class="input-group border-bottom pb-4 mb-3 ">
+              <input type="text" class="form-control text-center" name="coupon" placeholder="کد تخفیف"
+                aria-label="کد تخفیف" form="checkout-form" id="coupon-input">
+              <button class="btn btn-primary" type="button" onclick="validateCoupon(event)">بررسی</button>
+            </div>
 
-                  <div class="border-bottom pb-4 mb-4">
-                    <div class="d-grid gap-3">
+            <div class="border-bottom pb-4 mb-4">
+              <div class="d-grid gap-3">
 
-                      <!-- End Row -->
+                <!-- End Row -->
 
-                      <dl class="row">
-                        <dt class="col-sm-6">هزینه ارسال</dt>
-                        <dd class="col-sm-12 text-sm-end mb-0">برای تهران و حومه 35000 تومان</dd>
-                        <dd class="col-sm-12 text-sm-end mb-0">برای شهرستان ها 50000 تومان</dd>
-                      </dl>
-                      <!-- End Row -->
-                    </div>
-                  </div>
-
-                  <div class="d-grid gap-3 mb-4">
-                    <dl class="row">
-                      <dt class="col-sm-6">مالیات تخمینی</dt>
-                      <dd class="col-sm-12 text-sm-end mb-0">
-                      9% مالیات -
-                        <span class="formatted-price">{{total_tax}}</span>
-                      </dd>
-
-                    </dl>
-                    <!-- End Row -->
-
-                    <dl class="row">
-                      <dt class="col-sm-6">جمع کل</dt>
-                      <dd class="col-sm-6 text-sm-end mb-0 formatted-price">{{total_price}}</dd>
-                    </dl>
-                    <!-- End Row -->
-                  </div>
-
-                  <div class="d-grid">
-                    <button class="btn btn-primary btn-lg" type="submit" form="checkout-form">ثبت نهایی</button>
-                  </divbutton
+                <dl class="row">
+                  <dt class="col-sm-6">هزینه ارسال</dt>
+                  <dd class="col-sm-12 text-sm-end mb-0">برای تهران و حومه 35000 تومان</dd>
+                  <dd class="col-sm-12 text-sm-end mb-0">برای شهرستان ها 50000 تومان</dd>
+                </dl>
+                <!-- End Row -->
               </div>
+            </div>
+
+            <div class="d-grid gap-3 mb-4">
+              <dl class="row">
+                <dt class="col-sm-6">جمع کل</dt>
+                <dd class="col-sm-6 text-sm-end mb-0 formatted-price"  id="total-price" >{{ total_price }}</dd>
+              </dl>
+              <dl class="row">
+                <dt class="col-sm-6">مبلغ بعد از تخفیف</dt>
+                <dd class="col-sm-6 text-sm-end mb-0 formatted-price" id="discounted-price">{{ discounted_price }}</dd>
+              </dl>
+
+              <dl class="row">
+                <dt class="col-sm-6">مالیات (۹٪)</dt>
+                <dd class="col-sm-6 text-sm-end mb-0 formatted-price" id="total-tax">{{ total_tax }} </dd>
+              </dl>
+
+              <dl class="row">
+                <dt class="col-sm-6 fw-bold">مبلغ نهایی قابل پرداخت</dt>
+                <dd class="col-sm-6 text-sm-end fw-bold formatted-price" id="final-price-with-tax">{{ final_price_with_tax }}</dd>
+              </dl>
+
+            </div>
+
+            <div class="d-grid">
+              <button class="btn btn-primary btn-lg" type="submit" form="checkout-form">ثبت نهایی</button>
+              </div> </div>
               <!-- End Card -->
             </div>
 
@@ -129,4 +132,82 @@
       <!-- End Row -->
     </div>
     <!-- End Content -->
+    {% endblock %}
+
+{% block extra_js %}
+<script>
+function getCSRFToken() {
+  return document.querySelector('[name=csrfmiddlewaretoken]').value;
+}
+
+function validateCoupon(event) {
+  const couponInput = $('#coupon-input');
+  const code = couponInput.val().trim();
+  const button = $(event.currentTarget); // make sure event is passed in
+
+  if (!code) {
+    Toastify({
+      text: "لطفاً کد تخفیف را وارد کنید.",
+      className: "error",
+      style: { background: "red" },
+      gravity: "center",
+      position: "center",
+    }).showToast();
+    return;
+  }
+
+  // Disable the button while processing
+  button.prop('disabled', true).text("در حال بررسی...");
+
+  $.ajax({
+    url: "{% url 'order:validate-coupon' %}",
+    method: 'POST',
+    data: {
+      code: code,
+      csrfmiddlewaretoken: getCSRFToken()
+    },
+    success: function (response) {
+      Toastify({
+        text: response.message || "کد تخفیف اعمال شد.",
+        className: "info",
+        style: { background: "blue" },
+        gravity: "center",
+        position: "center",
+      }).showToast();
+
+      // Update DOM with response values if provided
+      if (response.total_price !== undefined) {
+        $('#total-price').text(response.total_price);
+      }
+      if (response.discounted_price !== undefined) {
+        $('#discounted-price').text(response.discounted_price);
+      }
+      if (response.total_tax !== undefined) {
+        $('#total-tax').text(response.total_tax);
+      }
+      if (response.final_price_with_tax !== undefined) {
+        $('#final-price-with-tax').text(response.final_price_with_tax);
+      }
+    },
+    error: function (xhr) {
+      let message = "خطایی رخ داده است.";
+      if (xhr.responseJSON && xhr.responseJSON.message) {
+        message = xhr.responseJSON.message;
+      }
+      Toastify({
+        text: message,
+        className: "error",
+        style: { background: "red" },
+        gravity: "center",
+        position: "center",
+      }).showToast();
+    },
+    complete: function () {
+      // Re-enable the button
+      button.prop('disabled', false).text("بررسی");
+    }
+  });
+}
+</script>
+
 {% endblock %}
