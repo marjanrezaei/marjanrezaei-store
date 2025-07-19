@@ -5,10 +5,8 @@ from decimal import Decimal, ROUND_HALF_UP
 
 class OrderStatusType(models.IntegerChoices):
     PENDING = 1, "در انتظار پرداخت"
-    PROCESSING = 2, "در حال پردازش"
-    SHIPPED = 3, "ارسال شده"
-    DELIVERED = 4, "تحویل شده"
-    CANCELED = 5, "لغو شده"
+    SUCCESS = 2, "موفقیت آمیز"
+    FAILED = 3, "لغو شده"
 
 
 class UserAddressModel(models.Model):
@@ -57,9 +55,10 @@ class OrderModel(models.Model):
     state = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
     zip_code = models.CharField(max_length=50)
+    
+    payment = models.ForeignKey('payment.PaymentModel', on_delete=models.SET_NULL, null=True, blank=True)
 
     total_price = models.DecimalField(default=0, max_digits=10, decimal_places=0)
-
     coupon = models.ForeignKey(CouponModel, on_delete=models.PROTECT, null=True, blank=True)
     status = models.IntegerField(choices=OrderStatusType.choices, default=OrderStatusType.PENDING)
     created_at = models.DateTimeField(auto_now_add=True)

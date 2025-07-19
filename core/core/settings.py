@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'shop',  
     'cart',
     'order',
+    'payment',
 
 ]
 
@@ -180,3 +181,8 @@ FRONTEND_URL = 'http://127.0.0.1:8080'
 DEFAULT_FROM_EMAIL = 'rezaei.marjann@gmail.com'
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+
+# payment gateway settings
+MERCHANT_ID = config('MERCHANT_ID', default='4ced0a1e-4ad8-4309-9668-3ea3ae8e8897')
+SANDBOX_MODE = config('SANDBOX_MODE', default=True, cast=bool)

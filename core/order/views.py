@@ -4,11 +4,16 @@ from django.urls import reverse_lazy
 from django.utils import timezone
 from django.http import JsonResponse
 from decimal import Decimal, ROUND_HALF_UP
+from django.shortcuts import redirect
+from django.contrib import messages
 
 from order.permissions import CustomerRequiredMixin
 from order.models import UserAddressModel, OrderModel, OrderItemModel, CouponModel
 from order.forms import CheckOutForm
 from cart.models import CartModel
+from payment.zarinpal_client import ZarinPalSandbox
+from payment.models import PaymentModel
+
 
 
 class OrderCheckOutView(LoginRequiredMixin, CustomerRequiredMixin, FormView):
@@ -25,7 +30,7 @@ class OrderCheckOutView(LoginRequiredMixin, CustomerRequiredMixin, FormView):
         user = self.request.user
         address = form.cleaned_data['address_id']
         coupon = form.cleaned_data.get('coupon')
-
+        
         cart = CartModel.objects.get(user=user)
         order = self.create_order(user, address, coupon)
         self.create_order_items(order, cart)
@@ -39,7 +44,28 @@ class OrderCheckOutView(LoginRequiredMixin, CustomerRequiredMixin, FormView):
 
         cart.items.all().delete()
 
-        return super().form_valid(form)
+        return self.redirect_to_payment(order)
+
+    def redirect_to_payment(self, order):
+        zarinpal = ZarinPalSandbox()
+        response = zarinpal.payment_request(order.total_price)
+
+        if response.get("data") and response["data"].get("code") == 100:
+            authority = response["data"]["authority"]
+
+            payment_obj = PaymentModel.objects.create(
+                authority_id=authority,
+                amount=order.total_price,
+            )
+            order.payment = payment_obj
+            order.save()
+
+            return redirect(zarinpal.generate_payment_url(authority))
+
+        # If payment failed
+        error_message = response.get("errors", {}).get("message", "خطا در اتصال به درگاه پرداخت")
+        messages.error(self.request, error_message)
+        return redirect("order:checkout")
 
     def form_invalid(self, form):
         print("Form errors:", form.errors)
@@ -89,6 +115,8 @@ class OrderCheckOutView(LoginRequiredMixin, CustomerRequiredMixin, FormView):
 class OrderCompletedView(LoginRequiredMixin, CustomerRequiredMixin, TemplateView):
     template_name = "order/completed.html"
 
+class OrderFailedView(LoginRequiredMixin, CustomerRequiredMixin, TemplateView): 
+    template_name = "order/failed.html"
 
 class ValidateCouponView(LoginRequiredMixin, CustomerRequiredMixin, View):
     def post(self, request, *args, **kwargs):
