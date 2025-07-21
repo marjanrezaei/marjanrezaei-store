@@ -16,3 +16,5 @@ djangorestframework-simplejwt
 
 pillow==11.2.1
 faker
+
+requests>=2.0

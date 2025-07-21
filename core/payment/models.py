@@ -16,3 +16,10 @@ class PaymentModel(models.Model):
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    def get_status(self):
+        return{
+            "id":self.status,
+            "title":PaymentStatusType(self.status).name,
+            "label":PaymentStatusType(self.status).label,
+        }

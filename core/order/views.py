@@ -44,28 +44,29 @@ class OrderCheckOutView(LoginRequiredMixin, CustomerRequiredMixin, FormView):
 
         cart.items.all().delete()
 
-        return self.redirect_to_payment(order)
+        return super().form_valid(form)
+        # return self.redirect_to_payment(order)
 
-    def redirect_to_payment(self, order):
-        zarinpal = ZarinPalSandbox()
-        response = zarinpal.payment_request(order.total_price)
+    # def redirect_to_payment(self, order):
+    #     zarinpal = ZarinPalSandbox()
+    #     response = zarinpal.payment_request(order.total_price)
 
-        if response.get("data") and response["data"].get("code") == 100:
-            authority = response["data"]["authority"]
+    #     if response.get("data") and response["data"].get("code") == 100:
+    #         authority = response["data"]["authority"]
 
-            payment_obj = PaymentModel.objects.create(
-                authority_id=authority,
-                amount=order.total_price,
-            )
-            order.payment = payment_obj
-            order.save()
+    #         payment_obj = PaymentModel.objects.create(
+    #             authority_id=authority,
+    #             amount=order.total_price,
+    #         )
+    #         order.payment = payment_obj
+    #         order.save()
 
-            return redirect(zarinpal.generate_payment_url(authority))
+    #         return redirect(zarinpal.generate_payment_url(authority))
 
-        # If payment failed
-        error_message = response.get("errors", {}).get("message", "خطا در اتصال به درگاه پرداخت")
-        messages.error(self.request, error_message)
-        return redirect("order:checkout")
+    #     # If payment failed
+    #     error_message = response.get("errors", {}).get("message", "خطا در اتصال به درگاه پرداخت")
+    #     messages.error(self.request, error_message)
+    #     return redirect("order:checkout")
 
     def form_invalid(self, form):
         print("Form errors:", form.errors)
