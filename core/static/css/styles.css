@@ -1,3 +1,9 @@
  .formatted-price {
-    font-weight: bold;
+   font-weight: bold;
+ }
+
+  .btn-outline-secondary.active{
+    background-color: red !important;
+    color: white !important;
   }
+
