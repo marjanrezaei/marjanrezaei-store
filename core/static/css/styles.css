@@ -7,3 +7,7 @@
     color: white !important;
   }
 
+  #starRating .star {
+  color: #ffc107; /* Bootstrap warning/yellow */
+  transition: color 0.2s;
+}

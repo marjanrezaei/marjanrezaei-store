@@ -69,12 +69,15 @@
     <div class="col-md-5">
       <!-- Rating -->
       <a class="d-flex gap-1 mb-4" href="#reviewSection">
-        <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-        <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-        <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-        <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-        <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-        <span class="ms-1">287 نظر</span>
+        <div class="d-flex gap-1 mb-2">
+          {% for i in "12345" %}
+          {% if i|add:0 <= object.avg_rate %} <span> <i class="bi bi-star-fill text-warning"></i></span>
+            {% else %}
+            <i class="bi bi-star text-warning"></i>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <span class="ms-1">{{object.avg_rate}}/5</span>
       </a>
       <!-- End Rating -->
       {% if request.user.is_authenticated %}
@@ -302,20 +305,21 @@
             <div class="d-flex justify-content-center">
               <div class="d-flex align-items-center">
                 <div class="flex-shrink-0">
-                  <span class="display-4 text-white">4.7</span>
+                  <span class="display-4 text-white">{{object.avg_rate}}/5</span>
                 </div>
 
                 <div class="flex-grow-1 ms-3">
                   <!-- Rating -->
                   <div class="d-flex gap-1 small">
-                    <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-                    <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-                    <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-                    <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-                    <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
+                    {% for i in "12345" %}
+                    {% if i|add:0 <= object.avg_rate %} <span> <i class="bi bi-star-fill text-warning"></i></span>
+                      {% else %}
+                      <i class="bi bi-star text-warning"></i>
+                      {% endif %}
+                      {% endfor %}
                   </div>
                   <!-- End Rating -->
-                  <span class="text-white">287 نظر</span>
+                  <span class="text-white">{{ reviews.count }} نظر</span>
                 </div>
               </div>
             </div>
@@ -435,9 +439,6 @@
         </div>
         <!-- End Ratings -->
       </div>
-
-      <h4 class="display-4 text-primary">77%</h4>
-      <p class="small">مشتریان این محصول را توصیه می کنند</p>
     </div>
     <!-- End Col -->
 
@@ -461,6 +462,57 @@
               </select>
               <!-- End Select -->
             </div>
+
+            <div class="col-sm-auto mb-2 text-center">
+              <button type="button" class="btn btn-primary btn-transition rounded-pill" data-bs-toggle="modal"
+                data-bs-target="#submitReviewModal">
+                ثبت دیدگاه
+              </button>
+            </div>
+
+            <div class="modal fade" id="submitReviewModal" tabindex="-1" aria-labelledby="reviewModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <form method="post" action="{% url 'review:submit-review' %}">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="reviewModalLabel">ثبت دیدگاه</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
+                    </div>
+
+                    <!-- Hidden Product ID -->
+                    <input type="hidden" name="product" value="{{ object.id }}">
+
+                    <div class="modal-body">
+                      <div class="mb-3">
+                        <label class="form-label d-block">امتیاز شما:</label>
+                        <div id="starRating" class="d-flex gap-1 fs-4">
+                          {% for i in "12345" %}
+                          <span class="star" data-value="{{ forloop.counter }}" style="cursor:pointer;">&#9734;</span>
+                          {% endfor %}
+                        </div>
+                        <input type="hidden" name="rate" id="id_rate" value="5">
+                      </div>
+
+                      <!-- 📝 Description -->
+                      <div class="mb-3">
+                        <label for="id_description" class="form-label">متن دیدگاه:</label>
+                        <textarea name="description" id="id_description" rows="4" class="form-control"
+                          placeholder="دیدگاه خود را بنویسید..."></textarea>
+                      </div>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
+                      <button type="submit" class="btn btn-success">ارسال دیدگاه</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+
             <!-- End Col -->
           </div>
           <!-- End Row -->
@@ -470,169 +522,42 @@
         <!-- Comment -->
         <ul class="list-comment list-comment-divider mb-5">
           <!-- Item -->
+          {% for review in reviews %}
           <li class="list-comment-item">
             <div class="d-flex gap-1 mb-3">
-              <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-              <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-              <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-              <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-              <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
+              {% for i in "12345" %}
+              {% if i|add:0 <= object.avg_rate %} <span>
+                <i class="bi bi-star-fill text-warning"></i></span>
+                {% else %}
+                <i class="bi bi-star text-warning"></i>
+                {% endif %}
+                {% endfor %}
             </div>
-
             <!-- Media -->
             <div class="d-flex align-items-center mb-3">
               <div class="flex-shrink-0">
-                <img class="avatar avatar-sm avatar-circle" src="{% static 'img/160x160/img9.jpg' %}"
+                <img class="avatar avatar-sm avatar-circle" src="{{ review.user.user_profile.image.url }}"
                   alt="Image Description">
               </div>
 
-              <div class="flex-grow-1 ms-3">
+              <div class="flex-grow-1 me-3">
                 <div class="d-flex justify-content-between align-items-center">
-                  <h5 class="mb-0">کریستینا کری</h5>
-                  <span class="d-block small text-muted">آوریل 3, 2019</span>
+                  <h5 class="mb-0">{{review.user.user_profile.get_fullname}}</h5>
+                  <span class="d-block small text-muted">{{ review.created_at|date:"Y-m-d h:i" }}</span>
                 </div>
               </div>
             </div>
             <!-- End Media -->
 
             <div class="mb-5">
-              <p>من این کلاه را برای دوست پسرم خریدم، اما بعد متوجه شدم که او به من خیانت کرده است، بنابراین آن را نگه
-                داشتم و دوستش دارم! من همیشه آن را می پوشم و هیچ مشکلی از نظر تناسب وجود ندارد، حتی اگر کلاه "مردانه"
-                است.</p>
+              <p>{{ review.description }}</p>
             </div>
 
-            <div class="mb-2">
-              <span class="text-dark fw-semibold">کریستینا</span>
-              <span>- خرید تایید شده</span>
-            </div>
-
-            <!-- Media -->
-            <div class="d-flex align-items-center">
-              <span class="small me-2">آیا این مفید بود؟</span>
-
-              <div class="d-flex gap-2">
-                <a class="btn btn-white btn-xs" href="javascript:;">
-                  <i class="bi-hand-thumbs-up me-1"></i> Yes <span>(45)</span>
-                </a>
-                <a class="btn btn-white btn-xs" href="javascript:;">
-                  <i class="bi-hand-thumbs-down me-1"></i> نه <span>(21)</span>
-                </a>
-              </div>
-            </div>
-            <!-- End Media -->
           </li>
-          <!-- End Item -->
-
-          <!-- Item -->
-          <li class="list-comment-item">
-            <div class="d-flex gap-1 mb-3">
-              <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-              <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-              <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-              <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-              <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-            </div>
-
-            <!-- Media -->
-            <div class="d-flex align-items-center mb-3">
-              <div class="flex-shrink-0">
-                <img class="avatar avatar-sm avatar-circle" src="{% static 'img/160x160/img1.jpg' %}"
-                  alt="Image Description">
-              </div>
-
-              <div class="flex-grow-1 ms-3">
-                <div class="d-flex justify-content-between align-items-center">
-                  <h5 class="mb-0">هایلی</h5>
-                  <span class="d-block small text-muted">ژانویه 19, 2019</span>
-                </div>
-              </div>
-            </div>
-            <!-- End Media -->
-
-            <div class="mb-5">
-              <p>جنس آن عالی است و کلاه راحت و شیک است.</p>
-            </div>
-
-            <div class="mb-2">
-              <span class="text-dark fw-semibold">هایلی</span>
-              <span>- خرید تایید شده</span>
-            </div>
-
-            <!-- Media -->
-            <div class="d-flex align-items-center">
-              <span class="small me-2">آیا این مفید بود؟</span>
-
-              <div class="d-flex gap-2">
-                <a class="btn btn-white btn-xs" href="javascript:;">
-                  <i class="bi-hand-thumbs-up me-1"></i> بله <span>(2)</span>
-                </a>
-                <a class="btn btn-white btn-xs" href="javascript:;">
-                  <i class="bi-hand-thumbs-down me-1"></i> نه <span>(0)</span>
-                </a>
-              </div>
-            </div>
-            <!-- End Media -->
-          </li>
-          <!-- End Item -->
-
-          <!-- Item -->
-          <li class="list-comment-item">
-            <div class="d-flex gap-1 mb-3">
-              <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-              <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-              <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-              <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-              <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-            </div>
-
-            <!-- Media -->
-            <div class="d-flex align-items-center mb-3">
-              <div class="flex-shrink-0">
-                <img class="avatar avatar-sm avatar-circle" src="{% static 'img/160x160/img8.jpg' %}"
-                  alt="Image Description">
-              </div>
-
-              <div class="flex-grow-1 ms-3">
-                <div class="d-flex justify-content-between align-items-center">
-                  <h5 class="mb-0">کریزل</h5>
-                  <span class="d-block small text-muted">دسامبر 21, 2018</span>
-                </div>
-              </div>
-            </div>
-            <!-- End Media -->
-
-            <div class="mb-5">
-              <p>کلاهی واقعا خوش ساخت به نظر عالی می رسد و به همان خوبی می پوشد. یک پایه عالی در کلاه های توپ.</p>
-            </div>
-
-            <div class="mb-2">
-              <span class="text-dark fw-semibold">کریزل</span>
-              <span>- خرید تایید شده</span>
-            </div>
-
-            <!-- Media -->
-            <div class="d-flex align-items-center">
-              <span class="small me-2">آیا این مفید بود؟</span>
-
-              <div class="d-flex gap-2">
-                <a class="btn btn-white btn-xs" href="javascript:;">
-                  <i class="bi-hand-thumbs-up me-1"></i> بله <span>(0)</span>
-                </a>
-                <a class="btn btn-white btn-xs" href="javascript:;">
-                  <i class="bi-hand-thumbs-down me-1"></i> نه <span>(0)</span>
-                </a>
-              </div>
-            </div>
-            <!-- End Media -->
-          </li>
+          {% endfor %}
           <!-- End Item -->
         </ul>
         <!-- End Comment -->
-
-        <div class="d-sm-flex justify-content-sm-end gap-2">
-          <a class="btn btn-link" href="#">ادامه مطلب <i class="bi-chevron-left small me-1"></i></a>
-          <button type="button" class="btn btn-primary btn-transition rounded-pill">یک بررسی بنویسید</button>
-        </div>
       </div>
     </div>
     <!-- End Col -->
@@ -677,5 +602,31 @@
 {% endblock content %}
 
 {% block extra_js %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const stars = document.querySelectorAll('#starRating .star');
+    const rateInput = document.getElementById('id_rate');
+
+    function updateStars(value) {
+      stars.forEach((star, index) => {
+        star.innerHTML = (index < value) ? '&#9733;' : '&#9734;'; // ★ or ☆
+      });
+    }
+
+    stars.forEach((star, index) => {
+      star.addEventListener('click', () => {
+        const selectedValue = index + 1;
+        rateInput.value = selectedValue;
+        updateStars(selectedValue);
+      });
+
+      star.addEventListener('mouseenter', () => updateStars(index + 1));
+      star.addEventListener('mouseleave', () => updateStars(parseInt(rateInput.value)));
+    });
+
+    updateStars(parseInt(rateInput.value)); // initialize
+  });
+</script>
+
 
 {% endblock extra_js %}

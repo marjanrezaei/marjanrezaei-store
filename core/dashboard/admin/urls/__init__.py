@@ -8,7 +8,9 @@ urlpatterns = [
     path("", include("dashboard.admin.urls.profiles")),  
     path("", include("dashboard.admin.urls.products")),    
     path("", include("dashboard.admin.urls.coupon")),   
-    path("", include("dashboard.admin.urls.orders")),    
+    path("", include("dashboard.admin.urls.orders")), 
+    path("", include("dashboard.admin.urls.reviews")),    
+   
  
 
 ]

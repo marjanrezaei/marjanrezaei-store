@@ -3,3 +3,5 @@ from .generals import *
 from .products import *
 from .coupon import *
 from .orders import *
+from .reviews import *
+

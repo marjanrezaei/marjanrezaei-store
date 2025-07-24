@@ -225,17 +225,19 @@
 
             <div class="card-footer pt-0">
               <!-- Rating -->
-              <a class="d-inline-flex align-items-center mb-3" href="#">
-                <div class="d-flex gap-1 ms-2">
-                  <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-                  <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-                  <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-                  <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-                  <img src="{% static 'svg/illustrations/star.svg' %}" alt="Review rating" width="16">
-                </div>
-                <span class="small">9</span>
-              </a>
+              <div class="d-flex justify-content-center align-items-center mb-2">
+                {% for i in "12345" %}
+                {% if i|add:0 <= object.avg_rate %} <span>
+                  <i class="bi bi-star-fill text-warning"></i></span>
+                  {% else %}
+                  <i class="bi bi-star text-warning"></i>
+                  {% endif %}
+                  {% endfor %}
+                  <span class="ms-2 small">{{object.avg_rate}}/5</span>
+              </div>
               <!-- End Rating -->
+
+
               <button type="button" class="btn btn-outline-primary btn-sm btn-add-to-cart"
                 data-product-id="{{ object.id }}">
                 افزودن به سبد خرید

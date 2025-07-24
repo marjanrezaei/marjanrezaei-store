@@ -10,6 +10,7 @@ from .models import (
     ProductCategoryModel,
     WishlistProductModel,
 )
+from review.models import ReviewModel, ReviewStatusType
 
 
 class ShopProductGridView(ListView):
@@ -69,7 +70,9 @@ class ShopProductDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        product = self.get_object()
         context["is_wished"] = self._is_product_wished()
+        context["reviews"] = ReviewModel.objects.filter(product=product, status=ReviewStatusType.accepted.value)
         return context
 
     def _is_product_wished(self):
