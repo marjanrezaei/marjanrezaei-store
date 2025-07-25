@@ -18,3 +18,7 @@ pillow==11.2.1
 faker
 
 requests>=2.0
+
+dj-database-url
+gunicorn
+psycopg2-binary

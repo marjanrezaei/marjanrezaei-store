@@ -1,0 +1,51 @@
+app = "marjanrezaei-shop"
+
+# مقداردهی اولیه برای سرور
+kill_signal = "SIGINT"
+kill_timeout = 5
+
+[build]
+  # اگر Dockerfile توی ریشه ریپوزیتوریه، همین خط کافیه:
+  dockerfile = "./Dockerfile"
+
+[env]
+  # متغیرهای محیطی به شکل اختیاری
+  SECRET_KEY = "django-insecure-#0!wdyvg^x++@u^wfh^^b3&c6@z8=&^nz&^k*n3hh=(a&p9ind)"
+  DEBUG = "False"
+  ALLOWED_HOSTS = "marjanrezaei-shop.fly.dev"
+  DATABASE_URL = "postgres://postgres:postgres@db.internal:5432/postgres"
+  CELERY_BROKER_URL = "redis://redis.internal:6379/0"
+  CELERY_RESULT_BACKEND = "redis://redis.internal:6379/0"
+
+[deploy]
+  release_command = "python manage.py migrate"
+
+[[services]]
+  internal_port = 8000
+  protocol = "tcp"
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [services.tcp_checks]
+    interval = 10000
+    timeout = 2000
+    grace_period = "10s"
+    restart_limit = 6
+
+[[mounts]]
+  source = "static_data"
+  destination = "/app/staticfiles"
+
+[[mounts]]
+  source = "media_data"
+  destination = "/app/media"

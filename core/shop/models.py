@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models 
 from decimal import Decimal
 from django.core.validators import MinValueValidator, MaxValueValidator
 
@@ -10,6 +10,7 @@ class ProductStatusType(models.IntegerChoices):
 class ProductCategoryModel(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(allow_unicode=True)
+    # parent = models.ForeignKey('self',on_delete=models.SET_NULL, null=True, related_name="category_child")
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -20,6 +21,7 @@ class ProductCategoryModel(models.Model):
 class ProductModel(models.Model):
     user = models.ForeignKey("accounts.User", on_delete=models.PROTECT)
     category = models.ManyToManyField(ProductCategoryModel)
+    # category = models.ForeignKey(ProductCategoryModel, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=255)
     slug = models.SlugField(allow_unicode=True)
     image = models.ImageField(default="/default/product-image.png", upload_to="product/img/")
