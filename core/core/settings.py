@@ -15,8 +15,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-#0!wdyvg^x++@u^wfh^^b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-# Hostnames for your site (adjust for your Fly.io app domain)
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')], default='*')
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1,localhost', cast=lambda v: [s.strip() for s in v.split(',')])
 
 # CSRF trusted origins (اضافه کردن دامنه‌های fly.io)
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=lambda v: [s.strip() for s in v.split(',')], default='https://*.fly.dev')
@@ -75,7 +74,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-# Database using dj-database-url for compatibility with Fly.io DATABASE_URL
 DATABASES = {
     'default': dj_database_url.config(
         default=config('DATABASE_URL', default='postgres://postgres:postgres@db:5432/postgres')
@@ -135,6 +133,7 @@ LOGOUT_REDIRECT_URL = '/'
 # Celery settings
 CELERY_BROKER_URL = config('CELERY_BROKER_URL', default="redis://redis:6379/0")
 CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND', default="redis://redis:6379/0")
+
 
 FRONTEND_URL = config('FRONTEND_URL', default='http://127.0.0.1:8080')
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='rezaei.marjann@gmail.com')

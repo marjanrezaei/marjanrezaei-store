@@ -15,6 +15,6 @@ COPY ./core .
 
 RUN python manage.py collectstatic --noinput
 
-EXPOSE 8080
+EXPOSE 8000
 
 CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8080"]

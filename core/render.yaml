@@ -2,8 +2,15 @@ services:
   - type: web
     name: marjanrezaei-store
     env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn core.wsgi:application --bind 0.0.0.0:8000"
+    plan: free
+    region: oregon
+    buildCommand: |
+      pip install -r requirements.txt
+      cd core
+      python manage.py migrate
+      python manage.py collectstatic --noinput
+      python create_superuser.py
+    startCommand: cd core && gunicorn core.wsgi:application --bind 0.0.0.0:8000
     envVars:
       - key: DEBUG
         value: "False"
@@ -15,8 +22,39 @@ services:
           name: marjan-db
           property: connectionString
           key: DATABASE_URL
+      - key: CELERY_BROKER_URL
+        value: rediss://default:AXvtAAIjcDFlM2VkY2EyYTE3OGI0NzVkOWEwNmQxOTQ3NWQzNDIxZXAxMA@obliging-pipefish-31725.upstash.io:6379
+      - key: CELERY_RESULT_BACKEND
+        value: rediss://default:AXvtAAIjcDFlM2VkY2EyYTE3OGI0NzVkOWEwNmQxOTQ3NWQzNDIxZXAxMA@obliging-pipefish-31725.upstash.io:6379
+      - key: EMAIL_BACKEND
+        value: django.core.mail.backends.smtp.EmailBackend
+      - key: EMAIL_HOST
+        value: smtp.gmail.com
+      - key: EMAIL_PORT
+        value: "587"
+      - key: EMAIL_USE_TLS
+        value: "True"
+      - key: EMAIL_USE_SSL
+        value: "False"
+      - key: EMAIL_HOST_USER
+        value: your_email@gmail.com
+      - key: EMAIL_HOST_PASSWORD
+        value: your_email_app_password
+      - key: DEFAULT_FROM_EMAIL
+        value: your_email@gmail.com
+      - key: ALLOWED_HOSTS
+        value: marjanzei-store.onrender.com,127.0.0.1,localhost
+      - key: CSRF_TRUSTED_ORIGINS
+        value: https://marjanzei-store.onrender.com
+      - key: FRONTEND_URL
+        value: https://marjanzei-store.onrender.com
+      - key: MERCHANT_ID
+        value: 4ced0a1e-4ad8-4309-9668-3ea3ae8e8897
+      - key: SANDBOX_MODE
+        value: "True"
 
 databases:
   - name: marjan-db
     databaseName: marjan
     user: marjan
+
