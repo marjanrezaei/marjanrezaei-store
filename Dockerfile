@@ -3,18 +3,19 @@ FROM python:3.10-slim-buster
 LABEL maintainer="rezaei.marjann@gmail.com"
 
 ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY ./requirements.txt .
+COPY requirements.txt .
 
 RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
+    pip install --no-cache-dir -r requirements.txt
 
-COPY ./core .
+COPY . .
 
-RUN python manage.py collectstatic --noinput
+RUN python core/manage.py collectstatic --noinput
 
 EXPOSE 8000
 
-CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8080"]
+CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8000"]

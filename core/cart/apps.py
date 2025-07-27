@@ -1,3 +1,4 @@
+import sys
 from django.apps import AppConfig
 
 class CartConfig(AppConfig):
@@ -5,4 +6,6 @@ class CartConfig(AppConfig):
     name = 'cart'
 
     def ready(self):
-        import cart.signals
+        if 'runserver' in sys.argv or 'gunicorn' in sys.argv:
+            import cart.signals
+

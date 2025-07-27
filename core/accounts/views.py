@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.timezone import now
 from datetime import timedelta
 import json
-from .tasks import send_reset_email  # Celery task
+from .tasks import send_reset_email 
 from .forms import AuthenticationForm
 
 User = get_user_model()

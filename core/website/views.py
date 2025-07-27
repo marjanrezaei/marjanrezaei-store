@@ -1,20 +1,39 @@
-from django.views.generic import TemplateView, FormView
-from django.core.mail import send_mail
+from django.views.generic import TemplateView, FormView, View
+from django.core.management import call_command
+from django.http import HttpResponse, HttpResponseNotAllowed
+from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.shortcuts import redirect
-from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+
 from .forms import NewsLetterForm, ContactForm
+from django.core.mail import send_mail
 
 
-# Create your views here.
+def ping_view(request):
+    return HttpResponse("pong", status=200)
+
+
+class SuperuserRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_superuser
+
+
+class MigrateView(SuperuserRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        try:
+            call_command('migrate', interactive=False)
+            return HttpResponse("Migrations completed successfully!")
+        except Exception as e:
+            return HttpResponse(f"Error during migration: {e}")
+        
 
 class IndexView(TemplateView):
     template_name = "website/index.html"
-    
-    
+
+
 class AboutView(TemplateView):
     template_name = "website/about.html"
-    
+
 
 class ContactView(FormView):
     template_name = "website/contact.html"
@@ -24,13 +43,16 @@ class ContactView(FormView):
     def form_valid(self, form):
         send_mail(
             subject=f"Contact Request from {form.cleaned_data['first_name']} {form.cleaned_data['last_name']}",
-            message=f"Email: {form.cleaned_data['email']}\nPhone: {form.cleaned_data['phone_number']}\nMessage: {form.cleaned_data['details']}",
+            message=(
+                f"Email: {form.cleaned_data['email']}\n"
+                f"Phone: {form.cleaned_data['phone_number']}\n"
+                f"Message: {form.cleaned_data['details']}"
+            ),
             from_email=form.cleaned_data['email'],
             recipient_list=["your_email@example.com"],
         )
         form.save()
         messages.success(self.request, "پیام شما با موفقیت ارسال شد!")
-        # Redirect user back to contact page
         return redirect(self.success_url)
 
     def form_invalid(self, form):
@@ -40,13 +62,13 @@ class ContactView(FormView):
 
 class NewsletterView(FormView):
     form_class = NewsLetterForm
-    success_url = '/'  # Redirect after successful form submission
+    success_url = '/'
 
     def form_valid(self, form):
-        form.save()  # Save the form data
+        form.save()
         messages.success(self.request, "ایمیل شما با موفقعیت ثبت شد.")
         return redirect(self.success_url)
 
     def form_invalid(self, form):
         messages.error(self.request, "لطفا یک ایمیل معتبر وارد نمایید.")
-        return HttpResponseRedirect(self.success_url)  # Redirect on invalid form
+        return redirect(self.success_url)

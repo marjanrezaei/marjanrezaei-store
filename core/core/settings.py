@@ -1,24 +1,21 @@
-"""
-Django settings for core project.
-"""
-
 from pathlib import Path
 from decouple import config
 import dj_database_url
 import socket
+import os
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-#0!wdyvg^x++@u^wfh^^b3&c6@z8=&^nz&^k*n3hh=(a&p9ind')
+SECRET_KEY = config('SECRET_KEY', default='090ed2cf54d24ae9de04717e789850ce')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1,localhost', cast=lambda v: [s.strip() for s in v.split(',')])
 
-# CSRF trusted origins (اضافه کردن دامنه‌های fly.io)
-CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=lambda v: [s.strip() for s in v.split(',')], default='https://*.fly.dev')
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=lambda v: [s.strip() for s in v.split(',')], default='https://marjanrezaei-store.onrender.com')
 
 # Application definition
 INSTALLED_APPS = [
@@ -28,7 +25,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar',
     'mail_templated',
     'django_celery_beat',
     'website',
@@ -45,7 +41,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -74,10 +69,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=config('DATABASE_URL', default='postgresql://postgres:postgres@db:5432/postgres')
+#     )
+# }
+
 DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL', default='postgres://postgres:postgres@db:5432/postgres')
-    )
+    "default": dj_database_url.config(default=os.environ.get("DATABASE_URL"))
 }
 
 # Password validation
@@ -115,14 +114,8 @@ EMAIL_PORT = config('EMAIL_PORT', default=25, cast=int)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 
-# Debug Toolbar settings (فعال فقط در حالت DEBUG)
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ['127.0.0.1']
-
-DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,
-    'INTERCEPT_REDIRECTS': False,
-}
 
 # Custom user model
 AUTH_USER_MODEL = 'accounts.User'
@@ -135,7 +128,7 @@ CELERY_BROKER_URL = config('CELERY_BROKER_URL', default="redis://redis:6379/0")
 CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND', default="redis://redis:6379/0")
 
 
-FRONTEND_URL = config('FRONTEND_URL', default='http://127.0.0.1:8080')
+FRONTEND_URL = config('FRONTEND_URL', default='http://127.0.0.1:8000')
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='rezaei.marjann@gmail.com')
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'

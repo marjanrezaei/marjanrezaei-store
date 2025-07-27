@@ -190,16 +190,15 @@
           <div class="card card-bordered shadow-none text-center h-100">
             <div class="card-pinned">
               <img class="card-img-top" src="{{object.image.url}}" alt="Image Description">
+
+              {% if request.user.is_authenticated %}
               <div class="card-pinned-top-end">
-                {% if request.user.is_authenticated %}
-                <button type="button"
-                  class="btn btn-outline-secondary btn-xs btn-icon rounded-circle {% if object.id in wishlist_items %} active {% endif %} "
-                  data-bs-toggle="tooltip" data-bs-placement="top" title="افزودن به علایق"
-                  onclick="addToWishlist(this,`{{object.id}}`)">
+                <button type="button" class="btn btn-outline-secondary btn-xs btn-icon rounded-circle"
+                  data-bs-toggle="tooltip" data-bs-placement="top" title="افزودن به علایق">
                   <i class="bi-heart"></i>
                 </button>
-                {% endif %}
               </div>
+              {% endif %}
             </div>
 
             <div class="card-body">
@@ -236,8 +235,6 @@
                   <span class="ms-2 small">{{object.avg_rate}}/5</span>
               </div>
               <!-- End Rating -->
-
-
               <button type="button" class="btn btn-outline-primary btn-sm btn-add-to-cart"
                 data-product-id="{{ object.id }}">
                 افزودن به سبد خرید
@@ -372,6 +369,7 @@
 {% endblock content %}
 
 {% block extra_js %}
+
 <script>
   $(document).ready(function () {
     let current_url_params = new URLSearchParams(window.location.search)
@@ -402,4 +400,6 @@
     window.location.href = new_url
   });
 </script>
+
+
 {% endblock extra_js %}
