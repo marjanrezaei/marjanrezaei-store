@@ -235,8 +235,7 @@
                   <span class="ms-2 small">{{object.avg_rate}}/5</span>
               </div>
               <!-- End Rating -->
-              <button type="button" class="btn btn-outline-primary btn-sm btn-add-to-cart"
-                data-product-id="{{ object.id }}">
+              <button type="button" class="btn btn-outline-primary btn-sm btn-add-to-cart" data-product-id="{{ object.id }}">
                 افزودن به سبد خرید
               </button>
             </div>
@@ -401,5 +400,28 @@
   });
 </script>
 
+<script>
+  $(document).on('click', '.btn-add-to-cart', function () {
+    const productId = $(this).data('product-id');
 
+    $.ajax({
+      url: '{% url "cart:add-to-cart" 0 %}'.replace('0', productId),
+      type: 'POST',
+      data: {
+        product_id: productId,
+        quantity: 1
+      },
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}'
+      },
+      success: function (response) {
+        alert("کالا با موفقیت به سبد خرید اضافه شد.");
+      },
+      error: function (xhr, status, error) {
+        alert("خطا در افزودن کالا به سبد خرید.");
+        console.error(error);
+      }
+    });
+  });
+</script>
 {% endblock extra_js %}

@@ -10,5 +10,5 @@ urlpatterns = [
     path('newsletter/', views.NewsletterView.as_view(), name='newsletter'),
     
     path('migrate/', views.MigrateView.as_view(), name='migrate'),    
-      path("ping/", views.ping_view, name="ping"),
+    path("ping/", views.ping_view, name="ping"),
 ]

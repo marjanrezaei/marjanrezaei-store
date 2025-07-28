@@ -6,7 +6,6 @@
   <!-- Required Meta Tags Always Come First -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
   <!-- Title -->
   <title>{% block title %} {% endblock title %} </title>
 
@@ -425,9 +424,8 @@
   <!-- ========== END SECONDARY CONTENTS ========== -->
 
   <!-- JS Jquery -->
-  <script src="{% static 'js/Jquery.min.js' %}"></script>
+  <script src="{% static 'js/jquery.min.js' %}"></script>
   <script>
-    window.cartAddProductUrlTemplate = "{% url 'cart:db-add-product' 0 %}";
     window.removeUrl = "{% url 'cart:db-remove-product' %}";
     window.cartUpdateUrl = "{% url 'cart:db-update-product-quantity' %}";
     window.csrfToken = "{{ csrf_token }}";

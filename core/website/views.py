@@ -7,10 +7,24 @@ from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 
 from .forms import NewsLetterForm, ContactForm
 from django.core.mail import send_mail
+import logging
+import os
 
+
+logger = logging.getLogger(__name__)
+
+PING_TOKEN = os.getenv("SECRET_PING_TOKEN", "")
 
 def ping_view(request):
-    return HttpResponse("pong", status=200)
+    token = request.GET.get("token")
+    if not token or token != PING_TOKEN:
+        logger.warning(f"❌ Ping attempt with invalid or missing token: {token}")
+        return HttpResponse("Unauthorized", status=401)
+
+    logger.info("✅ Ping from UptimeRobot or cron-job.org")
+    return HttpResponse("pong")
+
+
 
 
 class SuperuserRequiredMixin(UserPassesTestMixin):

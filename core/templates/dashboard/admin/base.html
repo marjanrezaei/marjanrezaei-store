@@ -374,7 +374,6 @@
   <!-- JS Jquery -->
   <script src="{% static 'js/Jquery.min.js' %}"></script>
   <script>
-    window.cartAddProductUrlTemplate = "{% url 'cart:db-add-product' 0 %}";
     window.removeUrl = "{% url 'cart:db-remove-product' %}";
     window.cartUpdateUrl = "{% url 'cart:db-update-product-quantity' %}";
     window.csrfToken = "{{ csrf_token }}";

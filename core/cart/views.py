@@ -7,6 +7,7 @@ from django.core.exceptions import ValidationError
 from shop.models import ProductModel
 from .cart import CartDB
 from .models import CartModel
+from .mixins import EnsureCartMixin
 
 
 class CartActionView(View):
@@ -69,13 +70,10 @@ class UpdateProductQuantityView(CartActionView):
             raise ValidationError("تعداد محصول الزامی است.")
         qty = int(quantity)
         self.cart.update_product_quantity(product_id, qty)
+        
 
-
-class CartSummaryView(TemplateView):
+class CartSummaryView(EnsureCartMixin, TemplateView):
     template_name = "cart/cart-summary.html"
-
-    def get_cart(self):
-        return CartDB(self.request.cart)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -86,3 +84,4 @@ class CartSummaryView(TemplateView):
             "total_payment_price": cart.get_total_payment_amount(),
         })
         return context
+
