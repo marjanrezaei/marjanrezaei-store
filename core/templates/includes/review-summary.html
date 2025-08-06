@@ -1,0 +1,25 @@
+{% load shop_tags %}
+
+<h3>تجزیه رتبه</h3>
+<div class="d-grid gap-1">
+  {% for star in "54321" %}
+    {% with rating=rating_data|dict_get:star %}
+      <a class="row align-items-center" href="#" style="max-width: 25rem;">
+        <div class="col-3">
+          <span class="text-dark">{{ star }} ستاره</span>
+        </div>
+        <div class="col-7">
+          <div class="progress">
+            <div class="progress-bar" role="progressbar"
+                 style="width: {{ rating.percent }}%;"
+                 aria-valuenow="{{ rating.percent }}"
+                 aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+        <div class="col-2 text-end">
+          <span>{{ rating.count }}</span>
+        </div>
+      </a>
+    {% endwith %}
+  {% endfor %}
+</div>
