@@ -5,8 +5,14 @@ services:
     plan: free
     region: oregon
     startCommand: |
+      mkdir -p /media/profile
+      chmod -R 775 /media
       python manage.py collectstatic --noinput
       gunicorn core.wsgi:application --bind 0.0.0.0:8000
+    disks:
+      - name: media
+        mountPath: /media
+        sizeGB: 1
     envVars:
       - key: DEBUG
         value: "False"

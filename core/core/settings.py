@@ -96,9 +96,12 @@ USE_TZ = True
 # Static and media files
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+if DEBUG:
+    MEDIA_ROOT = BASE_DIR / 'media' 
+else:
+    MEDIA_ROOT = '/media'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-MEDIA_ROOT = BASE_DIR / 'media'
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
