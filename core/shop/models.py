@@ -25,6 +25,7 @@ class ProductModel(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(allow_unicode=True)
     image = models.ImageField(default="/default/product-image.png", upload_to="product/img/")
+    image_url = models.URLField(blank=True, null=True)
     description = models.TextField()
     breif_description = models.TextField(null=True, blank=True)
     stock = models.PositiveIntegerField(default=0)

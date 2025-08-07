@@ -13,7 +13,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import FieldError
 
 from shop.models import ProductModel, ProductCategoryModel
-
+from core.utils.liara_upload import upload_to_liara
 
 
 class AdminProductListView(AdminRequiredMixin, LoginRequiredMixin, ListView):
@@ -54,25 +54,49 @@ class AdminProductCreateView(AdminRequiredMixin, LoginRequiredMixin, SuccessMess
     template_name = "dashboard/admin/products/product-create.html"
     queryset = ProductModel.objects.all()
     form_class = ProductForm
-    success_message = "ایجاد محصول با  موفقیت انجام شد"
-    
+    success_message = "ایجاد محصول با موفقیت انجام شد"
+
     def form_valid(self, form):
         form.instance.user = self.request.user
-        super().form_valid(form)
-        return redirect(reverse_lazy("dashboard:admin:product-edit", kwargs={"pk": form.instance.pk}))
-    
+        image_file = self.request.FILES.get("image")
+
+        if image_file:
+            filename = f"{form.instance.slug}_{image_file.name}"
+            image_url = upload_to_liara(image_file, filename, folder="products")
+            form.instance.image_url = image_url
+            form.instance.image = None  # جلوگیری از ذخیره فایل روی سرور
+
+        return super().form_valid(form)
+
     def get_success_url(self):
-        return reverse_lazy("dashboard:admin:product-list") 
-    
+        return reverse_lazy("dashboard:admin:product-edit", kwargs={"pk": self.object.pk})
+
 
 class AdminProductEditView(AdminRequiredMixin, LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = "dashboard/admin/products/product-edit.html"
     queryset = ProductModel.objects.all()
     form_class = ProductForm
-    success_message = "ویرایش محصول با  موفقیت انجام شد"
-    
+    success_message = "ویرایش محصول با موفقیت انجام شد"
+
+    def form_valid(self, form):
+        product = form.instance
+        image_file = self.request.FILES.get("image")
+
+        if image_file:
+            filename = f"{product.id}_{image_file.name}"
+            host = self.request.get_host()
+
+            if "onrender.com" in host:
+                image_url = upload_to_liara(image_file, filename, folder="products")
+                product.image_url = image_url
+                product.image = None
+            else:
+                product.image.save(filename, image_file)
+
+        return super().form_valid(form)
+
     def get_success_url(self):
-        return reverse_lazy("dashboard:admin:product-edit", kwargs={"pk":self.get_object().pk})
+        return reverse_lazy("dashboard:admin:product-edit", kwargs={"pk": self.object.pk})
 
 
 class AdminProductDeleteView(AdminRequiredMixin, LoginRequiredMixin, SuccessMessageMixin, DeleteView):

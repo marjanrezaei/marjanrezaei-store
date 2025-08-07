@@ -189,7 +189,13 @@
           <!-- Card -->
           <div class="card card-bordered shadow-none text-center h-100">
             <div class="card-pinned">
-              <img class="card-img-top" src="{{object.image.url}}" alt="Image Description">
+              {% if object.image_url %}
+              <img class="card-img" src="{{ object.image_url }}" alt="{{ object.title }}">
+              {% elif object.image %}
+              <img class="card-img" src="{{ object.image.url }}" alt="{{ object.title }}">
+              {% else %}
+              <img src="{% static 'img/default.jpg' %}" alt="No image">
+              {% endif %}
 
               {% if request.user.is_authenticated %}
               <div class="card-pinned-top-end">
@@ -235,7 +241,8 @@
                   <span class="ms-2 small">{{object.avg_rate}}/5</span>
               </div>
               <!-- End Rating -->
-              <button type="button" class="btn btn-outline-primary btn-sm btn-add-to-cart" data-product-id="{{ object.id }}">
+              <button type="button" class="btn btn-outline-primary btn-sm btn-add-to-cart"
+                data-product-id="{{ object.id }}">
                 افزودن به سبد خرید
               </button>
             </div>

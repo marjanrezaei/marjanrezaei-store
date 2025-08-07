@@ -32,7 +32,7 @@
           {% csrf_token %}
           <!-- Avatar -->
           <label class="avatar avatar-xl avatar-circle" for="avatarUploader">
-            <img id="avatarImg" class="avatar-img" src="{{request.user.user_profile.image.url}}"
+            <img id="avatarImg" class="avatar-img" src="{{request.user.user_profile.get_image}}"
               alt="Image Description">
           </label>
 

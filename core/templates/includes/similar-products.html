@@ -13,7 +13,14 @@
       <!-- Card -->
       <div class="card card-bordered shadow-none text-center h-100">
         <div class="card-pinned">
-          <img class="card-img-top" src="{{similar_product.image.url}}" alt="Image Description">
+          {% if similar_product.image_url %}
+          <img class="card-img-top" src="{{ similar_product.image_url }}" alt="{{ similar_product.title }}">
+          {% elif similar_product.image %}
+          <img class="card-img-top" src="{{ similar_product.image.url }}" alt="{{ similar_product.title }}">
+          {% else %}
+          <img src="{% static 'img/default.jpg' %}" alt="No image">
+          {% endif %}
+
           {% if request.user.is_authenticated %}
           <div class="card-pinned-top-end">
             <button type="button"

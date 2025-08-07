@@ -38,3 +38,4 @@ class CustomerProfileEditForm(forms.ModelForm):
         self.fields['last_name'].widget.attrs['class'] = 'form-control'
         self.fields['phone_number'].widget.attrs['class'] = 'form-control text-center'
      
+     

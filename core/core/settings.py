@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY', default='090ed2cf54d24ae9de04717e789850ce')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1,localhost', cast=lambda v: [s.strip() for s in v.split(',')])
 
@@ -139,3 +139,11 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 # Payment gateway settings
 MERCHANT_ID = config('MERCHANT_ID', default='4ced0a1e-4ad8-4309-9668-3ea3ae8e8897')
 SANDBOX_MODE = config('SANDBOX_MODE', default=True, cast=bool)
+
+# liara 
+
+LIARA_OBJECT_STORAGE = {
+    'bucket_name': 'marjan',
+    'aws_access_key_id': config('LIARA_ACCESS_KEY'),
+    'aws_secret_access_key': config('LIARA_SECRET_KEY'),
+}

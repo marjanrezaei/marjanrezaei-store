@@ -37,4 +37,8 @@ class AdminProfileEditForm(forms.ModelForm):
         self.fields['first_name'].widget.attrs['class'] = 'form-control'
         self.fields['last_name'].widget.attrs['class'] = 'form-control'
         self.fields['phone_number'].widget.attrs['class'] = 'form-control text-center'
-     
+
+class AdminProfileImageForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['image', 'image_url']

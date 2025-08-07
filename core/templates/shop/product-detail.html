@@ -17,7 +17,15 @@
               <!-- Slide -->
               <div class="swiper-slide">
                 <div class="card card-bordered shadow-none">
-                  <img class="card-img" src="{{object.image.url}}" alt="Image Description">
+                  {% if object.image_url %}
+                  <img src="{{ object.image_url }}" alt="{{ object.title }}">
+                  {% elif object.image %}
+                  <img src="{{ object.image.url }}" alt="{{ object.title }}">
+                  {% else %}
+                  <img src="{% static 'img/default.jpg' %}" alt="No image">
+                  {% endif %}
+                  
+
                 </div>
               </div>
               <!-- End Slide -->
@@ -427,7 +435,7 @@
             <!-- Media -->
             <div class="d-flex align-items-center mb-3">
               <div class="flex-shrink-0">
-                <img class="avatar avatar-sm avatar-circle" src="{{ review.user.user_profile.image.url }}"
+                <img class="avatar avatar-sm avatar-circle" src="{{ review.user.user_profile.get_image }}"
                   alt="Image Description">
               </div>
 

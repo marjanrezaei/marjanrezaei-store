@@ -89,7 +89,7 @@
               {% if request.user.is_authenticated %}
               <a class="btn btn-ghost-secondary btn-icon" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="avatar avatar-sm avatar-circle">
-                  <img class="avatar-img" src="{{request.user.user_profile.image.url}}" alt="Image Description">
+                  <img class="avatar-img" src="{{request.user.user_profile.get_image}}" alt="Image Description">
                 </span>
               </a>
               <ul class="dropdown-menu">
