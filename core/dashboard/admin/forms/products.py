@@ -1,8 +1,13 @@
-from django.forms import ModelForm
+from django import forms
 from shop.models import ProductModel
 
+class ProductForm(forms.ModelForm):
+    extra_images = forms.FileField(
+        widget=forms.ClearableFileInput(attrs={'multiple': True, 'class': 'form-control'}),
+        required=False,
+        label="تصاویر اضافی"
+    )
 
-class ProductForm(ModelForm):
     class Meta:
         model = ProductModel
         fields = [

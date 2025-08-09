@@ -12,7 +12,7 @@ from django.shortcuts import redirect
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import FieldError
 
-from shop.models import ProductModel, ProductCategoryModel
+from shop.models import ProductModel, ProductCategoryModel, ProductImageModel
 from core.utils.liara_upload import upload_to_liara
 
 
@@ -64,9 +64,17 @@ class AdminProductCreateView(AdminRequiredMixin, LoginRequiredMixin, SuccessMess
             filename = f"{form.instance.slug}_{image_file.name}"
             image_url = upload_to_liara(image_file, filename, folder="products")
             form.instance.image_url = image_url
-            form.instance.image = None  # جلوگیری از ذخیره فایل روی سرور
+            form.instance.image = None  
 
-        return super().form_valid(form)
+        response = super().form_valid(form)
+
+        # ذخیره تصاویر اضافی
+        for extra_file in self.request.FILES.getlist("extra_images"):
+            filename = f"{form.instance.slug}_{extra_file.name}"
+            image_url = upload_to_liara(extra_file, filename, folder="products/extra")
+            ProductImageModel.objects.create(product=form.instance, file=image_url)
+
+        return response
 
     def get_success_url(self):
         return reverse_lazy("dashboard:admin:product-edit", kwargs={"pk": self.object.pk})
@@ -80,20 +88,33 @@ class AdminProductEditView(AdminRequiredMixin, LoginRequiredMixin, SuccessMessag
 
     def form_valid(self, form):
         product = form.instance
-        image_file = self.request.FILES.get("image")
+        host = self.request.get_host()
 
-        if image_file:
-            filename = f"{product.id}_{image_file.name}"
-            host = self.request.get_host()
-
+        # ذخیره تصویر اصلی محصول
+        main_image = self.request.FILES.get("image")
+        if main_image:
+            filename = f"{product.id}_{main_image.name}"
             if "onrender.com" in host:
-                image_url = upload_to_liara(image_file, filename, folder="products")
+                image_url = upload_to_liara(main_image, filename, folder="products")
                 product.image_url = image_url
                 product.image = None
             else:
-                product.image.save(filename, image_file)
+                product.image.save(filename, main_image)
 
-        return super().form_valid(form)
+        response = super().form_valid(form)
+
+        # ذخیره تصاویر اضافی محصول
+        extra_images = self.request.FILES.getlist("extra_images")
+        for extra_file in extra_images:
+            filename = f"{product.id}_extra_{extra_file.name}"
+            if "onrender.com" in host:
+                image_url = upload_to_liara(extra_file, filename, folder="products/extra")
+                ProductImageModel.objects.create(product=product, file=image_url)
+            else:
+                image_instance = ProductImageModel(product=product)
+                image_instance.file.save(filename, extra_file)
+
+        return response
 
     def get_success_url(self):
         return reverse_lazy("dashboard:admin:product-edit", kwargs={"pk": self.object.pk})
@@ -104,4 +125,11 @@ class AdminProductDeleteView(AdminRequiredMixin, LoginRequiredMixin, SuccessMess
     queryset = ProductModel.objects.all()
     success_url = reverse_lazy("dashboard:admin:product-list")
     success_message = "حذف محصول با  موفقیت انجام شد"  
+
     
+class AdminProductImageDeleteView(AdminRequiredMixin, LoginRequiredMixin, DeleteView):
+    model = ProductImageModel
+    success_message = "تصویر حذف شد"
+
+    def get_success_url(self):
+        return reverse_lazy("dashboard:admin:product-edit", kwargs={"pk": self.object.product.pk})

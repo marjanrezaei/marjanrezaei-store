@@ -9,66 +9,52 @@
   <div class="row">
     <div class="col-md-7 mb-7 mb-md-0">
       <div class="pe-md-4">
-        <div class="card-pinned">
+        <div class="card-pinned position-relative">
+
           <!-- Swiper Main Slider -->
-          <div class="js-swiper-shop-product swiper">
+          <div class="swiper js-swiper-shop-product mb-4">
             <div class="swiper-wrapper">
 
-              <!-- Slide -->
+              {% if object.image_url or object.image %}
               <div class="swiper-slide">
-                <div class="card card-bordered shadow-none">
-                  {% if object.image_url %}
-                  <img src="{{ object.image_url }}" alt="{{ object.title }}">
-                  {% elif object.image %}
-                  <img src="{{ object.image.url }}" alt="{{ object.title }}">
-                  {% else %}
-                  <img src="{% static 'img/default.jpg' %}" alt="No image">
-                  {% endif %}
-
-
-                </div>
+                <img src="{{ object.image_url|default:object.image.url }}" class="img-fluid rounded w-100"
+                  alt="{{ object.title }}">
               </div>
-              <!-- End Slide -->
+              {% endif %}
 
+              {% for image in object.extra_images.all %}
+              <div class="swiper-slide">
+                <img src="{{ image.url|default:image.file.url }}" class="img-fluid rounded w-100"
+                  alt="تصویر {{ forloop.counter }}">
+              </div>
+              {% endfor %}
             </div>
 
-            <!-- Arrows -->
+            <!-- Navigation Buttons -->
             <div class="js-swiper-shop-product-button-next swiper-button-next"></div>
             <div class="js-swiper-shop-product-button-prev swiper-button-prev"></div>
           </div>
-          <!-- End Swiper Main Slider -->
 
-          <!-- Swiper Thumb Slider -->
-          <div class="position-absolute bottom-0 end-0 start-0 zi-1 p-4">
-            <div class="js-swiper-shop-product-thumb swiper" style="max-width: 15rem;">
-              <div class="swiper-wrapper">
-                <!-- Slide -->
-                <div class="swiper-slide">
-                  <a class="avatar avatar-circle" href="javascript:;">
-                    <img class="avatar-img" src="{% static 'img/160x160/img11.jpg' %}" alt="Image Description">
-                  </a>
-                </div>
-                <!-- End Slide -->
+          <!-- Swiper Thumbnail Slider -->
+          <div class="swiper js-swiper-shop-product-thumb px-2" style="max-width: 100%; overflow: hidden;">
+            <div class="swiper-wrapper">
 
-                <!-- Slide -->
-                <div class="swiper-slide">
-                  <a class="avatar avatar-circle" href="javascript:;">
-                    <img class="avatar-img" src="{% static 'img/160x160/img12.jpg' %}" alt="Image Description">
-                  </a>
-                </div>
-                <!-- End Slide -->
-
-                <!-- Slide -->
-                <div class="swiper-slide">
-                  <a class="avatar avatar-circle" href="javascript:;">
-                    <img class="avatar-img" src="{% static 'img/160x160/img13.jpg' %}" alt="Image Description">
-                  </a>
-                </div>
-                <!-- End Slide -->
+              {% if object.image_url or object.image %}
+              <div class="swiper-slide">
+                <img src="{{ object.image_url|default:object.image.url }}" class="img-thumbnail rounded-circle"
+                  alt="تصویر اصلی">
               </div>
+              {% endif %}
+
+              {% for image in object.extra_images.all %}
+              <div class="swiper-slide">
+                <img src="{{ image.url|default:image.file.url }}" class="img-thumbnail rounded-circle"
+                  alt="تصویر {{ forloop.counter }}">
+              </div>
+              {% endfor %}
             </div>
           </div>
-          <!-- End Swiper Thumb Slider -->
+
         </div>
       </div>
     </div>
