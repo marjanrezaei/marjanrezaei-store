@@ -24,7 +24,7 @@
                   {% else %}
                   <img src="{% static 'img/default.jpg' %}" alt="No image">
                   {% endif %}
-                  
+
 
                 </div>
               </div>
@@ -222,7 +222,8 @@
       <!-- End Accordion -->
 
       <div class="d-grid mb-4">
-        <button type="button" class="btn btn-outline-primary btn-sm btn-add-to-cart" data-product-id="{{ object.id }}">
+        <button class="btn-add-to-cart btn btn-outline-primary btn-sm btn-transition rounded-pill"
+          data-product-id="{{ product.id }}">
           افزودن به سبد خرید
         </button>
 
@@ -524,30 +525,6 @@
     });
 
     updateStars(parseInt(rateInput.value)); // initialize
-  });
-</script>
-<script>
-  $(document).on('click', '.btn-add-to-cart', function () {
-    const productId = $(this).data('product-id');
-
-    $.ajax({
-      url: '{% url "cart:add-to-cart" 0 %}'.replace('0', productId),
-      type: 'POST',
-      data: {
-        product_id: productId,
-        quantity: 1
-      },
-      headers: {
-        'X-CSRFToken': '{{ csrf_token }}'
-      },
-      success: function (response) {
-        alert("کالا با موفقیت به سبد خرید اضافه شد.");
-      },
-      error: function (xhr, status, error) {
-        alert("خطا در افزودن کالا به سبد خرید.");
-        console.error(error);
-      }
-    });
   });
 </script>
 

@@ -24,10 +24,11 @@
   <link rel="stylesheet" href="{% static 'vendor/toastify/toastify.css' %}">
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
-  {% block extra_css %} {% endblock extra_css %} 
+  {% block extra_css %} {% endblock extra_css %}
 
-  {% block extra_css_no_compress %} {% endblock extra_css_no_compress %} 
+  {% block extra_css_no_compress %} {% endblock extra_css_no_compress %}
 </head>
+
 <body>
   <!-- ========== HEADER ========== -->
   <header id="header" class="navbar navbar-expand-lg navbar-end navbar-light">
@@ -55,16 +56,20 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'website:index' %}">صفحه اصلی</a>
+              <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'website:index' %}">صفحه
+                اصلی</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {% if request.path == '/shop/product/grid/' %}active{% endif %}" href="{% url 'shop:product-grid' %}">لیست محصولات</a>
+              <a class="nav-link {% if request.path == '/shop/product/grid/' %}active{% endif %}"
+                href="{% url 'shop:product-grid' %}">لیست محصولات</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {% if request.path == '/about/' %}active{% endif %}" href="{% url 'website:about' %}">درباره ما</a>
+              <a class="nav-link {% if request.path == '/about/' %}active{% endif %}"
+                href="{% url 'website:about' %}">درباره ما</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {% if request.path == '/contact/' %}active{% endif %}" href="{% url 'website:contact' %}">ارتباط با ما</a>
+              <a class="nav-link {% if request.path == '/contact/' %}active{% endif %}"
+                href="{% url 'website:contact' %}">ارتباط با ما</a>
             </li>
 
 
@@ -82,21 +87,21 @@
                 <i class="bi-basket"></i>
                 <span class="cart-item-count ">3</span>
               </button> -->
-               <a href="{% url 'cart:cart-summary' %}"  class="btn btn-ghost-secondary btn-icon">
+              <a href="{% url 'cart:cart-summary' %}" class="btn btn-ghost-secondary btn-icon">
                 <i class="bi-basket"></i>
                 <span id="total-cart-item-count"> {{ total_quantity }} </span>
-               </a>
+              </a>
               <!-- End Shopping Cart -->
               {% if request.user.is_authenticated %}
-                  <a class="btn btn-ghost-secondary btn-icon" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <span class="avatar avatar-sm avatar-circle">
-                          <img class="avatar-img" src="{{request.user.user_profile.get_image}}" alt="Image Description">
-                      </span>
-                  </a>
-                  <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="{% url 'dashboard:home' %}">پروفایل</a></li>
-                      <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">خروج</a></li>
-                  </ul>
+              <a class="btn btn-ghost-secondary btn-icon" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="avatar avatar-sm avatar-circle">
+                  <img class="avatar-img" src="{{request.user.user_profile.get_image}}" alt="Image Description">
+                </span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'dashboard:home' %}">پروفایل</a></li>
+                <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">خروج</a></li>
+              </ul>
 
               {% else %}
               <a class="btn btn-primary btn-transition" href="{% url 'accounts:login' %}">ورود</a>
@@ -113,7 +118,7 @@
 
   <!-- ========== MAIN CONTENT ========== -->
   <main id="content" role="main" class="bg-light">
-        <!-- Breadcrumb -->
+    <!-- Breadcrumb -->
     <div class="navbar-dark bg-dark" style="
           background-image: url('static/svg/components/wave-pattern-light.svg')">
 
@@ -172,7 +177,7 @@
     <!-- End Content Section -->
   </main>
 
-   <!-- ========== FOOTER ========== -->
+  <!-- ========== FOOTER ========== -->
   <footer class="border-top">
     <div class="container">
       <div class="row justify-content-lg-between content-space-t-2 content-space-b-lg-2">
@@ -230,31 +235,31 @@
             <button type="button" class="btn btn-white btn-sm dropdown-toggle" id="footerSelectLanguage"
               data-bs-toggle="dropdown" aria-expanded="false" data-bs-dropdown-animation>
               <span class="d-flex align-items-center">
-                <img class="avatar avatar-xss avatar-circle ms-2" src="{% static 'vendor/flag-icon-css/flags/1x1/us.svg' %}"
-                  alt="Image description" width="16" />
+                <img class="avatar avatar-xss avatar-circle ms-2"
+                  src="{% static 'vendor/flag-icon-css/flags/1x1/us.svg' %}" alt="Image description" width="16" />
                 <span>انگلیسی (US)</span>
               </span>
             </button>
 
             <div class="dropdown-menu" aria-labelledby="footerSelectLanguage">
               <a class="dropdown-item d-flex align-items-center active" href="#">
-                <img class="avatar avatar-xss avatar-circle ms-2" src="{% static 'vendor/flag-icon-css/flags/1x1/us.svg' %}"
-                  alt="Image description" width="16" />
+                <img class="avatar avatar-xss avatar-circle ms-2"
+                  src="{% static 'vendor/flag-icon-css/flags/1x1/us.svg' %}" alt="Image description" width="16" />
                 <span>انگلیسی</span>
               </a>
               <a class="dropdown-item d-flex align-items-center" href="#">
-                <img class="avatar avatar-xss avatar-circle ms-2" src="{% static 'vendor/flag-icon-css/flags/1x1/de.svg' %}"
-                  alt="Image description" width="16" />
+                <img class="avatar avatar-xss avatar-circle ms-2"
+                  src="{% static 'vendor/flag-icon-css/flags/1x1/de.svg' %}" alt="Image description" width="16" />
                 <span>آلمانی</span>
               </a>
               <a class="dropdown-item d-flex align-items-center" href="#">
-                <img class="avatar avatar-xss avatar-circle ms-2" src="{% static 'vendor/flag-icon-css/flags/1x1/es.svg' %}"
-                  alt="Image description" width="16" />
+                <img class="avatar avatar-xss avatar-circle ms-2"
+                  src="{% static 'vendor/flag-icon-css/flags/1x1/es.svg' %}" alt="Image description" width="16" />
                 <span>اسپانیایی</span>
               </a>
               <a class="dropdown-item d-flex align-items-center" href="#">
-                <img class="avatar avatar-xss avatar-circle ms-2" src="{% static 'vendor/flag-icon-css/flags/1x1/cn.svg' %}"
-                  alt="Image description" width="16" />
+                <img class="avatar avatar-xss avatar-circle ms-2"
+                  src="{% static 'vendor/flag-icon-css/flags/1x1/cn.svg' %}" alt="Image description" width="16" />
                 <span>چینی</span>
               </a>
             </div>
@@ -351,7 +356,7 @@
           <div class="mb-7">
             <!-- Form -->
             <form action="{% url 'shop:product-grid' %}">
-              {% csrf_token %} 
+              {% csrf_token %}
               <!-- Input Card -->
               <div class="input-card">
                 <div class="input-card-form">
@@ -376,9 +381,10 @@
   <!-- JS Jquery -->
   <script src="{% static 'js/Jquery.min.js' %}"></script>
   <script>
-  window.removeUrl = "{% url 'cart:db-remove-product' %}";
-  window.cartUpdateUrl = "{% url 'cart:db-update-product-quantity' %}";
-  window.csrfToken = "{{ csrf_token }}";
+    window.addToCartUrl = "{% url 'cart:add-to-cart' 0 %}";
+    window.removeUrl = "{% url 'cart:db-remove-product' %}";
+    window.cartUpdateUrl = "{% url 'cart:db-update-product-quantity' %}";
+    window.csrfToken = "{{ csrf_token }}";
   </script>
   <script src="{% static 'js/custom.js' %}"></script>
   <!-- JS Implementing Plugins -->
@@ -386,7 +392,7 @@
 
   <!-- JS Front -->
   <script src="{% static 'js/theme.min.js' %}"></script>
-  
+
   <!-- JS Toastify -->
   <script src="{% static 'vendor/toastify/toastify.js' %}"></script>
 
@@ -491,23 +497,40 @@
       })
     })()
   </script>
-{% block extra_js %}
 
-{% endblock extra_js %} 
+  {% block extra_js %}
+  <script>
+    $(document).on('click', '.btn-add-to-cart', function () {
+      const productId = $(this).data('product-id');
 
-{% block extra_js_no_compress %} {% endblock extra_js_no_compress %} 
+      $.ajax({
+        url: window.addToCartUrl.replace('0', productId),
+        type: 'POST',
+        data: {
+          product_id: productId,
+          quantity: 1
+        },
+        headers: {
+          'X-CSRFToken': window.csrfToken
+        },
+        success: function (response) {
+          if (response.total_quantity !== undefined) {
+            alert("کالا با موفقیت به سبد خرید اضافه شد.");
+            $("#total-cart-item-count").text(response.total_quantity);
+          }
+        },
+        error: function (xhr, status, error) {
+          alert("خطا در افزودن کالا به سبد خرید.");
+          console.error(error);
+        }
+      });
+    });
+  </script>
+  {% endblock extra_js %}
 
-{% include 'messages.html' %}
+  {% block extra_js_no_compress %} {% endblock extra_js_no_compress %}
+
+  {% include 'messages.html' %}
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-

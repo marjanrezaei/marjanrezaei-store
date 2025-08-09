@@ -78,10 +78,18 @@ class CartSummaryView(EnsureCartMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cart = self.get_cart()
+        cart_items = cart.get_cart_items()
+
+        for item in cart_items:
+            item['quantity_range'] = range(1, item['product_obj'].stock + 1)
+    
         context.update({
-            "cart_items": cart.get_cart_items(),
+            "cart_items": cart_items,
             "total_quantity": cart.total_quantity,
             "total_payment_price": cart.get_total_payment_amount(),
         })
         return context
+
+
+
 

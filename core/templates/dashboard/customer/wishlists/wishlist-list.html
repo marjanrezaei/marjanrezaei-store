@@ -31,7 +31,13 @@
       <li class="list-group-item">
         <div class="d-flex">
           <div class="flex-shrink-0">
-            <img class="avatar avatar-xl avatar-4x3" src="{{object.product.image.url}}" alt="Image Description">
+            {% if object.product.image_url %}
+            <img class="avatar avatar-xl avatar-4x3" src="{{ object.product.image_url }}" alt="{{ object.title }}">
+            {% elif object.product.image %}
+            <img class="avatar avatar-xl avatar-4x3" src="{{ object.product.image.url }}" alt="{{ object.title }}">
+            {% else %}
+            <img src="{% static 'img/default.jpg' %}" alt="No image">
+            {% endif %}
           </div>
 
           <div class="flex-grow-1 ms-3">
