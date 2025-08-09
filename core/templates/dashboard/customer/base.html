@@ -381,7 +381,6 @@
   <!-- JS Jquery -->
   <script src="{% static 'js/Jquery.min.js' %}"></script>
   <script>
-    window.addToCartUrl = "{% url 'cart:add-to-cart' 0 %}";
     window.removeUrl = "{% url 'cart:db-remove-product' %}";
     window.cartUpdateUrl = "{% url 'cart:db-update-product-quantity' %}";
     window.csrfToken = "{{ csrf_token }}";
@@ -499,33 +498,7 @@
   </script>
 
   {% block extra_js %}
-  <script>
-    $(document).on('click', '.btn-add-to-cart', function () {
-      const productId = $(this).data('product-id');
 
-      $.ajax({
-        url: window.addToCartUrl.replace('0', productId),
-        type: 'POST',
-        data: {
-          product_id: productId,
-          quantity: 1
-        },
-        headers: {
-          'X-CSRFToken': window.csrfToken
-        },
-        success: function (response) {
-          if (response.total_quantity !== undefined) {
-            alert("کالا با موفقیت به سبد خرید اضافه شد.");
-            $("#total-cart-item-count").text(response.total_quantity);
-          }
-        },
-        error: function (xhr, status, error) {
-          alert("خطا در افزودن کالا به سبد خرید.");
-          console.error(error);
-        }
-      });
-    });
-  </script>
   {% endblock extra_js %}
 
   {% block extra_js_no_compress %} {% endblock extra_js_no_compress %}
