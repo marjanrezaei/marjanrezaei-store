@@ -1,7 +1,7 @@
 from datetime import timedelta
 from django.utils import timezone
 from django.db import connection
-from .models import CartModel
+from .models import CartModel, CartItemModel
 
 def table_exists(table_name):
     return table_name in connection.introspection.table_names()
@@ -32,15 +32,35 @@ class CartMiddleware:
                         session_key=old_session_key,
                         user__isnull=True
                     ).first()
+
                     if anonymous_cart:
-                        anonymous_cart.user = request.user
-                        anonymous_cart.session_key = None
-                        anonymous_cart.save()
-                        cart = anonymous_cart
+                        user_cart, created = CartModel.objects.get_or_create(user=request.user)
+
+                        if not created:
+                            # انتقال آیتم‌ها از anonymous_cart به user_cart
+                            for item in CartItemModel.objects.filter(cart=anonymous_cart):
+                                user_item, created = CartItemModel.objects.get_or_create(
+                                    cart=user_cart,
+                                    product=item.product,
+                                    defaults={'quantity': item.quantity}
+                                )
+                                if not created:
+                                    user_item.quantity += item.quantity
+                                    user_item.save(update_fields=['quantity'])
+
+                            anonymous_cart.delete()
+                        else:
+                            # اگر کاربر قبلاً سبد نداشت، فقط مالکیت رو منتقل کن
+                            anonymous_cart.user = request.user
+                            anonymous_cart.session_key = None
+                            anonymous_cart.save()
+                            user_cart = anonymous_cart
+
+                        cart = user_cart
                         del request.session['anonymous_cart_session_key']
                         request.session.modified = True
 
-                # گرفتن یا ساختن سبد خرید کاربر
+                # اگر انتقال انجام نشده بود، گرفتن یا ساختن سبد خرید کاربر
                 if not cart:
                     cart, _ = CartModel.objects.get_or_create(user=request.user)
 
