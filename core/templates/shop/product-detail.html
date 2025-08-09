@@ -222,11 +222,10 @@
       <!-- End Accordion -->
 
       <div class="d-grid mb-4">
-        <button class="btn-add-to-cart btn btn-outline-primary btn-sm btn-transition rounded-pill"
-          data-product-id="{{ product.id }}">
+        <button class="btn btn-outline-primary btn-sm btn-transition rounded-pill btn-add-to-cart"
+          data-product-id="{{ object.id }}">
           افزودن به سبد خرید
         </button>
-
       </div>
 
       <!-- Media -->
@@ -527,5 +526,31 @@
     updateStars(parseInt(rateInput.value)); // initialize
   });
 </script>
+<script>
+  $(document).on('click', '.btn-add-to-cart', function () {
+    const productId = $(this).data('product-id');
 
+    $.ajax({
+      url: '{% url "cart:add-to-cart" 0 %}'.replace('0', productId),
+      type: 'POST',
+      data: {
+        product_id: productId,
+        quantity: 1
+      },
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}'
+      },
+      success: function (response) {
+        if (response.total_quantity !== undefined) {
+          alert("کالا با موفقیت به سبد خرید اضافه شد.");
+          $("#total-cart-item-count").text(response.total_quantity);
+        }
+      },
+      error: function (xhr, status, error) {
+        alert("خطا در افزودن کالا به سبد خرید.");
+        console.error(error);
+      }
+    });
+  });
+</script>
 {% endblock extra_js %}
