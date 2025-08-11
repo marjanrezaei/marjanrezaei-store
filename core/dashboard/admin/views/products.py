@@ -40,7 +40,6 @@ class AdminProductListView(AdminRequiredMixin, LoginRequiredMixin, ListView):
                 queryset = queryset.order_by(order_by)
             except FieldError:
                 pass
-        
             
         return queryset
 
@@ -50,6 +49,7 @@ class AdminProductListView(AdminRequiredMixin, LoginRequiredMixin, ListView):
         context["categories"] = ProductCategoryModel.objects.all()
         return context
 
+
 class AdminProductCreateView(AdminRequiredMixin, LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = "dashboard/admin/products/product-create.html"
     queryset = ProductModel.objects.all()
@@ -58,42 +58,12 @@ class AdminProductCreateView(AdminRequiredMixin, LoginRequiredMixin, SuccessMess
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        image_file = self.request.FILES.get("image")
-
-        if image_file:
-            filename = f"{form.instance.slug}_{image_file.name}"
-            image_url = upload_to_liara(image_file, filename, folder="products")
-            form.instance.image_url = image_url
-            form.instance.image = None  
-
-        response = super().form_valid(form)
-
-        # ذخیره تصاویر اضافی
-        for extra_file in self.request.FILES.getlist("extra_images"):
-            filename = f"{form.instance.slug}_{extra_file.name}"
-            image_url = upload_to_liara(extra_file, filename, folder="products/extra")
-            ProductImageModel.objects.create(product=form.instance, file=image_url)
-
-        return response
-
-    def get_success_url(self):
-        return reverse_lazy("dashboard:admin:product-edit", kwargs={"pk": self.object.pk})
-
-
-class AdminProductEditView(AdminRequiredMixin, LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    template_name = "dashboard/admin/products/product-edit.html"
-    queryset = ProductModel.objects.all()
-    form_class = ProductForm
-    success_message = "ویرایش محصول با موفقیت انجام شد"
-
-    def form_valid(self, form):
-        product = form.instance
         host = self.request.get_host()
+        product = form.instance
 
-        # ذخیره تصویر اصلی محصول
         main_image = self.request.FILES.get("image")
         if main_image:
-            filename = f"{product.id}_{main_image.name}"
+            filename = f"{product.slug}_{main_image.name}"
             if "onrender.com" in host:
                 image_url = upload_to_liara(main_image, filename, folder="products")
                 product.image_url = image_url
@@ -103,16 +73,90 @@ class AdminProductEditView(AdminRequiredMixin, LoginRequiredMixin, SuccessMessag
 
         response = super().form_valid(form)
 
-        # ذخیره تصاویر اضافی محصول
+        extra_images = self.request.FILES.getlist("extra_images")
+        for extra_file in extra_images:
+            filename = f"{product.slug}_extra_{extra_file.name}"
+            if "onrender.com" in host:
+                image_url = upload_to_liara(extra_file, filename, folder="products/extra")
+                ProductImageModel.objects.create(product=product, url=image_url)
+            else:
+                image_instance = ProductImageModel(product=product)
+                image_instance.file.save(filename, extra_file)
+                image_instance.save()
+
+        return response
+
+    def get_success_url(self):
+        return reverse_lazy("dashboard:admin:product-edit", kwargs={"pk": self.object.pk})
+
+
+class AdminProductEditView(SuccessMessageMixin, UpdateView):
+    model = ProductModel
+    form_class = ProductForm
+    template_name = "dashboard/admin/products/product-edit.html"
+    success_message = "ویرایش محصول با موفقیت انجام شد"
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+
+        # حذف تصویر اصلی اگر تیک حذف زده شده باشد
+        if 'delete_image' in request.POST:
+            if self.object.image:
+                self.object.image.delete(save=False)
+            self.object.image_url = None
+            self.object.image = None
+            self.object.save()
+
+        # حذف تصاویر اضافی
+        delete_extra_ids = request.POST.getlist('delete_extra_images')
+        if delete_extra_ids:
+            extra_images = ProductImageModel.objects.filter(id__in=delete_extra_ids, product=self.object)
+            for img in extra_images:
+                if img.file:
+                    img.file.delete(save=False)
+                img.url = None
+                img.delete()
+
+        return super().post(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        product = form.instance
+        host = self.request.get_host()
+        main_image = self.request.FILES.get("image")
+
+        if main_image:
+            # اگر تصویر جدید انتخاب شد → جایگزین تصویر قبلی شود
+            filename = f"{product.id}_{main_image.name}"
+            if "onrender.com" in host:
+                image_url = upload_to_liara(main_image, filename, folder="products")
+                product.image_url = image_url
+                product.image = None
+            else:
+                # حذف تصویر قبلی اگر وجود داشت
+                if product.image:
+                    product.image.delete(save=False)
+                product.image.save(filename, main_image)
+                product.image_url = None
+        else:
+            # اگر تصویر جدید آپلود نشده و تیک حذف نزده → تصویر قبلی رو نگه دار
+            original_product = ProductModel.objects.get(pk=product.pk)
+            if not ('delete_image' in self.request.POST):
+                product.image = original_product.image
+                product.image_url = original_product.image_url
+
+        response = super().form_valid(form)
+
+        # ذخیره تصاویر اضافی جدید
         extra_images = self.request.FILES.getlist("extra_images")
         for extra_file in extra_images:
             filename = f"{product.id}_extra_{extra_file.name}"
             if "onrender.com" in host:
                 image_url = upload_to_liara(extra_file, filename, folder="products/extra")
-                ProductImageModel.objects.create(product=product, file=image_url)
+                ProductImageModel.objects.create(product=product, url=image_url)
             else:
                 image_instance = ProductImageModel(product=product)
                 image_instance.file.save(filename, extra_file)
+                image_instance.save()
 
         return response
 

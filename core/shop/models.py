@@ -57,10 +57,12 @@ class ProductModel(models.Model):
     
 class ProductImageModel(models.Model):
     product = models.ForeignKey(ProductModel, on_delete=models.CASCADE, related_name="extra_images")
-    file = models.ImageField(upload_to="product/extra-img/")
+    file = models.ImageField(upload_to="product/extra-img/", blank=True, null=True)
+    url = models.URLField(blank=True, null=True)  
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
 
 
 class WishlistProductModel(models.Model):

@@ -15,17 +15,20 @@
           <div class="swiper js-swiper-shop-product mb-4">
             <div class="swiper-wrapper">
 
-              {% if object.image_url or object.image %}
               <div class="swiper-slide">
-                <img src="{{ object.image_url|default:object.image.url }}" class="img-fluid rounded w-100"
+                <img src="{% if object.image_url %}{{ object.image_url }}
+               {% elif object.image %}{{ object.image.url }}
+               {% else %}{% static 'img/default.jpg' %}{% endif %}" class="img-fluid rounded w-100"
                   alt="{{ object.title }}">
               </div>
-              {% endif %}
 
-              {% for image in object.extra_images.all %}
+              {% for img in object.extra_images.all %}
               <div class="swiper-slide">
-                <img src="{{ image.url|default:image.file.url }}" class="img-fluid rounded w-100"
-                  alt="تصویر {{ forloop.counter }}">
+                {% if img.url %}
+                <img src="{{ img.url }}" class="img-fluid rounded w-100" alt="تصویر اضافی">
+                {% elif img.file and img.file.url %}
+                <img src="{{ img.file.url }}" class="img-fluid rounded w-100" alt="تصویر اضافی">
+                {% endif %}
               </div>
               {% endfor %}
             </div>
@@ -39,17 +42,20 @@
           <div class="swiper js-swiper-shop-product-thumb px-2" style="max-width: 100%; overflow: hidden;">
             <div class="swiper-wrapper">
 
-              {% if object.image_url or object.image %}
               <div class="swiper-slide">
-                <img src="{{ object.image_url|default:object.image.url }}" class="img-thumbnail rounded-circle"
-                  alt="تصویر اصلی">
+                <img src="{% if object.image_url %}{{ object.image_url }}
+               {% elif object.image %}{{ object.image.url }}
+               {% else %}{% static 'img/default.jpg' %}{% endif %}" class="img-thumbnail rounded-circle"
+                  alt="{{ object.title }}">
               </div>
-              {% endif %}
 
-              {% for image in object.extra_images.all %}
+              {% for img in object.extra_images.all %}
               <div class="swiper-slide">
-                <img src="{{ image.url|default:image.file.url }}" class="img-thumbnail rounded-circle"
-                  alt="تصویر {{ forloop.counter }}">
+                {% if img.url %}
+                <img src="{{ img.url }}" class="img-thumbnail rounded-circle" alt="تصویر {{ forloop.counter }}">
+                {% elif img.file and img.file.url %}
+                <img src="{{ img.file.url }}" class="img-thumbnail rounded-circle" alt="تصویر {{ forloop.counter }}">
+                {% endif %}
               </div>
               {% endfor %}
             </div>

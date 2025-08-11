@@ -6,5 +6,5 @@ urlpatterns = [
     path("product/create/", views.AdminProductCreateView.as_view(), name="product-create"),
     path("product/<int:pk>/edit/", views.AdminProductEditView.as_view(), name="product-edit"),
     path("product/<int:pk>/delete/", views.AdminProductDeleteView.as_view(), name="product-delete"),
-    
+    path("product/image/<int:pk>/delete/",views.AdminProductImageDeleteView.as_view(),name="product-image-delete"),
     ]
