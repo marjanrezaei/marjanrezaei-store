@@ -459,7 +459,7 @@
     const productId = $(this).data('product-id');
 
     $.ajax({
-      url: '{% url "cart:add-to-cart" 0 %}'.replace('0', productId),
+      url: '{% url "cart_api:add_to_cart_api" 0 %}'.replace('0', productId),
       type: 'POST',
       data: {
         product_id: productId,
@@ -470,7 +470,6 @@
       },
       success: function (response) {
         if (response.total_quantity !== undefined) {
-          alert("کالا با موفقیت به سبد خرید اضافه شد.");
           $("#total-cart-item-count").text(response.total_quantity);
         }
       },

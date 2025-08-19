@@ -6,113 +6,16 @@
   <div class="row">
     <!-- Cart Items Column -->
     <div class="col-lg-8 mb-7 mb-lg-0">
-      <!-- Heading -->
       <div class="d-flex justify-content-between align-items-end border-bottom pb-3 mb-7">
         <h1 class="h3 mb-0">سبد خرید</h1>
-        <span>{{ total_quantity }} مورد</span>
       </div>
-      <!-- End Heading -->
 
-      <!-- Cart Items List -->
-      <form>
-        <ul class="list-group list-group-flush list-group-no-gutters mb-5">
-          {% for item in cart_items %}
-          <li class="list-group-item">
-            <div class="d-flex">
-              <div class="flex-shrink-0">
-                {% if item.product_obj.image_url %}
-                <img class="avatar avatar-xl avatar-4x3" src="{{ item.product_obj.image_url }}"
-                  alt="{{ item.product_obj.title }}">
-                {% elif item.product_obj.image and item.product_obj.image.url %}
-                <img class="avatar avatar-xl avatar-4x3" src="{{ item.product_obj.image.url }}"
-                  alt="{{ item.product_obj.title }}">
-                {% else %}
-                <img class="avatar avatar-xl avatar-4x3" src="{% static 'img/default.jpg' %}" alt="No image available">
-                {% endif %}
-              </div>
-
-              <div class="flex-grow-1 ms-3">
-                <div class="row">
-                  <div class="col-sm-7 mb-3 mb-sm-0">
-                    <h5>
-                      <a class="text-dark" href="{% url 'shop:product-detail' slug=item.product_obj.slug %}">
-                        {{ item.product_obj.title }}
-                      </a>
-                    </h5>
-
-                    <div class="d-block d-sm-none">
-                      <h5 class="mb-1 formatted-price">{{ item.total_price }}</h5>
-                    </div>
-
-                    <div class="d-grid gap-1">
-                      <div class="text-body">
-                        <span class="small">دسته بندی:</span>
-                        <span class="fw-semibold small">
-                          {% for category in item.product_obj.category.all %}
-                          <a href="#">{{ category.title }}</a>{% if not forloop.last %}, {% endif %}
-                          {% endfor %}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div class="d-grid gap-1">
-                      <div class="text-body">
-                        <span class="small">قیمت هر واحد:</span>
-                        <span class="fw-semibold formatted-price small">
-                          {{ item.product_obj.get_price }}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- End Col -->
-
-                  <div class="col-sm-3">
-                    <div class="row">
-                      <div class="col-auto">
-                        {% if item.product_obj.stock %}
-                        <select class="form-select form-select-sm mb-3"
-                          onchange="changeProductQuantity('{{ item.product_obj.id }}', this.value)">
-                          {% for i in item.quantity_range %}
-                          <option value="{{ i }}" {% if i == item.quantity %}selected{% endif %}>{{ i }}</option>
-                          {% endfor %}
-                        </select>
-                        {% else %}
-                        <select class="form-select form-select-sm mb-3" disabled>
-                          <option>ناموجود</option>
-                        </select>
-                        {% endif %}
-                      </div>
-
-                      <div class="col-auto">
-                        <div class="d-grid gap-2 d-flex justify-content-between">
-                          <button type="button" class="btn btn-sm btn-icon text-danger border-0 mx-1"
-                            onclick="removeProduct('{{ item.product_obj.id }}')">
-                            <i class="bi-trash ms-1"></i> حذف
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- End Col -->
-
-                  <div class="col-4 col-sm-2 d-none d-sm-inline-block text-end">
-                    <span class="h5 d-block mb-1 formatted-price">{{ item.total_price }}</span>
-                  </div>
-                  <!-- End Col -->
-                </div>
-                <!-- End Row -->
-              </div>
-            </div>
-          </li>
-          {% empty %}
-          <li class="list-group-item text-center">سبد خرید شما خالی است.</li>
-          {% endfor %}
-        </ul>
-      </form>
-      <!-- End Cart Items List -->
+      <ul class="list-group list-group-flush list-group-no-gutters mb-3" id="cart-items-list">
+        <li class="list-group-item text-center p-2 text-sm">در حال بارگذاری...</li>
+      </ul>
 
       <div class="d-sm-flex justify-content-end">
-        <a class="link" href="{% url 'shop:product-grid' %}">
+        <a class="link" href="{% url 'shop:product-list' %}">
           به خرید ادامه دهید <i class="bi-chevron-left small ms-1"></i>
         </a>
       </div>
@@ -133,7 +36,7 @@
               <dd class="col-sm-12 text-sm-end mb-0">به همراه 9% در هنگام پرداخت</dd>
 
               <dt class="col-sm-6">جمع</dt>
-              <dd class="col-sm-12 text-sm-end mb-0 formatted-price">{{ total_payment_price }}</dd>
+              <dd class="col-sm-12 text-sm-end mb-0 formatted-price" id="total-payment-price">0 تومان</dd>
             </dl>
 
             <div class="d-grid">
@@ -142,19 +45,10 @@
           </div>
         </div>
 
-        <!-- Support Section -->
         <div class="d-flex align-items-center">
           <div class="flex-shrink-0">
             <div class="svg-icon svg-icon-sm text-primary">
               <!-- SVG icon here -->
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M22.1671 18.1421C22.4827 18.4577 23.0222 18.2331 23.0206 17.7868L23.0039 13.1053V5.52632C23.0039 4.13107 21.8729 3 20.4776 3H8.68815C7.2929 3 6.16183 4.13107 6.16183 5.52632V9H13C14.6568 9 16 10.3431 16 12V15.6316H19.6565L22.1671 18.1421Z"
-                  fill="#035A4B" />
-                <path opacity="0.3" fill-rule="evenodd" clip-rule="evenodd"
-                  d="M1.98508 18V13C1.98508 11.8954 2.88051 11 3.98508 11H11.9851C13.0896 11 13.9851 11.8954 13.9851 13V18C13.9851 19.1046 13.0896 20 11.9851 20H4.10081L2.85695 21.1905C2.53895 21.4949 2.01123 21.2695 2.01123 20.8293V18.3243C1.99402 18.2187 1.98508 18.1104 1.98508 18ZM5.99999 14.5C5.99999 14.2239 6.22385 14 6.49999 14H11.5C11.7761 14 12 14.2239 12 14.5C12 14.7761 11.7761 15 11.5 15H6.49999C6.22385 15 5.99999 14.7761 5.99999 14.5ZM9.49999 16C9.22385 16 8.99999 16.2239 8.99999 16.5C8.99999 16.7761 9.22385 17 9.49999 17H11.5C11.7761 17 12 16.7761 12 16.5C12 16.2239 11.7761 16 11.5 16H9.49999Z"
-                  fill="#035A4B" />
-              </svg>
             </div>
           </div>
           <div class="flex-grow-1 ms-2">
@@ -162,22 +56,158 @@
             <a class="link small" href="#">ارسال تیکت</a>
           </div>
         </div>
-        <!-- End Support Section -->
       </div>
     </div>
     <!-- End Summary Column -->
   </div>
-  <!-- End Row -->
 </div>
-<!-- End Content -->
 {% endblock %}
 
 {% block extra_js %}
 <script>
-  // Helper: Generate a range for select options in Django template (need custom filter or simple workaround)
-  // Example custom filter (Python):
-  // @register.filter
-  // def to(value, arg):
-  //     return range(value, arg+1)
+  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
+
+  // تبدیل قیمت به فرمت ایرانی
+  function formatPrice(price) {
+    return Number(price).toLocaleString('fa-IR') + ' تومان';
+  }
+
+  // رندر هر آیتم سبد خرید
+  function renderCartItem(item) {
+    return `
+<li id="cart-item-${item.product_id}" class="list-group-item d-flex flex-column flex-sm-row justify-content-between align-items-center p-2 opacity-0 transition">
+  <div class="d-flex align-items-center gap-2 w-100 w-sm-66">
+    <img src="${item.product_image || '/static/img/default.jpg'}" class="rounded" style="width:40px;height:40px;object-fit:cover;" alt="${item.product_name}">
+    <div>
+      <h5 class="mb-0 small">${item.product_name}</h5>
+      <p class="text-muted small mb-0">قیمت واحد: ${formatPrice(item.unit_price)}</p>
+    </div>
+  </div>
+  <div class="d-flex align-items-center gap-1 mt-1 mt-sm-0 w-100 w-sm-33">
+    <select class="form-select form-select-sm" onchange="changeProductQuantity(${item.product_id}, this.value)">
+      ${[...Array(10).keys()].map(i => `
+      <option value="${i + 1}" ${i + 1 === item.quantity ? 'selected' : ''}>${i + 1}</option>`
+    ).join('')}
+    </select>
+    <span id="cart-item-total-${item.product_id}" class="fw-bold small ms-2">${formatPrice(item.total_price)}</span>
+    <button onclick="removeProduct(${item.product_id})" class="btn btn-link btn-sm text-danger p-0 ms-2">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+</li>`;
+  }
+
+  // بارگذاری سبد خرید
+  async function fetchCartSummary() {
+    const list = document.getElementById('cart-items-list');
+    list.innerHTML = '<li class="text-center text-muted p-2 small">در حال بارگذاری...</li>';
+
+    try {
+      const response = await fetch('/api/cart/summary/');
+      const data = await response.json();
+
+      // بروزرسانی جمع کل
+      document.getElementById('total-payment-price').textContent = formatPrice(data.total_payment_price || 0);
+
+      if (!data.cart_items || data.cart_items.length === 0) {
+        list.innerHTML = '<li class="text-center text-muted p-2 small">سبد خرید شما خالی است.</li>';
+        return;
+      }
+
+      list.innerHTML = '';
+      data.cart_items.forEach(item => {
+        list.insertAdjacentHTML('beforeend', renderCartItem(item));
+        const li = document.getElementById(`cart-item-${item.product_id}`);
+        requestAnimationFrame(() => li.classList.remove('opacity-0'));
+      });
+
+    } catch (err) {
+      console.error(err);
+      list.innerHTML = '<li class="text-center text-danger p-2 small">خطا در بارگذاری سبد خرید.</li>';
+    }
+  }
+
+  async function changeProductQuantity(productId, quantity) {
+  quantity = parseInt(quantity, 10);  // تبدیل به عدد
+  const itemEl = document.getElementById(`cart-item-${productId}`);
+  if (itemEl) itemEl.classList.add('opacity-50');
+
+  try {
+    const updateUrl = "{% url 'cart_api:update-cart' %}";
+
+    const response = await fetch(updateUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken
+      },
+      body: JSON.stringify({ product_id: productId, quantity: quantity })
+    });
+
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error('خطا در تغییر تعداد محصول:', errText);
+      alert('خطا در تغییر تعداد محصول.');
+      return;
+    }
+
+    const data = await response.json();
+    if (data.total_quantity !== undefined)
+        document.getElementById('total-cart-item-count').textContent = data.total_quantity;
+
+    if (data.item_total !== undefined)
+      document.getElementById(`cart-item-total-${productId}`).textContent = formatPrice(data.item_total);
+
+    if (data.cart_total !== undefined)
+      document.getElementById('total-payment-price').textContent = formatPrice(data.cart_total);
+
+  } catch (err) {
+    console.error(err);
+    alert('خطا در تغییر تعداد محصول.');
+  } finally {
+    if (itemEl) itemEl.classList.remove('opacity-50');
+  }
+}
+
+  async function removeProduct(productId) {
+      const itemEl = document.getElementById(`cart-item-${productId}`);
+      if (itemEl) {
+          itemEl.classList.add('opacity-0', 'translate-x-full', 'transition', 'duration-500');
+
+          setTimeout(async () => {
+              try {
+                  const formData = new FormData();
+                  formData.append("product_id", productId);
+
+                  const response = await fetch('/api/cart/remove-product/', {
+                      method: 'POST',
+                      headers: { 'X-CSRFToken': csrftoken },
+                      body: formData
+                  });
+
+                  if (!response.ok) {
+                      console.error("خطا در حذف محصول:", await response.text());
+                      return;
+                  }
+
+                  const data = await response.json();
+
+                  // حذف آیتم از DOM
+                  itemEl.remove();
+
+                  // بروزرسانی شمارنده سبد خرید (jQuery style)
+                  if (data.total_quantity !== undefined) {
+                      $("#total-cart-item-count").text(data.total_quantity);
+                  }
+
+              } catch (err) {
+                  console.error(err);
+                  alert('خطا در حذف محصول.');
+              }
+          }, 500);
+      }
+  }
+
+  document.addEventListener('DOMContentLoaded', fetchCartSummary);
 </script>
 {% endblock %}

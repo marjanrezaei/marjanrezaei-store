@@ -1,3 +1,4 @@
+# shop/views.py
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -83,7 +84,6 @@ class ShopProductDetailView(DetailView):
 
 
 class AddOrRemoveWishlistView(LoginRequiredMixin, View):
-
     def post(self, request, *args, **kwargs):
         product_id = request.POST.get("product_id")
         message = ""

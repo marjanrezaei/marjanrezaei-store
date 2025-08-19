@@ -78,10 +78,11 @@ class CartSummaryView(TemplateView):
         context = super().get_context_data(**kwargs)
 
         cart = CartDB(self.request.cart)
-        cart_items = cart.get_cart_items()
+        cart_items = cart.get_items_queryset()
 
-        for item in cart_items:
-            item['quantity_range'] = range(1, item['product_obj'].stock + 1)
+        for item in cart.items.select_related('product'):
+            item.quantity_range = range(1, item.product.stock + 1) 
+
 
         context.update({
             "cart_items": cart_items,

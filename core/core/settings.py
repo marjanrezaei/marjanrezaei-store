@@ -27,6 +27,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mail_templated',
     'django_celery_beat',
+    'rest_framework',
+    'rest_framework_simplejwt.token_blacklist', 
+      
     'website',
     'dashboard',
     'accounts',
@@ -75,8 +78,14 @@ WSGI_APPLICATION = 'core.wsgi.application'
 #     )
 # }
 
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if not DATABASE_URL:
+    # Provide a sensible default for local development
+    DATABASE_URL = "postgresql://postgres:postgres@db:5432/postgres"
+
 DATABASES = {
-    "default": dj_database_url.config(default=os.environ.get("DATABASE_URL"))
+    "default": dj_database_url.parse(DATABASE_URL, conn_max_age=600)
 }
 
 # Password validation
@@ -146,4 +155,25 @@ LIARA_OBJECT_STORAGE = {
     'bucket_name': 'marjan',
     'aws_access_key_id': config('LIARA_ACCESS_KEY'),
     'aws_secret_access_key': config('LIARA_SECRET_KEY'),
+}
+
+
+# rest_framework & jwt
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }
