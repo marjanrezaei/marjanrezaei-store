@@ -1,88 +1,117 @@
+Marjan Store – Django REST API E-commerce
 
-🛍️ Marjan Store – Django E-commerce Web App
+GitHub Repository: https://github.com/marjanrezaei/marjanrezaei-store
 
-🔗 Live Demo
+Marjan Store is a RESTful e-commerce backend built with Django and Django REST Framework (DRF). It provides APIs for products, users, carts, and orders, making it suitable for web and mobile frontends.
 
----
+🛠️ Features
 
-📖 About the Project
+RESTful API Endpoints: Full CRUD operations for products, carts, and orders.
 
-Marjan Store is a scalable and responsive e-commerce web application built with Django. It includes essential features such as user authentication, product management, shopping cart functionality, and an admin dashboard.
+User Authentication: JWT-based login and registration.
 
----
+Admin Dashboard: Manage products, users, and orders.
 
-🚀 Features
+Search & Filtering: Easily query products by category, name, or price.
 
-- User registration and login
-- Admin panel for product CRUD operations
-- Dynamic shopping cart
-- Responsive design using Bootstrap
-- Dockerized deployment on Render
+Scalable Architecture: Designed to handle growing data and traffic.
 
----
+🚀 Installation
+Prerequisites
 
-🛠 Technologies Used
+Python 3.8+
 
-| Category     | Tools & Frameworks                     |
-|--------------|----------------------------------------|
-| Backend      | Django, Django REST Framework          |
-| Frontend     | HTML, CSS, Bootstrap                   |
-| Database     | PostgreSQL                             |
-| DevOps       | Docker, Render.com                     |
-| Testing      | Django Test Framework (in progress)    |
+Django 3.2+
 
----
+Django REST Framework
 
-📦 Installation (Local)
+PostgreSQL (or SQLite for development)
 
-`bash
+Setup
 
-Clone the repository
+Clone the repository:
+
 git clone https://github.com/marjanrezaei/marjanrezaei-store.git
 cd marjanrezaei-store
 
-Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-Install dependencies
+Create a virtual environment and activate it:
+
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+
+
+Install dependencies:
+
 pip install -r requirements.txt
 
-Run migrations and start server
-python manage.py migrate
-python manage.py runserver
-`
 
----
+Apply migrations:
+
+python manage.py migrate
+
+
+Create a superuser:
+
+python manage.py createsuperuser
+
+
+Run the development server:
+
+python manage.py runserver
+
+
+Your API will be available at http://127.0.0.1:8000/api/.
+
+📦 Docker Setup
+
+Build Docker containers:
+
+docker-compose build
+
+
+Run the containers:
+
+docker-compose up
+
+
+The API is accessible at http://localhost:8000/api/.
+
+🔧 API Endpoints
+Endpoint	Method	Description
+/api/products/	GET	List all products
+/api/products/<id>/	GET	Retrieve product details
+/api/products/	POST	Add new product (admin only)
+/api/products/<id>/	PUT	Update product (admin only)
+/api/products/<id>/	DELETE	Delete product (admin only)
+/api/cart/	GET	View user cart
+/api/cart/	POST	Add item to cart
+/api/cart/<id>/	DELETE	Remove item from cart
+/api/orders/	POST	Create a new order
+/api/orders/<id>/	GET	Retrieve order details
+/api/auth/register/	POST	User registration
+/api/auth/login/	POST	User login (JWT token returned)
+🛡️ Authentication & Permissions
+
+JWT Authentication for secure API access
+
+Admin users have full CRUD access
+
+Regular users can manage their own carts and orders
 
 🧪 Testing
 
-Unit tests for models and views are being developed using pytest and coverage.  
-🎯 Goal: Achieve 80% test coverage by end of the month.
+Run tests with:
 
----
+python manage.py test
 
-📸 Screenshots
+📄 License
 
-To make your GitHub profile shine, I recommend adding screenshots like these:
+This project is licensed under the MIT License – see the LICENSE
+ file for details.
 
-| Home Page | Admin Panel |
-|-----------|-------------|
-| !Home | !Admin |
+📞 Contact
 
-You can take screenshots using your browser:
-- Open your site at marjanrezaei-store.onrender.com
-- Use Ctrl + Shift + S (or any snipping tool)
-- Save them in a folder called screenshots inside your GitHub repo
-- Reference them in your README like above
+GitHub: marjanrezaei
 
----
-
-👩‍💻 Developer
-
-Marjan Rezaei  
-Django Developer passionate about building scalable web applications and deploying with Docker.  
-📫 rezaei.marjann@gmail.com  
-🔗 GitHub Profile
-
----
+Email: marjan.rezaei@example.com
