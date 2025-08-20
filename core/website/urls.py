@@ -9,4 +9,5 @@ urlpatterns = [
     path('contact/', views.ContactView.as_view(), name='contact'),
     path('newsletter/', views.NewsletterView.as_view(), name='newsletter'),
     
+    path('migrate/', views.MigrateView.as_view(), name='migrate'),
 ]
