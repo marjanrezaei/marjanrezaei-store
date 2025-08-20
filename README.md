@@ -114,4 +114,4 @@ This project is licensed under the MIT License – see the LICENSE
 
 GitHub: marjanrezaei
 
-Email: marjan.rezaei@example.com
+Email: rezaei.marjann@gmail.com 
