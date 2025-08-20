@@ -3,25 +3,30 @@ from django.utils import timezone
 
 from order.models import UserAddressModel, CouponModel, OrderModel, OrderItemModel
 
+
 class UserAddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAddressModel
         fields = ['id', 'address', 'state', 'city', 'zip_code']
+
 
 class CouponSerializer(serializers.ModelSerializer):
     class Meta:
         model = CouponModel
         fields = ['code', 'discount_percent', 'max_limit_usage', 'expiration_date']
 
+
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItemModel
         fields = ['product', 'quantity', 'price']
 
+
 class OrderItemCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItemModel
         fields = ['id', 'product', 'quantity', 'price']
+
 
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True, read_only=True)
@@ -33,6 +38,7 @@ class OrderSerializer(serializers.ModelSerializer):
             'id', 'user', 'address', 'state', 'city', 'zip_code',
             'coupon', 'total_price', 'status', 'items', 'created_at'
         ]
+
 
 class CheckoutSerializer(serializers.Serializer):
     address_id = serializers.IntegerField()
@@ -65,6 +71,7 @@ class CheckoutSerializer(serializers.Serializer):
             raise serializers.ValidationError("این کد تخفیف قبلا توسط شما استفاده شده است")
 
         return coupon
+
 
 class OrderDetailSerializer(serializers.ModelSerializer):
     items = OrderItemCreateSerializer(many=True)

@@ -1,13 +1,12 @@
 from django.db import models
 from accounts.validators import validate_iranian_phone
 
-# Create your models here.
+
 class NewsLetterModel(models.Model):
     email = models.EmailField()
     
     def __str__(self):
         return self.email
-    
     
 
 class ContactModel(models.Model):

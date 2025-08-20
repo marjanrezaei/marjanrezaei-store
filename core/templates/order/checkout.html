@@ -160,7 +160,7 @@ function validateCoupon(event) {
   button.prop('disabled', true).text("در حال بررسی...");
 
   $.ajax({
-    url: "{% url 'order:validate-coupon' %}",
+    url: "{% url 'order_api:validate-coupon-api' %}",
     method: 'POST',
     data: {
       code: code,

@@ -83,7 +83,6 @@ class CartSummaryView(TemplateView):
         for item in cart.items.select_related('product'):
             item.quantity_range = range(1, item.product.stock + 1) 
 
-
         context.update({
             "cart_items": cart_items,
             "total_quantity": cart.total_quantity,

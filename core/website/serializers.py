@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import NewsLetterModel, ContactModel
 
+
 class NewsLetterSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsLetterModel

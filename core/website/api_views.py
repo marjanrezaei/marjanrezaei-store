@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny
 from .models import NewsLetterModel, ContactModel
 from .serializers import NewsLetterSerializer, ContactSerializer
 
+
 class NewsletterAPIView(generics.CreateAPIView):
     queryset = NewsLetterModel.objects.all()
     serializer_class = NewsLetterSerializer

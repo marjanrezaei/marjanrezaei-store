@@ -4,8 +4,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from accounts.models import UserType
 
-# Create your views here.
-
 
 class DashboardHomeView(LoginRequiredMixin, View):
     

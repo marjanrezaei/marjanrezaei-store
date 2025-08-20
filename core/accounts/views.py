@@ -1,47 +1,21 @@
-from django.contrib.auth import update_session_auth_hash, views as auth_views, get_user_model
+from django.contrib.auth import views as auth_views
 from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 from django.utils.timezone import now
 from datetime import timedelta
 import json
-from .tasks import send_reset_email 
-from .forms import AuthenticationForm
+from django.views import View
+from django.http import JsonResponse
+from django.contrib.auth.views import LoginView as AuthLoginView
+from django.contrib.auth import get_user_model
+from .tasks import send_reset_email
 
 User = get_user_model()
 
 
-class LoginView(auth_views.LoginView):
-    form_class = AuthenticationForm
+class LoginView(AuthLoginView):
     template_name = "accounts/login.html"
-    redirect_authenticated_user = True
-
-    def form_valid(self, form):
-        request = self.request
-
-        # Save guest cart from session before login (login flushes session)
-        guest_cart = request.session.get('cart', {}).copy()
-
-        # Proceed with login (flushes session)
-        response = super().form_valid(form)
-
-        # Merge guest cart into new session cart
-        session_cart = request.session.get('cart', {})
-        for pid, qty in guest_cart.items():
-            session_cart[pid] = session_cart.get(pid, 0) + qty
-
-        request.session['cart'] = session_cart
-        request.session.modified = True
-
-        # Prevent logout due to session key change
-        update_session_auth_hash(request, request.user)
-
-        return response
-
-
-class LogoutView(auth_views.LogoutView):
-    pass
+    redirect_authenticated_user = True 
 
 
 class PasswordResetView(auth_views.PasswordResetView):
@@ -51,8 +25,8 @@ class PasswordResetView(auth_views.PasswordResetView):
 
     def form_valid(self, form):
         messages.success(self.request, _("Password reset link has been sent to your email."))
-        email = form.cleaned_data.get('email')
-        # Schedule sending email asynchronously with 48h ETA
+        email = form.cleaned_data.get("email")
+        # Send async email after 48h
         send_reset_email.apply_async((email,), eta=now() + timedelta(hours=48))
         return super().form_valid(form)
 
@@ -64,11 +38,10 @@ class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
     def form_valid(self, form):
         messages.success(self.request, _("Your password was changed successfully. Please log in."))
         return super().form_valid(form)
-
-
-@csrf_exempt
-def check_email_exists(request):
-    if request.method == "POST":
+ 
+    
+class CheckEmailExistsView(View):
+    def post(self, request, *args, **kwargs):
         try:
             data = json.loads(request.body)
             email = data.get("email", "").strip()
@@ -78,4 +51,5 @@ def check_email_exists(request):
         exists = User.objects.filter(email__iexact=email).exists()
         return JsonResponse({"exists": exists})
 
-    return JsonResponse({"error": "POST method required"}, status=405)
+    def get(self, request, *args, **kwargs):
+        return JsonResponse({"error": "POST method required"}, status=405)

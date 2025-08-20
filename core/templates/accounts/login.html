@@ -1,60 +1,72 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
-{{ request.user.email }} <!-- for check login -->
-    <!-- Form -->
-    <div class="container content-space-3 content-space-t-lg-4 content-space-b-lg-3">
-      <div class="flex-grow-1 mx-auto" style="max-width: 28rem;">
-        <!-- Heading -->
-        <div class="text-center mb-5 mb-md-7">
-          <h1 class="h2">فرم ورود</h1>
-          <p>برای مدیریت حساب خود وارد شوید.</p>
-        </div>
-        <!-- End Heading -->
-
-        <!-- Form -->
-        <form action="{% url 'accounts:login' %}" method="post" >
-            {% csrf_token %} 
-          <!-- Form -->
-          <div class="mb-4">
-            <label class="form-label" for="signupSimpleLoginEmail">ایمیل شما</label>
-            <input type="email" class="form-control form-control-lg text-center" name="username"
-              id="signupSimpleLoginEmail" placeholder="email@site.com" aria-label="email@site.com" required>
-            <span class="invalid-feedback">لطفا یک آدرس ایمیل معتبر وارد کنید.</span>
-          </div>
-          <!-- End Form -->
-
-          <!-- Form -->
-          <div class="mb-4">
-            <div class="d-flex justify-content-between align-items-center">
-              <label class="form-label" for="signupSimpleLoginPassword">کلمه عبور</label>
-
-            </div>
-
-            <div class="input-group input-group-merge">
-              <input type="password" class="form-control form-control-lg text-center" name="password"
-                id="signupSimpleLoginPassword" placeholder="8+ characters required" aria-label="8+ characters required"
-                required>
-              <a id="changePassTarget" class="input-group-append input-group-text" href="javascript:;">
-                <i id="changePassIcon" class="bi-eye"></i>
-              </a>
-            </div>
-
-            <span class="invalid-feedback">لطفا یک گذر واژه معتبر وارد کنید.</span>
-          </div>
-          <!-- End Form -->
-
-          <div class="d-grid mb-3">
-            <a class="form-label-link" href="{% url 'accounts:reset-password' %}">رمز عبور را فراموش کرده اید؟</a>
-            <button type="submit" class="btn btn-primary btn-lg">ورود</button>
-          </div>
-
-          <div class="text-center">
-            <p>حساب کاربری ندارید؟ <a class="link" href="./page-signup-simple.html">اینجا ثبت نام کنید</a></p>
-          </div>
-        </form>
-        <!-- End Form -->
-      </div>
+<div class="container mt-5" style="max-width: 28rem;">
+  <h2 class="mb-4 text-center">ورود</h2>
+  <form id="login-form" method="post" novalidate>
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="email">ایمیل</label>
+      <input type="email" id="email" class="form-control" placeholder="email@site.com" required>
     </div>
-    <!-- End Form -->
+
+    <div class="mb-3">
+      <label for="password">کلمه عبور</label>
+      <input type="password" id="password" class="form-control" placeholder="********" required>
+    </div>
+
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary">ورود</button>
+    </div>
+    <div id="login-message" class="text-danger mt-2"></div>
+  </form>
+</div>
 {% endblock content %}
+
+{% block extra_js %}
+<script src="{% static 'js/auth.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('login-form');
+  const message = document.getElementById('login-message');
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    message.innerText = '';
+
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    if (!email || !password) {
+      message.innerText = 'لطفا ایمیل و رمز عبور را وارد کنید';
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/accounts/login/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+      localStorage.setItem('access', data.access);
+      localStorage.setItem('refresh', data.refresh);
+
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      window.location.href = '/';
+      } 
+      else {
+          message.innerText = data.detail || 'خطا در ورود';
+      }
+    } catch (err) {
+      console.error(err);
+      message.innerText = 'خطا در ارتباط با سرور';
+    }
+  });
+});
+</script>
+{% endblock extra_js %}

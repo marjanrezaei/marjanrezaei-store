@@ -389,7 +389,7 @@
     const productId = $(this).data('product-id');
 
     $.ajax({
-      url: '{% url "cart_api:add_to_cart_api" 0 %}'.replace('0', productId),
+      url: '{% url "cart_api:add-to-cart-api" 0 %}'.replace('0', productId),
       type: 'POST',
       data: {
         product_id: productId,

@@ -1,10 +1,12 @@
 from django.db import models
 from django.db.models import JSONField
 
+
 class PaymentStatusType(models.IntegerChoices):
     pending = 1 , "در انتظار"
     success = 2 , "پرداخت موفق"
     failed = 3 , "پرداخت ناموفق"
+
     
 class PaymentModel(models.Model):
     authority_id = models.CharField(max_length=255, null=False, blank=False)

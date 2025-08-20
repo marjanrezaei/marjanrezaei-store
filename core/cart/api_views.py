@@ -62,7 +62,7 @@ class AddToCartAPIView(CartMixin, APIView):
         }, status=status.HTTP_200_OK)
 
 
-class RemoveProductView(CartMixin, APIView):
+class RemoveProductAPIView(CartMixin, APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -82,7 +82,7 @@ class RemoveProductView(CartMixin, APIView):
         })
 
 
-class UpdateProductQuantityView(CartMixin, APIView):
+class UpdateProductQuantityAPIView(CartMixin, APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):

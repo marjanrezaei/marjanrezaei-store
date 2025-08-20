@@ -61,7 +61,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link {% if request.path == '/shop/product/grid/' %}active{% endif %}"
-                href="{% url 'shop:product-grid' %}">لیست محصولات</a>
+                href="{% url 'shop:product-list' %}">لیست محصولات</a>
             </li>
             <li class="nav-item">
               <a class="nav-link {% if request.path == '/about/' %}active{% endif %}"
@@ -355,7 +355,7 @@
 
           <div class="mb-7">
             <!-- Form -->
-            <form action="{% url 'shop:product-grid' %}">
+            <form action="{% url 'shop:product-list' %}">
               {% csrf_token %}
               <!-- Input Card -->
               <div class="input-card">
@@ -381,8 +381,8 @@
   <!-- JS Jquery -->
   <script src="{% static 'js/Jquery.min.js' %}"></script>
   <script>
-    window.removeUrl = "{% url 'cart:db-remove-product' %}";
-    window.cartUpdateUrl = "{% url 'cart:db-update-product-quantity' %}";
+    window.removeUrl = "{% url 'cart_api:remove-product-api' %}";
+    window.cartUpdateUrl = "{% url 'cart_api:update-product-quantity-api' %}";
     window.csrfToken = "{{ csrf_token }}";
   </script>
   <script src="{% static 'js/custom.js' %}"></script>

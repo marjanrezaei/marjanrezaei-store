@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import ProductModel, ProductImageModel, ProductCategoryModel, WishlistProductModel
 
-# Register your models here.
 
 @admin.register(ProductModel)
 class ProductModelAdmin(admin.ModelAdmin):

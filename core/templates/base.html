@@ -432,8 +432,8 @@
   <!-- JS Jquery -->
   <script src="{% static 'js/jquery.min.js' %}"></script>
   <script>
-    window.removeUrl = "{% url 'cart_api:api_remove_product' %}";
-    window.cartUpdateUrl = "{% url 'cart_api:update-cart' %}";
+    window.removeUrl = "{% url 'cart_api:remove-product-api' %}";
+    window.cartUpdateUrl = "{% url 'cart_api:update-product-quantity-api' %}";
     window.csrfToken = "{{ csrf_token }}";
   </script>
   <script src="{% static 'js/custom.js' %}"></script>

@@ -1,4 +1,5 @@
 {% extends 'dashboard/admin/base.html' %}
+
 {% block Breadcrumb %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb breadcrumb-light mb-0">
@@ -9,6 +10,7 @@
   </ol>
 </nav>
 {% endblock %}
+
 {% block content %}
 
 <!-- Card -->
@@ -20,11 +22,82 @@
   <!-- End Header -->
   <!-- Body -->
   <div class="card-body">
-    <div class="row">
+    <div class="row" id="dashboard-summary">
+      <!-- داده‌های API اینجا نمایش داده می‌شوند -->
     </div>
-    <!-- End Row -->
   </div>
   <!-- End Body -->
 </div>
 <!-- End Card -->
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const accessToken = localStorage.getItem('access_token'); 
+        if (!accessToken) {
+            console.warn("توکن دسترسی پیدا نشد");
+            return;
+        }
+
+        const response = await fetch('/api/dashboard/admin/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
+
+        if (!response.ok) {
+            console.error("خطا در دریافت داده‌ها:", response.status);
+            return;
+        }
+
+        const data = await response.json();
+        const container = document.getElementById('dashboard-summary');
+
+        // کارت‌ها با Bootstrap
+        container.innerHTML = `
+            <div class="col-md-4 mb-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h6 class="card-title">تعداد کاربران</h6>
+                        <p class="card-text">${data.user_count || 0}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h6 class="card-title">تعداد محصولات</h6>
+                        <p class="card-text">${data.products_count || 0}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h6 class="card-title">تعداد سفارش‌ها</h6>
+                        <p class="card-text">${data.orders_count || 0}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h6 class="card-title">تعداد کوپن‌ها</h6>
+                        <p class="card-text">${data.coupons_count || 0}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    } catch (err) {
+        console.error("خطا:", err);
+        document.getElementById('dashboard-summary').innerHTML =
+            '<p class="text-danger">امکان بارگذاری داده‌های داشبورد وجود ندارد.</p>';
+    }
+});
+</script>
 {% endblock %}

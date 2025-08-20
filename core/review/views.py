@@ -3,8 +3,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.shortcuts import redirect
-from django.db import connection
-from django.http import HttpResponseServerError
 
 from .models import ReviewModel
 from .forms import SubmitReviewForm

@@ -22,6 +22,7 @@ class CartModel(models.Model):
     def calculate_total_price(self):
         return sum(item.product.get_price()* item.quantity for item in self.items.all())
 
+
 class CartItemModel(models.Model):
     cart = models.ForeignKey(CartModel, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey('shop.ProductModel', on_delete=models.CASCADE)

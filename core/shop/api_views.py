@@ -4,8 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.core.exceptions import FieldError
 
-from .models import ProductModel, ProductStatusType, ProductCategoryModel, WishlistProductModel
-from review.models import ReviewModel, ReviewStatusType
+from .models import ProductModel, ProductStatusType, WishlistProductModel
 from .serializers import ProductSerializer, ProductDetailSerializer
 
 

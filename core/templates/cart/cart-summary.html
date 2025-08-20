@@ -133,7 +133,7 @@
   if (itemEl) itemEl.classList.add('opacity-50');
 
   try {
-    const updateUrl = "{% url 'cart_api:update-cart' %}";
+    const updateUrl = "{% url 'cart_api:update-product-quantity-api' %}";
 
     const response = await fetch(updateUrl, {
       method: 'POST',

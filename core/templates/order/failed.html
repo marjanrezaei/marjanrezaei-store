@@ -2,87 +2,53 @@
 {% load static %}
 
 {% block content %}
-    <!-- Content -->
-    <div class="container content-space-2 content-space-lg-3">
-      <div class="w-md-75 w-lg-50 text-center mx-md-auto">
-        <div class="mb-5">
-          <img class="img-fluid" src="{% static 'svg/illustrations/oc-hi-five.svg' %}" alt="Image Description" style="width: 15rem;">
-        </div>
-
-        <div class="mb-5">
-          <h1 class="h2">سفارش شما با مشکل مواجه شد!</h1>
-        </div>
-
-        <a class="btn btn-primary btn-transition rounded-pill px-6" href="{% url 'shop:product-list' %}">به خرید ادامه دهید</a>
-      </div>
+<div class="container content-space-2 content-space-lg-3">
+  <div class="w-md-75 w-lg-50 text-center mx-md-auto">
+    <div class="mb-5">
+      <img class="img-fluid" src="{% static 'svg/illustrations/oc-hi-five.svg' %}" alt="Image Description" style="width: 15rem;">
     </div>
-    <!-- End Content -->
 
-    <!-- Subscribe -->
-    <div class="bg-light">
-      <div class="container content-space-2">
-        <div class="w-md-75 w-lg-50 text-center mx-md-auto">
-          <div class="row justify-content-lg-between">
-            <!-- Heading -->
-            <div class="mb-5">
-              <span class="text-cap">ثبت نام</span>
-              <h2>اخبار جدید را دریافت کنید</h2>
-            </div>
-            <!-- End Heading -->
-
-            <form>
-              <!-- Input Card -->
-              <div class="input-card input-card-pill input-card-sm border mb-3">
-                <div class="input-card-form">
-                  <label for="subscribeForm" class="form-label visually-hidden">ایمیل را وارد کنید</label>
-                  <input type="text" class="form-control form-control-lg" id="subscribeForm" placeholder="ایمیل خود را وارد نمایید" aria-label="ایمیل خود را وارد کنید">
-                </div>
-                <button type="button" class="btn btn-primary btn-lg rounded-pill">ثبت نام</button>
-              </div>
-              <!-- End Input Card -->
-            </form>
-
-            <p class="small">می توانید در هر زمانی اشتراک خود را لغو کنید <a href="#">سیاست حفظ حریم خصوصی</a> ما را بخوانید</p>
-          </div>
-        </div>
-      </div>
+    <div class="mb-5">
+      <h1 class="h2" id="order_status_heading">در حال بررسی سفارش...</h1>
+      <p id="order_status_message"></p>
     </div>
-    <!-- End Subscribe -->
 
-    <!-- Clients -->
-    <div class="container content-space-2">
-      <div class="row">
-        <div class="col text-center py-3">
-          <img class="avatar avatar-lg avatar-4x3" src="{% static 'svg/brands/hollister-dark.svg' %}" alt="Logo">
-        </div>
-        <!-- End Col -->
+    <a class="btn btn-primary btn-transition rounded-pill px-6" href="{% url 'shop:product-list' %}">به خرید ادامه دهید</a>
+  </div>
+</div>
+{% endblock %}
 
-        <div class="col text-center py-3">
-          <img class="avatar avatar-lg avatar-4x3" src="{% static 'svg/brands/levis-dark.svg' %}" alt="Logo">
-        </div>
-        <!-- End Col -->
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const orderId = "{{ order_id }}";  // Pass from Django view
+    const apiUrl = `/api/order/${orderId}/status/`;
 
-        <div class="col text-center py-3">
-          <img class="avatar avatar-lg avatar-4x3" src="{% static 'svg/brands/new-balance-dark.svg' %}" alt="Logo">
-        </div>
-        <!-- End Col -->
+    fetch(apiUrl, {
+        headers: {
+            'Authorization': 'Token {{ user.auth_token.key }}' // if using token auth
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+        const heading = document.getElementById('order_status_heading');
+        const message = document.getElementById('order_status_message');
 
-        <div class="col text-center py-3">
-          <img class="avatar avatar-lg avatar-4x3" src="{% static 'svg/brands/puma-dark.svg' %}" alt="Logo">
-        </div>
-        <!-- End Col -->
-
-        <div class="col text-center py-3">
-          <img class="avatar avatar-lg avatar-4x3" src="{% static 'svg/brands/nike-dark.svg' %}" alt="Logo">
-        </div>
-        <!-- End Col -->
-
-        <div class="col text-center py-3">
-          <img class="avatar avatar-lg avatar-4x3" src="{% static 'svg/brands/tnf-dark.svg' %}" alt="Logo">
-        </div>
-        <!-- End Col -->
-      </div>
-      <!-- End Row -->
-    </div>
-    <!-- End Clients -->
+        if (data.status === 'completed') {
+            heading.textContent = 'سفارش شما تکمیل شد!';
+            message.innerHTML = `
+                شماره سفارش: <strong>#${data.id}</strong><br>
+                مجموع: <strong>${data.total_price} تومان</strong>
+            `;
+        } else {
+            heading.textContent = 'سفارش شما با مشکل مواجه شد!';
+            message.textContent = 'لطفا دوباره تلاش کنید یا با پشتیبانی تماس بگیرید.';
+        }
+    })
+    .catch(err => {
+        document.getElementById('order_status_heading').textContent = 'خطا در بارگذاری اطلاعات سفارش';
+        console.error(err);
+    });
+});
+</script>
 {% endblock %}

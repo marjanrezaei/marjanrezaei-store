@@ -3,6 +3,10 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import handler500, handler404, handler403
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 
 # Error handlers
@@ -22,28 +26,23 @@ urlpatterns = [
     path('order/', include('order.urls')),
     path('payment/', include('payment.urls')),
     path('review/', include('review.urls')),
+    path('dashboard/', include('dashboard.urls')),
     
     # API views
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    
     path("api/website/", include("website.api_urls")),
     path("api/shop/", include("shop.api_urls", namespace="shop_api")),
     path("api/accounts/", include("accounts.api_urls", namespace="accounts_api")),
-    path("api/cart/", include("cart.api_urls", namespace="cart_api")), 
+    path("api/cart/", include("cart.api_urls")), 
     path("api/order/", include("order.api_urls")),
     path("api/payment/", include("payment.api_urls")),
     path("api/review/", include("review.api_urls")),
- 
-
-
-    
-    
-    path('dashboard/', include('dashboard.urls')),
   
-    
-    
-
     # Dashboard APIs
-    path('dashboard/admin/', include('dashboard.admin.urls')),
-    path('dashboard/customer/', include('dashboard.customer.urls')),
+    path('api/dashboard/admin/', include('dashboard.api_admin.api_urls')),
+    path('api/dashboard/customer/', include('dashboard.api_customer.api_urls')),
 ]
 
 # ---------- Static & Media Files ----------

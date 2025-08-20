@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5" style="max-width: 28rem;">
+  <h2 class="mb-4 text-center">ثبت نام</h2>
+  <form id="register-form" novalidate>
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="email">ایمیل</label>
+      <input type="email" id="email" class="form-control" placeholder="email@site.com" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="password">کلمه عبور</label>
+      <input type="password" id="password" class="form-control" placeholder="********" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="first_name">نام</label>
+      <input type="text" id="first_name" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="last_name">نام خانوادگی</label>
+      <input type="text" id="last_name" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="phone_number">شماره تلفن</label>
+      <input type="text" id="phone_number" class="form-control" placeholder="09123456789" required>
+    </div>
+
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary">ثبت نام</button>
+    </div>
+    <div id="register-message" class="text-danger mt-2"></div>
+  </form>
+</div>
+{% endblock content %}
+
+<script src="{% static 'js/auth.js' %}"></script>
+<script>
+document.getElementById('register-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const first_name = document.getElementById('first_name').value.trim();
+  const last_name = document.getElementById('last_name').value.trim();
+  const phone_number = document.getElementById('phone_number').value.trim();
+
+  try {
+    const response = await fetch('/api/accounts/register/', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        email, password,
+        profile: {first_name, last_name, phone_number}
+      })
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      document.getElementById('register-message').classList.remove('text-danger');
+      document.getElementById('register-message').classList.add('text-success');
+      document.getElementById('register-message').innerText = 'ثبت نام با موفقیت انجام شد!';
+    } else {
+      document.getElementById('register-message').innerText = JSON.stringify(data);
+    }
+  } catch(err) {
+    document.getElementById('register-message').innerText = 'خطا در ارتباط با سرور';
+  }
+});
+</script>

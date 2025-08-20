@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import CartItemModel
 
+
 class CartItemSerializer(serializers.ModelSerializer):
     product_name = serializers.CharField(source='product.title')
     product_image = serializers.SerializerMethodField()

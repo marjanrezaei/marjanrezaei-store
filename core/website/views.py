@@ -1,9 +1,9 @@
 from django.views.generic import TemplateView, FormView, View
 from django.core.management import call_command
-from django.http import HttpResponse, HttpResponseNotAllowed
-from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.contrib import messages
-from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 from .forms import NewsLetterForm, ContactForm
 from django.core.mail import send_mail
