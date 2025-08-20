@@ -1,117 +1,122 @@
-Marjan Store – Django REST API E-commerce
+# Marjan Store – E-commerce API (Django REST Framework)
 
-GitHub Repository: https://github.com/marjanrezaei/marjanrezaei-store
+🚀 **Live API:** [https://marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com)
 
-Marjan Store is a RESTful e-commerce backend built with Django and Django REST Framework (DRF). It provides APIs for products, users, carts, and orders, making it suitable for web and mobile frontends.
+Marjan Store is an **API-based e-commerce backend** built with **Django REST Framework (DRF)**.
+It provides a complete RESTful API for managing products, users, shopping carts, and orders.
+The project is deployed on **Render**, so you can directly interact with the API endpoints online.
 
-🛠️ Features
+---
 
-RESTful API Endpoints: Full CRUD operations for products, carts, and orders.
+## ✨ Features
 
-User Authentication: JWT-based login and registration.
+* 🔑 **Authentication & Authorization**
 
-Admin Dashboard: Manage products, users, and orders.
+  * User registration & login
+  * JWT-based authentication for secure API access
 
-Search & Filtering: Easily query products by category, name, or price.
+* 🛍️ **Product Management**
 
-Scalable Architecture: Designed to handle growing data and traffic.
+  * List, search, and filter products
+  * Admin-only endpoints for creating, updating, and deleting products
 
-🚀 Installation
-Prerequisites
+* 🛒 **Shopping Cart**
 
-Python 3.8+
+  * Add, update, and remove items from the cart
+  * Retrieve cart details per user
 
-Django 3.2+
+* 📦 **Order Management**
 
-Django REST Framework
+  * Create orders from cart
+  * View user-specific order history
 
-PostgreSQL (or SQLite for development)
+* ⚡ **API-first Design**
 
-Setup
+  * Built entirely on DRF for use with web frontends, mobile apps, or third-party integrations
 
-Clone the repository:
+---
 
-git clone https://github.com/marjanrezaei/marjanrezaei-store.git
-cd marjanrezaei-store
+## 🌍 Live API on Render
 
+The backend is deployed and accessible here:
+👉 [https://marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com)
 
-Create a virtual environment and activate it:
+### Example Endpoints
 
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+| Endpoint              | Method | Description                |
+| --------------------- | ------ | -------------------------- |
+| `/api/products/`      | GET    | List all products          |
+| `/api/products/<id>/` | GET    | Get single product details |
+| `/api/auth/register/` | POST   | Register a new user        |
+| `/api/auth/login/`    | POST   | Login & get JWT token      |
+| `/api/cart/`          | GET    | View cart for current user |
+| `/api/cart/`          | POST   | Add product to cart        |
+| `/api/orders/`        | POST   | Create a new order         |
+| `/api/orders/`        | GET    | List user’s past orders    |
 
+---
 
-Install dependencies:
+## ⚙️ Local Development Setup
 
-pip install -r requirements.txt
+1. **Clone the repository**
 
+   ```bash
+   git clone https://github.com/marjanrezaei/marjanrezaei-store.git
+   cd marjanrezaei-store
+   ```
 
-Apply migrations:
+2. **Create a virtual environment & activate it**
 
-python manage.py migrate
+   ```bash
+   python -m venv venv
+   source venv/bin/activate   # On Windows: venv\Scripts\activate
+   ```
 
+3. **Install dependencies**
 
-Create a superuser:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-python manage.py createsuperuser
+4. **Run migrations**
 
+   ```bash
+   python manage.py migrate
+   ```
 
-Run the development server:
+5. **Create a superuser (for admin access)**
 
-python manage.py runserver
+   ```bash
+   python manage.py createsuperuser
+   ```
 
+6. **Start the server**
 
-Your API will be available at http://127.0.0.1:8000/api/.
+   ```bash
+   python manage.py runserver
+   ```
 
-📦 Docker Setup
+Now open: `http://127.0.0.1:8000`
 
-Build Docker containers:
+---
 
-docker-compose build
+## 🧪 Testing
 
+Run unit tests with:
 
-Run the containers:
-
-docker-compose up
-
-
-The API is accessible at http://localhost:8000/api/.
-
-🔧 API Endpoints
-Endpoint	Method	Description
-/api/products/	GET	List all products
-/api/products/<id>/	GET	Retrieve product details
-/api/products/	POST	Add new product (admin only)
-/api/products/<id>/	PUT	Update product (admin only)
-/api/products/<id>/	DELETE	Delete product (admin only)
-/api/cart/	GET	View user cart
-/api/cart/	POST	Add item to cart
-/api/cart/<id>/	DELETE	Remove item from cart
-/api/orders/	POST	Create a new order
-/api/orders/<id>/	GET	Retrieve order details
-/api/auth/register/	POST	User registration
-/api/auth/login/	POST	User login (JWT token returned)
-🛡️ Authentication & Permissions
-
-JWT Authentication for secure API access
-
-Admin users have full CRUD access
-
-Regular users can manage their own carts and orders
-
-🧪 Testing
-
-Run tests with:
-
+```bash
 python manage.py test
+```
 
-📄 License
+---
 
-This project is licensed under the MIT License – see the LICENSE
- file for details.
+## 📄 License
 
-📞 Contact
+This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
 
-GitHub: marjanrezaei
+---
 
-Email: rezaei.marjann@gmail.com 
+## 👩‍💻 Author
+
+* GitHub: [marjanrezaei](https://github.com/marjanrezaei)
+* Live API: [marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com) 
