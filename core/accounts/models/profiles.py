@@ -11,7 +11,7 @@ class Profile(models.Model):
     phone_number = models.CharField(
         max_length=11,
         validators=[validate_iranian_phone], 
-        unique=True)
+        unique=True, blank=True, null=True)
     
     image = models.ImageField(upload_to="profile/", default="profile/default.jpg")
     image_url = models.URLField(blank=True, null=True)  # فقط برای لیارا

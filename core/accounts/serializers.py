@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.contrib.auth.password_validation import validate_password
+from django.core import exceptions
 
 from .models.users import User
 from .models.profiles import Profile
@@ -9,28 +11,40 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'email', 'type']
 
+
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['first_name', 'last_name', 'phone_number', 'image', 'image_url']
 
+
 class RegisterSerializer(serializers.ModelSerializer):
-    profile = ProfileSerializer(required=True)
+    password = serializers.CharField(write_only=True)
+    password1 = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
-        fields = ['email', 'password', 'type', 'profile']
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ["email", "password", "password1"]
+
+    def validate(self, attrs):
+        if attrs["password"] != attrs["password1"]:
+            raise serializers.ValidationError({"password1": "Passwords do not match."})
+        try:
+            validate_password(attrs["password"])
+        except exceptions.ValidationError as e:
+            raise serializers.ValidationError({"password": list(e.messages)})
+        return attrs
 
     def create(self, validated_data):
-        profile_data = validated_data.pop('profile')
-        password = validated_data.pop('password')
-        user = User.objects.create(**validated_data)
+        validated_data.pop("password1")
+        password = validated_data.pop("password")
+        user = User(email=validated_data["email"])
         user.set_password(password)
+        user.is_verified = False  # Ensure user is inactive until activation
         user.save()
-        Profile.objects.create(user=user, **profile_data)
         return user
-
+    
+    
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     username_field = 'email'
 

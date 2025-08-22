@@ -118,13 +118,15 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email settings
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = config('EMAIL_HOST', default='smtp4dev')
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=False, cast=bool)
-EMAIL_USE_SSL = config('EMAIL_USE_SSL', default=False, cast=bool)
-EMAIL_PORT = config('EMAIL_PORT', default=25, cast=int)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = config("EMAIL_HOST", default="mailhog" if DEBUG else "smtp.mailtrap.io")
+EMAIL_PORT = config("EMAIL_PORT", default=1025 if DEBUG else 587, cast=int)
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=False if DEBUG else True, cast=bool)
+EMAIL_USE_SSL = config("EMAIL_USE_SSL", default=False, cast=bool)
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="no-reply@example.com")
+
 
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ['127.0.0.1']
@@ -141,7 +143,6 @@ CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND', default="redis://redis:6
 
 
 FRONTEND_URL = config('FRONTEND_URL', default='http://127.0.0.1:8000')
-DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='rezaei.marjann@gmail.com')
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
