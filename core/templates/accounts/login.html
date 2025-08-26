@@ -20,53 +20,57 @@
     </div>
     <div id="login-message" class="text-danger mt-2"></div>
   </form>
+
+  <!-- 🔗 لینک‌ها -->
+  <div class="mt-3 text-center">
+    <a href="{% url 'accounts:signup' %}">ثبت‌ نام</a> |
+    <a href="{% url 'accounts:reset-password' %}">فراموشی رمز عبور</a>
+  </div>
 </div>
 {% endblock content %}
 
 {% block extra_js %}
 <script src="{% static 'js/auth.js' %}"></script>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('login-form');
-  const message = document.getElementById('login-message');
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('login-form');
+    const message = document.getElementById('login-message');
 
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    message.innerText = '';
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      message.innerText = '';
 
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
 
-    if (!email || !password) {
-      message.innerText = 'لطفا ایمیل و رمز عبور را وارد کنید';
-      return;
-    }
-
-    try {
-      const response = await fetch('/api/accounts/login/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-      localStorage.setItem('access', data.access);
-      localStorage.setItem('refresh', data.refresh);
-
-      localStorage.setItem('user', JSON.stringify(data.user));
-
-      window.location.href = '/';
-      } 
-      else {
-          message.innerText = data.detail || 'خطا در ورود';
+      if (!email || !password) {
+        message.innerText = 'لطفا ایمیل و رمز عبور را وارد کنید';
+        return;
       }
-    } catch (err) {
-      console.error(err);
-      message.innerText = 'خطا در ارتباط با سرور';
-    }
+
+      try {
+        const response = await fetch('/api/accounts/login/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          localStorage.setItem('access', data.access);
+          localStorage.setItem('refresh', data.refresh);
+          localStorage.setItem('user', JSON.stringify(data.user));
+
+          window.location.href = '/';
+        } else {
+          message.innerText = data.detail || 'خطا در ورود';
+        }
+      } catch (err) {
+        console.error(err);
+        message.innerText = 'خطا در ارتباط با سرور';
+      }
+    });
   });
-});
 </script>
 {% endblock extra_js %}

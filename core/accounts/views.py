@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.utils.timezone import now
 from datetime import timedelta
 import json
+from django.views.generic import TemplateView
 from django.views import View
 from django.http import JsonResponse
 from django.contrib.auth.views import LoginView as AuthLoginView

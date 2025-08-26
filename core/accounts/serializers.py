@@ -21,29 +21,45 @@ class ProfileSerializer(serializers.ModelSerializer):
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     password1 = serializers.CharField(write_only=True)
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=True)
+    phone_number = serializers.CharField(required=True)
 
     class Meta:
         model = User
-        fields = ["email", "password", "password1"]
+        fields = ["email", "password", "password1", "first_name", "last_name", "phone_number"]
 
     def validate(self, attrs):
         if attrs["password"] != attrs["password1"]:
             raise serializers.ValidationError({"password1": "Passwords do not match."})
         try:
             validate_password(attrs["password"])
-        except exceptions.ValidationError as e:
+        except serializers.ValidationError as e:
             raise serializers.ValidationError({"password": list(e.messages)})
         return attrs
 
     def create(self, validated_data):
+        # Remove password1 before creating user
         validated_data.pop("password1")
         password = validated_data.pop("password")
-        user = User(email=validated_data["email"])
-        user.set_password(password)
-        user.is_verified = False  # Ensure user is inactive until activation
-        user.save()
+
+        # Extract profile info
+        first_name = validated_data.pop("first_name")
+        last_name = validated_data.pop("last_name")
+        phone_number = validated_data.pop("phone_number")
+
+        # Create user
+        user = User.objects.create_user(email=validated_data["email"], password=password, is_verified=False)
+
+        # Update related profile
+        profile = user.user_profile  # because related_name='user_profile'
+        profile.first_name = first_name
+        profile.last_name = last_name
+        profile.phone_number = phone_number
+        profile.save()
+
         return user
-    
+
     
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     username_field = 'email'

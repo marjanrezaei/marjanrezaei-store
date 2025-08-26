@@ -5,21 +5,17 @@ from django.contrib.auth import authenticate, login
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
-from django.utils.timezone import now
-from datetime import timedelta
-from django.contrib.auth.tokens import default_token_generator
-from django.utils.encoding import force_str
-from django.utils.http import urlsafe_base64_decode
 from django.shortcuts import get_object_or_404
 from rest_framework_simplejwt.tokens import RefreshToken, UntypedToken
 import traceback
+import jwt
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.urls import reverse
 from rest_framework_simplejwt.exceptions import TokenError
+from rest_framework_simplejwt.tokens import AccessToken
 
-from .tasks import send_reset_email
 from .serializers import RegisterSerializer, MyTokenObtainPairSerializer
 from .models.users import User
 
@@ -119,49 +115,81 @@ class ActivationApiView(generics.GenericAPIView):
 
 
 class PasswordResetAPI(APIView):
-    def post(self, request, *args, **kwargs):
+    """
+    Initiates password reset via JWT email.
+    Expects JSON: { "email": "user@example.com" }
+    """
+    permission_classes = []  # Allow any
+
+    def post(self, request):
         email = request.data.get("email", "").strip()
         if not email:
-            return Response({"error": "Email is required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "Email is required."}, status=status.HTTP_400_BAD_REQUEST)
 
-        if not User.objects.filter(email__iexact=email).exists():
-            return Response({"error": "No account found with this email"}, status=status.HTTP_404_NOT_FOUND)
+        try:
+            user = User.objects.get(email__iexact=email)
+        except User.DoesNotExist:
+            return Response({"error": "No account found with this email."}, status=status.HTTP_404_NOT_FOUND)
 
-        # Schedule async email
-        send_reset_email.apply_async((email,), eta=now() + timedelta(hours=48))
+        # Generate JWT token with user ID
+        token = str(AccessToken.for_user(user))
 
-        return Response({"message": "Password reset link will be sent to your email."}, status=status.HTTP_200_OK)
+        # Build reset URL
+        path = reverse('accounts_api:password-reset-confirm-api')  # you can create a single endpoint for JWT
+        domain = settings.FRONTEND_URL.rstrip('/')
+        reset_link = f"{domain}{path}?token={token}"
+
+        # Render email
+        message = render_to_string("accounts/password_reset_email.html", {
+            "user": user,
+            "reset_link": reset_link,
+        })
+
+        email_message = EmailMessage(
+            subject="Password Reset Request",
+            body=message,
+            to=[email],
+            from_email=settings.DEFAULT_FROM_EMAIL,
+        )
+        email_message.content_subtype = "html"
+        email_message.send()
+
+        return Response({"message": "A password reset link has been sent to your email."}, status=status.HTTP_200_OK)
 
 
-class PasswordResetConfirmAPI(APIView):
+class PasswordResetConfirmJWTAPI(APIView):
     """
-    Handles password reset confirmation via API.
-    Expects: uid, token, new_password, confirm_password
+    دریافت JWT از query params و تغییر پسورد کاربر.
     """
-    
-    def post(self, request, *args, **kwargs):
-        uidb64 = request.data.get("uid")
-        token = request.data.get("token")
+    permission_classes = []  
+    def post(self, request):
+        token = request.query_params.get("token")  
         new_password = request.data.get("new_password")
         confirm_password = request.data.get("confirm_password")
 
-        if not uidb64 or not token or not new_password or not confirm_password:
+        if not token or not new_password or not confirm_password:
             return Response({"error": "All fields are required"}, status=status.HTTP_400_BAD_REQUEST)
 
         if new_password != confirm_password:
             return Response({"error": "Passwords do not match"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            uid = force_str(urlsafe_base64_decode(uidb64))
-            user = User.objects.get(pk=uid)
-        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-            return Response({"error": "Invalid link"}, status=status.HTTP_400_BAD_REQUEST)
+            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
+        except jwt.ExpiredSignatureError:
+            return Response({"error": "Token has expired"}, status=status.HTTP_400_BAD_REQUEST)
+        except jwt.InvalidTokenError:
+            return Response({"error": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST)
 
-        if not default_token_generator.check_token(user, token):
-            return Response({"error": "Invalid or expired token"}, status=status.HTTP_400_BAD_REQUEST)
+        if payload.get("type") != "password_reset":
+            return Response({"error": "Invalid token type"}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Set the new password
+        try:
+            user = User.objects.get(id=payload.get("user_id"))
+        except User.DoesNotExist:
+            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
         user.set_password(new_password)
         user.save()
 
         return Response({"message": "Password has been reset successfully"}, status=status.HTTP_200_OK)
+

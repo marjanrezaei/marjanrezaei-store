@@ -127,6 +127,7 @@ EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="no-reply@example.com")
 
+FRONTEND_URL = config('FRONTEND_URL', default='http://127.0.0.1:8000' if DEBUG else 'https://marjanrezaei-store.onrender.com')
 
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ['127.0.0.1']
@@ -140,9 +141,6 @@ LOGOUT_REDIRECT_URL = '/'
 # Celery settings
 CELERY_BROKER_URL = config('CELERY_BROKER_URL', default="redis://redis:6379/0")
 CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND', default="redis://redis:6379/0")
-
-
-FRONTEND_URL = config('FRONTEND_URL', default='http://127.0.0.1:8000')
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
