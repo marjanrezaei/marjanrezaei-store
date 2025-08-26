@@ -11,6 +11,26 @@ import logging
 import os
 
 
+from django.db import connection
+
+
+from django.http import JsonResponse
+from django.conf import settings
+
+def test_email(request):
+    try:
+        send_mail(
+            subject="Test Email from Render",
+            message="If you see this, Gmail SMTP works!",
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=["rezaei.marjann@gmail.com"],
+            fail_silently=False,
+        )
+        return JsonResponse({"status": "ok", "msg": "email sent"})
+    except Exception as e:
+        return JsonResponse({"status": "error", "msg": str(e)})
+    
+
 logger = logging.getLogger(__name__)
 
 PING_TOKEN = os.getenv("SECRET_PING_TOKEN", "")
@@ -30,7 +50,17 @@ class SuperuserRequiredMixin(UserPassesTestMixin):
         return self.request.user.is_superuser
 
 
-class MigrateView(SuperuserRequiredMixin, View):
+def test_db(request):
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT NOW();")
+            row = cursor.fetchone()
+        return HttpResponse(f"DB OK - Time: {row[0]}")
+    except Exception as e:
+        return HttpResponse(f"DB ERROR: {e}")
+    
+
+class MigrateView(View):
     def get(self, request, *args, **kwargs):
         try:
             call_command('migrate', interactive=False)

@@ -4,7 +4,7 @@ services:
     env: python
     plan: free
     region: oregon
-    buildCommand: python manage.py collectstatic --noinput
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
     startCommand: gunicorn core.wsgi:application --bind 0.0.0.0:8000
     disks:
       - name: media

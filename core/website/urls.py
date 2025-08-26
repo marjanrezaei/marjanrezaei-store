@@ -10,4 +10,7 @@ urlpatterns = [
     path('newsletter/', views.NewsletterView.as_view(), name='newsletter'),
     
     path('migrate/', views.MigrateView.as_view(), name='migrate'),
+    path("test-email/", views.test_email),
+    path("test-db/", views.test_db),
+    
 ]
