@@ -14,8 +14,8 @@
 }
 @font-face {
 	font-family: vazir-bold;
-	src: url('../fonts/vazir/vazir-Bold.eot');
-	src: url('../fonts/vazir/vazir-Blod.eot') format('embedded-opentype'), url('../fonts/vazir/Vazir-Bold-FD.woff') format('woff');
+	
+	src: url('../fonts/vazir/Vazir-Bold-FD.woff') format('woff');
 	font-weight: 400;
 	font-style: normal;
   font-display: swap;
