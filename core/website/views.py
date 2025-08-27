@@ -12,6 +12,8 @@ import os
 
 
 from django.db import connection
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 
 from django.http import JsonResponse
@@ -60,13 +62,14 @@ def test_db(request):
         return HttpResponse(f"DB ERROR: {e}")
     
 
+@method_decorator(csrf_exempt, name='dispatch')
 class MigrateView(View):
     def get(self, request, *args, **kwargs):
         try:
             call_command('migrate', interactive=False)
-            return HttpResponse("Migrations completed successfully!")
+            return HttpResponse("✅ Migrations completed successfully!")
         except Exception as e:
-            return HttpResponse(f"Error during migration: {e}")
+            return HttpResponse(f"❌ Error during migration: {e}")
         
 
 class IndexView(TemplateView):
