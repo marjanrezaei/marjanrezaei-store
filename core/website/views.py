@@ -4,35 +4,16 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
-
-from .forms import NewsLetterForm, ContactForm
 from django.core.mail import send_mail
 import logging
 import os
-
-
-from django.db import connection
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
+from .forms import NewsLetterForm, ContactForm
 
-from django.http import JsonResponse
-from django.conf import settings
-
-def test_email(request):
-    try:
-        send_mail(
-            subject="Test Email from Render",
-            message="If you see this, Gmail SMTP works!",
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=["rezaei.marjann@gmail.com"],
-            fail_silently=False,
-        )
-        return JsonResponse({"status": "ok", "msg": "email sent"})
-    except Exception as e:
-        return JsonResponse({"status": "error", "msg": str(e)})
     
-
+# ping
 logger = logging.getLogger(__name__)
 
 PING_TOKEN = os.getenv("SECRET_PING_TOKEN", "")
@@ -47,23 +28,14 @@ def ping_view(request):
     return HttpResponse("pong")
 
 
+# migrate
 class SuperuserRequiredMixin(UserPassesTestMixin):
     def test_func(self):
         return self.request.user.is_superuser
-
-
-def test_db(request):
-    try:
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT NOW();")
-            row = cursor.fetchone()
-        return HttpResponse(f"DB OK - Time: {row[0]}")
-    except Exception as e:
-        return HttpResponse(f"DB ERROR: {e}")
     
 
 @method_decorator(csrf_exempt, name='dispatch')
-class MigrateView(View):
+class MigrateView(View, SuperuserRequiredMixin):
     def get(self, request, *args, **kwargs):
         try:
             call_command('migrate', interactive=False)

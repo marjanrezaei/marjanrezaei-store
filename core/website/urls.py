@@ -9,8 +9,7 @@ urlpatterns = [
     path('contact/', views.ContactView.as_view(), name='contact'),
     path('newsletter/', views.NewsletterView.as_view(), name='newsletter'),
     
+    path("ping/", views.ping_view, name="ping"),
     path('migrate/', views.MigrateView.as_view(), name='migrate'),
-    path("test-email/", views.test_email),
-    path("test-db/", views.test_db),
-    
+
 ]
