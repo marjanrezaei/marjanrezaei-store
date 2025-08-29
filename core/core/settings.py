@@ -80,17 +80,15 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # ========================
 # دیتابیس
 # ========================
-DATABASE_URL = os.getenv("DATABASE_URL")
+# Get DATABASE_URL from environment or use local default
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:postgres@db:5432/postgres")
 
-if not DATABASE_URL:
-    # Provide a sensible default for local development
-    DATABASE_URL = "postgresql://postgres:postgres@db:5432/postgres"
-
+# Configure Django DATABASES
 DATABASES = {
-    "default": dj_database_url.config(
-        default=os.environ.get("DATABASE_URL"),
+    "default": dj_database_url.parse(
+        DATABASE_URL,
         conn_max_age=600,
-        ssl_require=True,
+        ssl_require=os.getenv("ENV") == "production"  # Enable SSL only if using remote DB
     )
 }
 # ========================
