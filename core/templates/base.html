@@ -94,7 +94,7 @@
               </button> -->
               <a href="{% url 'cart:cart-summary' %}" class="btn btn-ghost-secondary btn-icon">
                 <i class="bi-basket"></i>
-                <span id="total-cart-item-count"> {{ total_quantity }} </span>
+                <span id="total-cart-item-count">0</span>
               </a>
               <!-- End Shopping Cart -->
               {% if request.user.is_authenticated %}
@@ -601,6 +601,23 @@
       });
     }
   </script>
+  <script>
+  async function updateCartCount() {
+    try {
+      const response = await fetch('/api/cart/summary/');
+      if (!response.ok) throw new Error("خطا در دریافت سبد خرید");
+
+      const data = await response.json();
+      const countEl = document.getElementById('total-cart-item-count');
+      if (countEl) countEl.textContent = data.total_quantity || 0;
+
+    } catch (err) {
+      console.error("خطا در آپدیت تعداد سبد خرید:", err);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", updateCartCount);
+</script>
 
   {% block extra_js %}
 

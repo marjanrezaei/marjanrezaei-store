@@ -72,7 +72,7 @@
     return Number(price).toLocaleString('fa-IR') + ' تومان';
   }
 
-  // رندر هر آیتم سبد خرید
+  // ---- رندر آیتم ----
   function renderCartItem(item) {
     return `
 <li id="cart-item-${item.product_id}" class="list-group-item d-flex flex-column flex-sm-row justify-content-between align-items-center p-2 opacity-0 transition">
@@ -97,117 +97,105 @@
 </li>`;
   }
 
-  // بارگذاری سبد خرید
+  // ---- بارگذاری خلاصه سبد خرید ----
   async function fetchCartSummary() {
     const list = document.getElementById('cart-items-list');
-    list.innerHTML = '<li class="text-center text-muted p-2 small">در حال بارگذاری...</li>';
+    if (list) list.innerHTML = '<li class="text-center text-muted p-2 small">در حال بارگذاری...</li>';
 
     try {
       const response = await fetch('/api/cart/summary/');
+      if (!response.ok) throw new Error("خطا در دریافت اطلاعات سبد خرید");
+
       const data = await response.json();
 
-      // بروزرسانی جمع کل
-      document.getElementById('total-payment-price').textContent = formatPrice(data.total_payment_price || 0);
+      // شمارنده بالای هدر
+      document.getElementById('total-cart-item-count').textContent = data.total_quantity || 0;
 
-      if (!data.cart_items || data.cart_items.length === 0) {
-        list.innerHTML = '<li class="text-center text-muted p-2 small">سبد خرید شما خالی است.</li>';
-        return;
+      // جمع کل
+      const totalPriceEl = document.getElementById('total-payment-price');
+      if (totalPriceEl) totalPriceEl.textContent = formatPrice(data.total_payment_price || 0);
+
+      // لیست محصولات (فقط وقتی صفحه summary هستیم)
+      if (list) {
+        if (!data.cart_items || data.cart_items.length === 0) {
+          list.innerHTML = '<li class="text-center text-muted p-2 small">سبد خرید شما خالی است.</li>';
+          return;
+        }
+
+        list.innerHTML = '';
+        data.cart_items.forEach(item => {
+          list.insertAdjacentHTML('beforeend', renderCartItem(item));
+          const li = document.getElementById(`cart-item-${item.product_id}`);
+          requestAnimationFrame(() => li.classList.remove('opacity-0'));
+        });
       }
-
-      list.innerHTML = '';
-      data.cart_items.forEach(item => {
-        list.insertAdjacentHTML('beforeend', renderCartItem(item));
-        const li = document.getElementById(`cart-item-${item.product_id}`);
-        requestAnimationFrame(() => li.classList.remove('opacity-0'));
-      });
-
     } catch (err) {
       console.error(err);
-      list.innerHTML = '<li class="text-center text-danger p-2 small">خطا در بارگذاری سبد خرید.</li>';
+      if (list) list.innerHTML = '<li class="text-center text-danger p-2 small">خطا در بارگذاری سبد خرید.</li>';
     }
   }
 
+  // ---- تغییر تعداد ----
   async function changeProductQuantity(productId, quantity) {
-  quantity = parseInt(quantity, 10);  // تبدیل به عدد
-  const itemEl = document.getElementById(`cart-item-${productId}`);
-  if (itemEl) itemEl.classList.add('opacity-50');
+    quantity = parseInt(quantity, 10);
+    const itemEl = document.getElementById(`cart-item-${productId}`);
+    if (itemEl) itemEl.classList.add('opacity-50');
 
-  try {
-    const updateUrl = "{% url 'cart_api:update-product-quantity-api' %}";
+    try {
+      const updateUrl = "{% url 'cart_api:update-product-quantity-api' %}";
+      const response = await fetch(updateUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
+        body: JSON.stringify({ product_id: productId, quantity })
+      });
 
-    const response = await fetch(updateUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrftoken
-      },
-      body: JSON.stringify({ product_id: productId, quantity: quantity })
-    });
+      if (!response.ok) throw new Error(await response.text());
 
-    if (!response.ok) {
-      const errText = await response.text();
-      console.error('خطا در تغییر تعداد محصول:', errText);
+      // بعد از موفقیت دوباره خلاصه رو آپدیت می‌کنیم
+      await fetchCartSummary();
+
+    } catch (err) {
+      console.error('خطا در تغییر تعداد محصول:', err);
       alert('خطا در تغییر تعداد محصول.');
-      return;
+    } finally {
+      if (itemEl) itemEl.classList.remove('opacity-50');
     }
-
-    const data = await response.json();
-    if (data.total_quantity !== undefined)
-        document.getElementById('total-cart-item-count').textContent = data.total_quantity;
-
-    if (data.item_total !== undefined)
-      document.getElementById(`cart-item-total-${productId}`).textContent = formatPrice(data.item_total);
-
-    if (data.cart_total !== undefined)
-      document.getElementById('total-payment-price').textContent = formatPrice(data.cart_total);
-
-  } catch (err) {
-    console.error(err);
-    alert('خطا در تغییر تعداد محصول.');
-  } finally {
-    if (itemEl) itemEl.classList.remove('opacity-50');
   }
-}
 
+  // ---- حذف محصول ----
   async function removeProduct(productId) {
-      const itemEl = document.getElementById(`cart-item-${productId}`);
-      if (itemEl) {
-          itemEl.classList.add('opacity-0', 'translate-x-full', 'transition', 'duration-500');
+    const itemEl = document.getElementById(`cart-item-${productId}`);
+    if (itemEl) {
+      itemEl.classList.add('opacity-0', 'translate-x-full', 'transition', 'duration-500');
 
-          setTimeout(async () => {
-              try {
-                  const formData = new FormData();
-                  formData.append("product_id", productId);
+      setTimeout(async () => {
+        try {
+          const formData = new FormData();
+          formData.append("product_id", productId);
 
-                  const response = await fetch('/api/cart/remove-product/', {
-                      method: 'POST',
-                      headers: { 'X-CSRFToken': csrftoken },
-                      body: formData
-                  });
+          const response = await fetch('/api/cart/remove-product/', {
+            method: 'POST',
+            headers: { 'X-CSRFToken': csrftoken },
+            body: formData
+          });
 
-                  if (!response.ok) {
-                      console.error("خطا در حذف محصول:", await response.text());
-                      return;
-                  }
+          if (!response.ok) throw new Error(await response.text());
 
-                  const data = await response.json();
+          // حذف از DOM
+          itemEl.remove();
 
-                  // حذف آیتم از DOM
-                  itemEl.remove();
+          // دوباره خلاصه رو آپدیت کن
+          await fetchCartSummary();
 
-                  // بروزرسانی شمارنده سبد خرید (jQuery style)
-                  if (data.total_quantity !== undefined) {
-                      $("#total-cart-item-count").text(data.total_quantity);
-                  }
-
-              } catch (err) {
-                  console.error(err);
-                  alert('خطا در حذف محصول.');
-              }
-          }, 500);
-      }
+        } catch (err) {
+          console.error("خطا در حذف محصول:", err);
+          alert('خطا در حذف محصول.');
+        }
+      }, 500);
+    }
   }
 
+  // اجرای اولیه بعد از لود
   document.addEventListener('DOMContentLoaded', fetchCartSummary);
 </script>
 {% endblock %}

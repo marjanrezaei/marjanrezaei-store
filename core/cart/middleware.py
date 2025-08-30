@@ -1,18 +1,27 @@
-from django.utils import timezone
+from django.utils.deprecation import MiddlewareMixin
+from cart.models import CartModel
+from .cart import CartDB
 
-class CartMiddleware:
-    def __init__(self, get_response):
-        self.get_response = get_response
+class CartMiddleware(MiddlewareMixin):
 
-    def __call__(self, request):
-        # مطمئن شدن session key ساخته شده
+    def process_request(self, request):
+        # Make sure the session has a key
         if not request.session.session_key:
-            request.session.save()
+            request.session.create()
 
-        # ست کردن session key برای cart ناشناس
-        request.session['anonymous_cart_session_key'] = request.session.session_key
-        request.session.modified = True
+        # Set a key for anonymous users if it doesn't exist yet
+        if not request.session.get('anonymous_cart_session_key'):
+            request.session['anonymous_cart_session_key'] = request.session.session_key
+            request.session.modified = True
 
-        # cart را روی request قرار می‌دهد (بعد از login merge خواهد شد)
-        request.cart = None
-        return self.get_response(request)
+        # Attach the cart to the request if not already set
+        if getattr(request, 'cart', None):
+            return  # Cart already attached
+
+        if request.user.is_authenticated:
+            cart, _ = CartModel.objects.get_or_create(user=request.user)
+        else:
+            session_key = request.session['anonymous_cart_session_key']
+            cart, _ = CartModel.objects.get_or_create(session_key=session_key, user__isnull=True)
+
+        request.cart = cart
