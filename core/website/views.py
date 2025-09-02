@@ -36,7 +36,7 @@ class SuperuserRequiredMixin(UserPassesTestMixin):
     
 
 @method_decorator(csrf_exempt, name='dispatch')
-class MigrateView(View, SuperuserRequiredMixin):
+class MigrateView(View):
     def get(self, request, *args, **kwargs):
         try:
             call_command('migrate', interactive=False)

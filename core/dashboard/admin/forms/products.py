@@ -1,10 +1,11 @@
 from django import forms
 from shop.models import ProductModel
+from parler.forms import TranslatableModelForm
 from django import forms
 from shop.models import ProductModel
 
-class ProductForm(forms.ModelForm):
-    image = forms.ImageField(required=False) 
+class ProductForm(TranslatableModelForm):
+    image = forms.ImageField(required=False)
 
     extra_images = forms.FileField(
         widget=forms.ClearableFileInput(attrs={'multiple': True, 'class': 'form-control'}),

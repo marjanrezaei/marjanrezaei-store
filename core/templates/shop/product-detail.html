@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load static %}
+{% load static i18n %}
 {% load shop_tags %}
 
 {% block content %}
@@ -10,30 +10,26 @@
     <div class="col-md-7 mb-7 mb-md-0">
       <div class="pe-md-4">
         <div class="card-pinned position-relative">
-
           <!-- Swiper Main Slider -->
           <div class="swiper js-swiper-shop-product mb-4">
             <div class="swiper-wrapper">
-
               <div class="swiper-slide">
                 <img src="{% if object.image_url %}{{ object.image_url }}
-               {% elif object.image %}{{ object.image.url }}
-               {% else %}{% static 'img/default.jpg' %}{% endif %}" class="img-fluid rounded w-100"
+                      {% elif object.image %}{{ object.image.url }}
+                      {% else %}{% static 'img/default.jpg' %}{% endif %}" class="img-fluid rounded w-100"
                   alt="{{ object.title }}">
               </div>
 
               {% for img in object.extra_images.all %}
               <div class="swiper-slide">
                 {% if img.url %}
-                <img src="{{ img.url }}" class="img-fluid rounded w-100" alt="تصویر اضافی">
+                <img src="{{ img.url }}" class="img-fluid rounded w-100" alt="{% trans 'Extra Image' %}">
                 {% elif img.file and img.file.url %}
-                <img src="{{ img.file.url }}" class="img-fluid rounded w-100" alt="تصویر اضافی">
+                <img src="{{ img.file.url }}" class="img-fluid rounded w-100" alt="{% trans 'Extra Image' %}">
                 {% endif %}
               </div>
               {% endfor %}
             </div>
-
-            <!-- Navigation Buttons -->
             <div class="js-swiper-shop-product-button-next swiper-button-next"></div>
             <div class="js-swiper-shop-product-button-prev swiper-button-prev"></div>
           </div>
@@ -41,20 +37,21 @@
           <!-- Swiper Thumbnail Slider -->
           <div class="swiper js-swiper-shop-product-thumb px-2" style="max-width: 100%; overflow: hidden;">
             <div class="swiper-wrapper">
-
               <div class="swiper-slide">
                 <img src="{% if object.image_url %}{{ object.image_url }}
-               {% elif object.image %}{{ object.image.url }}
-               {% else %}{% static 'img/default.jpg' %}{% endif %}" class="img-thumbnail rounded-circle"
+                      {% elif object.image %}{{ object.image.url }}
+                      {% else %}{% static 'img/default.jpg' %}{% endif %}" class="img-thumbnail rounded-circle"
                   alt="{{ object.title }}">
               </div>
 
               {% for img in object.extra_images.all %}
               <div class="swiper-slide">
                 {% if img.url %}
-                <img src="{{ img.url }}" class="img-thumbnail rounded-circle" alt="تصویر {{ forloop.counter }}">
+                <img src="{{ img.url }}" class="img-thumbnail rounded-circle"
+                  alt="{% trans 'Image' %} {{ forloop.counter }}">
                 {% elif img.file and img.file.url %}
-                <img src="{{ img.file.url }}" class="img-thumbnail rounded-circle" alt="تصویر {{ forloop.counter }}">
+                <img src="{{ img.file.url }}" class="img-thumbnail rounded-circle"
+                  alt="{% trans 'Image' %} {{ forloop.counter }}">
                 {% endif %}
               </div>
               {% endfor %}
@@ -64,43 +61,41 @@
         </div>
       </div>
     </div>
-    <!-- End Col -->
 
     <div class="col-md-5">
       <!-- Rating -->
       <a class="d-flex gap-1 mb-4" href="#reviewSection">
         <div class="d-flex gap-1 mb-2">
           {% for i in "12345" %}
-          {% if i|add:0 <= object.avg_rate %} <span> <i class="bi bi-star-fill text-warning"></i></span>
+            {% if i|add:0 <= object.avg_rate %} <span> <i class="bi bi-star-fill text-warning"></i></span>
             {% else %}
             <i class="bi bi-star text-warning"></i>
             {% endif %}
-            {% endfor %}
+          {% endfor %}
         </div>
         <span class="ms-1">{{object.avg_rate}}/5</span>
       </a>
-      <!-- End Rating -->
       {% if request.user.is_authenticated %}
       <button type="button"
         class="btn btn-outline-secondary btn-xs btn-icon rounded-circle {% if is_wished %} active {% endif %}"
-        data-bs-toggle="tooltip" data-bs-placement="top" title="افزودن به علایق"
+        data-bs-toggle="tooltip" data-bs-placement="top" title="{% trans 'Add to Wishlist' %}"
         onclick="addToWishlist(this,`{{object.id}}`)">
         <i class="bi-heart"></i>
       </button>
       {% endif %}
-      <!-- Heading -->
+
       <div class="mb-5">
         <h1 class="h2">{{object.title}}</h1>
-        <p> {% for category in object.category.all %} <a href="#"> {{category.title}} </a>
-          {% if not forloop.last %} , {% endif %}{% endfor %} </p>
-        <p> {{object.breif_description}} </p>
-
+        <p>{% for category in object.category.all %}
+          <a href="#">{{category.title}}</a>
+          {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p>{{object.breif_description}}</p>
       </div>
-      <!-- End Heading -->
 
-      <!-- Price -->
       <div class="mb-5">
-        <span class="d-block mb-2">قیمت کل:</span>
+        <span class="d-block mb-2">{% trans "Total Price:" %}</span>
         {% if object.is_discounted %}
         <h3 class="card-text text-dark formatted-price">{{object.get_price}}</h3>
         <span class="text-body ms-1 formatted-price text-decoration-line-through">{{object.price}}</span>
@@ -108,17 +103,13 @@
         <h3 class="card-text text-dark formatted-price">{{object.price}}</h3>
         {% endif %}
       </div>
-      <!-- End Price -->
 
-      <!-- Quantity -->
       <div class="quantity-counter mb-3">
         <div class="js-quantity-counter row align-items-center">
           <div class="col">
-            <span class="d-block small">تعداد را انتخاب کنید</span>
+            <span class="d-block small">{% trans "Select Quantity" %}</span>
             <input class="js-result form-control form-control-quantity-counter" type="text" value="1">
           </div>
-          <!-- End Col -->
-
           <div class="col-auto">
             <a class="js-minus btn btn-outline-secondary btn-xs btn-icon rounded-circle" href="javascript:;">
               <svg width="8" height="2" viewBox="0 0 8 2" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -134,21 +125,20 @@
                   fill="currentColor" />
               </svg>
             </a>
-          </div>
-          <!-- End Col -->
-        </div>
-        <!-- End Row -->
-      </div>
-      <!-- End Quantity -->
 
-      <!-- Accordion -->
+            <a class="js-minus btn btn-outline-secondary btn-xs btn-icon rounded-circle" href="javascript:;">-</a>
+            <a class="js-plus btn btn-outline-secondary btn-xs btn-icon rounded-circle" href="javascript:;">+</a>
+          </div>
+        </div>
+      </div>
+
       <div class="accordion mb-5" id="shopCartAccordion">
-        <!-- Collapse -->
         <div class="accordion-item">
           <a class="accordion-button collapsed" href="#" role="button" data-bs-toggle="collapse"
             data-bs-target="#shopCartAccordionCollapseOne" aria-expanded="false"
             aria-controls="shopCartAccordionCollapseOne">
             <div class="d-flex align-items-center">
+
               <div class="flex-shrink-0">
                 <span class="svg-icon svg-icon-sm text-primary">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -162,28 +152,25 @@
 
                 </span>
               </div>
+
               <div class="flex-grow-1 ms-3">
-                ارسال رایگان
+                {% trans "Free Shipping" %}
               </div>
             </div>
           </a>
-
           <div id="shopCartAccordionCollapseOne" class="accordion-collapse collapse"
             data-bs-parent="#shopCartAccordion">
             <div class="accordion-body">
-              <p class="mb-0">ما ارسال رایگان را در هر نقطه از ایالات متحده ارائه می دهیم، یک تیم ماهر تحویل جعبه ها را
-                به دفتر شما می آورد.</p>
+              <p class="mb-0">{% trans "We offer free shipping..." %}</p>
             </div>
           </div>
         </div>
-        <!-- End Collapse -->
-
-        <!-- Collapse -->
         <div class="accordion-item">
           <a class="accordion-button collapsed" href="#" role="button" data-bs-toggle="collapse"
             data-bs-target="#shopCartAccordionCollapseTwo" aria-expanded="false"
             aria-controls="shopCartAccordionCollapseTwo">
             <div class="d-flex align-items-center">
+
               <div class="flex-shrink-0">
                 <span class="svg-icon svg-icon-sm text-primary">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -195,31 +182,25 @@
 
                 </span>
               </div>
+
               <div class="flex-grow-1 ms-3">
-                30 روز بازگشت
+                {% trans "30 Days Return" %}
               </div>
             </div>
           </a>
-
           <div id="shopCartAccordionCollapseTwo" class="accordion-collapse collapse"
             data-bs-parent="#shopCartAccordion">
             <div class="accordion-body">
-              <p class="mb-0">اگر راضی نیستید، آن را برای بازپرداخت کامل بازگردانید. ما از جداسازی قطعات و حمل و نقل
-                برگشت مراقبت خواهیم کرد.</p>
+              <p class="mb-0">{% trans "Return within 30 days for full refund..." %}</p>
             </div>
           </div>
         </div>
-        <!-- End Collapse -->
       </div>
-      <!-- End Accordion -->
 
       <div class="d-grid mb-4">
         <button class="btn btn-outline-primary btn-sm btn-transition rounded-pill btn-add-to-cart"
-          data-product-id="{{ object.id }}">
-          افزودن به سبد خرید
-        </button>
+          data-product-id="{{ object.id }}">{% trans "Add to Cart" %}</button>
       </div>
-
       <!-- Media -->
       <div class="d-flex align-items-center">
         <div class="flex-shrink-0">
@@ -248,20 +229,18 @@
 </div>
 <!-- End Hero -->
 
-<!-- Content -->
 <div class="container content-space-t-2 content-space-md-3">
   <div class="row">
     <div class="col-md-6 mb-5 mb-md-0">
       <div class="pe-lg-4">
-        <h3>جزئیات</h3>
+        <h3>{% trans "Details" %}</h3>
         <p>{{object.description|safe}}</p>
       </div>
     </div>
     <!-- End Col -->
 
     <div class="col-md-6 mb-5 mb-md-0">
-      <h3>مواد و مراقبت</h3>
-
+      <h3>{% trans "Materials & Care" %}</h3>
       <div class="row">
         <div class="col-sm-6">
           <ul class="list-py-2 mb-0">
@@ -292,6 +271,7 @@
 <!-- End Content -->
 
 {% show_similar_products product=object %}
+
 
 <!-- Review Section -->
 <div id="reviewSection" class="container content-space-b-2 content-space-b-lg-3">
