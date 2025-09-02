@@ -3,9 +3,18 @@ from rest_framework import generics, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.core.exceptions import FieldError
+from rest_framework.generics import RetrieveAPIView
+from parler.views import TranslatableSlugMixin
 
 from .models import ProductModel, ProductStatusType, WishlistProductModel
 from .serializers import ProductSerializer, ProductDetailSerializer
+
+
+class ProductDetailBySlugAPIView(TranslatableSlugMixin, RetrieveAPIView):
+    queryset = ProductModel.objects.filter(status=ProductStatusType.publish.value)
+    serializer_class = ProductDetailSerializer
+    slug_field = "slug"          # فیلدی که توی ترجمه‌ها داریم
+    slug_url_kwarg = "slug"      # از URL گرفته میشه
 
 
 class ProductListAPIView(generics.ListAPIView):

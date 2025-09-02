@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import FieldError
 from django.http import JsonResponse
+from parler.views import TranslatableSlugMixin
 
 from .models import (
     ProductModel,
@@ -63,21 +64,27 @@ class ShopProductGridView(ListView):
         return []
 
 
-class ShopProductDetailView(DetailView):
+class ShopProductDetailView(TranslatableSlugMixin, DetailView):
     template_name = "shop/product-detail.html"
     queryset = ProductModel.objects.filter(status=ProductStatusType.publish.value)
+    slug_field = "slug"
+    slug_url_kwarg = "slug"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         product = self.get_object()
         context["is_wished"] = self._is_product_wished()
-        context["reviews"] = ReviewModel.objects.filter(product=product, status=ReviewStatusType.accepted.value)
+        context["reviews"] = ReviewModel.objects.filter(
+            product=product, status=ReviewStatusType.accepted.value
+        )
         return context
 
     def _is_product_wished(self):
         user = self.request.user
         if user.is_authenticated:
-            return WishlistProductModel.objects.filter(user=user, product=self.get_object()).exists()
+            return WishlistProductModel.objects.filter(
+                user=user, product=self.get_object()
+            ).exists()
         return False
 
 

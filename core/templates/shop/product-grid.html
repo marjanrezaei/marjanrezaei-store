@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
 {% block content %}
 <!-- Breadcrumb -->
@@ -7,14 +7,14 @@
   <div class="container py-4">
     <div class="row">
       <div class="col-sm">
-        <h4 class="mb-0">شبکه محصولات</h4>
+        <h4 class="mb-0">{% trans "Product Grid" %}</h4>
       </div>
       <div class="col-sm-auto">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item ps-2"><a href="/index.html">خرید کنید</a></li>
-            <li class="breadcrumb-item"><a href="/products-grid.html">محصولات</a></li>
-            <li class="breadcrumb-item active" aria-current="page">توری</li>
+            <li class="breadcrumb-item ps-2"><a href="/index.html">{% trans "Shop" %}</a></li>
+            <li class="breadcrumb-item"><a href="/products-grid.html">{% trans "Products" %}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "Grid" %}</li>
           </ol>
         </nav>
       </div>
@@ -29,41 +29,43 @@
       <!-- Sidebar Filters -->
       <form action=".">
         <div class="border-bottom pb-4 mb-4">
-          <h5>جستجوی کالا</h5>
-          <input class="form-control" placeholder="واژه مورد نظر را وارد نمایید" type="text" name="q">
+          <h5>{% trans "Search Product" %}</h5>
+          <input class="form-control" placeholder="{% trans "Enter search term" %}" type="text" name="q">
         </div>
 
         <div class="border-bottom pb-4 mb-4">
-          <h5>قیمت</h5>
-          <input class="form-control mb-2" type="number" name="min_price" placeholder="کمترین قیمت">
-          <input class="form-control" type="number" name="max_price" placeholder="بیشترین قیمت">
+          <h5>{% trans "Price" %}</h5>
+          <input class="form-control mb-2" type="number" name="min_price" placeholder="{% trans "Min Price" %}">
+          <input class="form-control" type="number" name="max_price" placeholder="{% trans "Max Price" %}">
         </div>
+
         <div class="border-bottom pb-4 mb-4">
-          <h5>دسته بندی</h5>
+          <h5>{% trans "Category" %}</h5>
           <select class="form-select form-select-sm" name="category_id">
-            <option value="" selected>انتخاب دسته بندی</option>
+            <option value="" selected>{% trans "Select Category" %}</option>
             {% for category in categories %}
-            <option value="{{category.id}}">{{category.title}}</option>
+              <option value="{{category.id}}">{{category.title}}</option>
             {% endfor %}
           </select>
         </div>
-        <button type="submit" class="btn btn-white btn-transition">اعمال فیلتر</button>
+
+        <button type="submit" class="btn btn-white btn-transition">{% trans "Apply Filter" %}</button>
       </form>
     </div>
 
     <div class="col-lg-9">
       <div class="d-flex justify-content-between align-items-center mb-4">
-        <h6 class="mb-0">{{total_items}} محصول</h6>
+        <h6 class="mb-0">{{total_items}} {% trans "Products" %}</h6>
         <div class="d-flex align-items-center gap-2">
           <select class="form-select form-select-sm" id="order-by-filter">
-            <option value="" selected>مرتب سازی</option>
-            <option value="-created_at">جدیدترین</option>
-            <option value="created_at">قدیمی ترین</option>
-            <option value="-price">بیشترین قیمت</option>
-            <option value="price">کمترین قیمت</option>
+            <option value="" selected>{% trans "Sort By" %}</option>
+            <option value="-created_at">{% trans "Newest" %}</option>
+            <option value="created_at">{% trans "Oldest" %}</option>
+            <option value="-price">{% trans "Highest Price" %}</option>
+            <option value="price">{% trans "Lowest Price" %}</option>
           </select>
           <select class="form-select form-select-sm" id="page-size-filter">
-            <option value="" selected>تعداد در صفحه</option>
+            <option value="" selected>{% trans "Items Per Page" %}</option>
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="20">20</option>
@@ -87,55 +89,62 @@
           <div class="card card-bordered shadow-none text-center h-100">
             <div class="card-pinned">
               {% if object.image_url %}
-              <img class="card-img" src="{{ object.image_url }}" alt="{{ object.title }}">
+                <img class="card-img" src="{{ object.image_url }}" alt="{{ object.title }}">
               {% elif object.image %}
-              <img class="card-img" src="{{ object.image.url }}" alt="{{ object.title }}">
+                <img class="card-img" src="{{ object.image.url }}" alt="{{ object.title }}">
               {% else %}
-              <img src="{% static 'img/default.jpg' %}" alt="No image">
+                <img src="{% static 'img/default.jpg' %}" alt="No image">
               {% endif %}
+
               {% if request.user.is_authenticated %}
               <div class="card-pinned-top-end">
                 <button type="button"
-                  class="btn btn-outline-secondary btn-xs btn-icon rounded-circle {% if object.id in wishlist_items %} active {% endif %}"
-                  onclick="addToWishlist(this,`{{object.id}}`)">
+                        class="btn btn-outline-secondary btn-xs btn-icon rounded-circle {% if object.id in wishlist_items %} active {% endif %}"
+                        onclick="addToWishlist(this,`{{object.id}}`)">
                   <i class="bi-heart"></i>
                 </button>
               </div>
               {% endif %}
             </div>
+
             <div class="card-body">
               <div class="mb-2">
                 {% for category in object.category.all %}
-                <a class="link-sm link-secondary" href="#">{{category.title}}</a>{% if not forloop.last %}, {% endif %}
+                  <a class="link-sm link-secondary" href="#">{{ category.title }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
               </div>
+
               <h4 class="card-title">
-                <a class="text-dark" href="{% url 'shop:product-detail' slug=object.slug %}">{{object.title}}</a>
+                <a class="text-dark" href="{% url 'shop:product-detail' slug=object.slug %}">{{ object.title }}</a>
               </h4>
+
               {% if object.is_discounted %}
-              <h3 class="text-dark">{{object.get_price}}</h3>
-              <span class="text-muted text-decoration-line-through">{{object.price}}</span>
+                <h3 class="text-dark">{{ object.get_price }}</h3>
+                <span class="text-muted text-decoration-line-through">{{ object.price }}</span>
               {% else %}
-              <h3 class="text-dark">{{object.price}}</h3>
+                <h3 class="text-dark">{{ object.price }}</h3>
               {% endif %}
             </div>
+
             <div class="card-footer pt-0">
               <div class="d-flex justify-content-center align-items-center mb-2">
                 {% for i in "12345" %}
-                {% if forloop.counter <= object.avg_rate %} <i class="bi bi-star-fill text-warning"></i>
+                  {% if forloop.counter <= object.avg_rate %} 
+                    <i class="bi bi-star-fill text-warning"></i>
                   {% else %}
-                  <i class="bi bi-star text-warning"></i>
+                    <i class="bi bi-star text-warning"></i>
                   {% endif %}
-                  {% endfor %}
-                  <span class="ms-2 small">{{object.avg_rate}}/5</span>
+                {% endfor %}
+                <span class="ms-2 small">{{ object.avg_rate }}/5</span>
               </div>
+
               <button class="btn btn-outline-primary btn-sm btn-transition rounded-pill btn-add-to-cart"
-                data-product-id="{{ object.id }}">افزودن به سبد خرید</button>
+                      data-product-id="{{ object.id }}">{% trans "Add to Cart" %}</button>
             </div>
           </div>
         </div>
         {% empty %}
-        <p class="text-center py-5">هیچ کالایی برای نمایش وجود ندارد</p>
+        <p class="text-center py-5">{% trans "No products available" %}</p>
         {% endfor %}
       </div>
 
@@ -146,66 +155,70 @@
           <div class="row g-0 align-items-center">
             <div class="col-md-3">
               {% if object.image_url %}
-              <img class="img-fluid rounded-start" src="{{ object.image_url }}" alt="{{ object.title }}">
+                <img class="img-fluid rounded-start" src="{{ object.image_url }}" alt="{{ object.title }}">
               {% elif object.image %}
-              <img class="img-fluid rounded-start" src="{{ object.image.url }}" alt="{{ object.title }}">
+                <img class="img-fluid rounded-start" src="{{ object.image.url }}" alt="{{ object.title }}">
               {% else %}
-              <img class="img-fluid rounded-start" src="{% static 'img/default.jpg' %}" alt="No image">
+                <img class="img-fluid rounded-start" src="{% static 'img/default.jpg' %}" alt="No image">
               {% endif %}
             </div>
             <div class="col-md-9">
               <div class="card-body">
                 <h5 class="card-title">
-                  <a class="text-dark" href="{% url 'shop:product-detail' slug=object.slug %}">{{object.title}}</a>
+                  <a class="text-dark" href="{% url 'shop:product-detail' slug=object.slug %}">{{ object.title }}</a>
                 </h5>
+
                 <p>
                   {% for category in object.category.all %}
-                  <span class="badge bg-light text-dark me-1">{{ category.title }}</span>
+                    <span class="badge bg-light text-dark me-1">{{ category.title }}</span>
                   {% endfor %}
                 </p>
+
                 {% if object.is_discounted %}
-                <p>
-                  <strong class="text-danger">{{object.get_price}}</strong>
-                  <span class="text-muted text-decoration-line-through">{{object.price}}</span>
-                </p>
+                  <p>
+                    <strong class="text-danger">{{ object.get_price }}</strong>
+                    <span class="text-muted text-decoration-line-through">{{ object.price }}</span>
+                  </p>
                 {% else %}
-                <p><strong>{{object.price}}</strong></p>
+                  <p><strong>{{ object.price }}</strong></p>
                 {% endif %}
+
                 <div class="d-flex align-items-center mb-2">
                   {% for i in "12345" %}
-                  {% if forloop.counter <= object.avg_rate %} <i class="bi bi-star-fill text-warning"></i>
+                    {% if forloop.counter <= object.avg_rate %} 
+                      <i class="bi bi-star-fill text-warning"></i>
                     {% else %}
-                    <i class="bi bi-star text-warning"></i>
+                      <i class="bi bi-star text-warning"></i>
                     {% endif %}
-                    {% endfor %}
-                    <span class="ms-2 small">{{object.avg_rate}}/5</span>
+                  {% endfor %}
+                  <span class="ms-2 small">{{ object.avg_rate }}/5</span>
                 </div>
+
                 <div class="d-flex align-items-center gap-2 mt-3">
                   <button class="btn btn-outline-primary btn-sm btn-transition rounded-pill btn-add-to-cart"
-                    data-product-id="{{ object.id }}">افزودن به سبد خرید</button>
+                          data-product-id="{{ object.id }}">{% trans "Add to Cart" %}</button>
 
                   {% if request.user.is_authenticated %}
                   <button type="button" class="btn btn-outline-secondary btn-xs btn-icon
-                    rounded-circle {% if object.id in wishlist_items %} active {% endif %}" data-bs-toggle=" tooltip"
-                    data-bs-placement="top" title="افزودن به علایق" onclick="addToWishlist(this,`{{object.id}}`)">
+                    rounded-circle {% if object.id in wishlist_items %} active {% endif %}" data-bs-toggle="tooltip"
+                    data-bs-placement="top" title="{% trans "Add to Wishlist" %}" onclick="addToWishlist(this,`{{object.id}}`)">
                     <i class="bi-heart"></i>
                   </button>
                   {% endif %}
                 </div>
+
               </div>
             </div>
           </div>
         </div>
         {% empty %}
-        <p class="text-center py-5">هیچ کالایی برای نمایش وجود ندارد</p>
+        <p class="text-center py-5">{% trans "No products available" %}</p>
         {% endfor %}
       </div>
 
     </div>
   </div>
 </div>
-
-<!-- View Switch Script -->
 
 <!-- Pagination -->
 {% if page_obj.has_other_pages %}

@@ -14,13 +14,19 @@ class CartModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['session_key'],
+                condition=models.Q(user__isnull=True),
+                name='unique_session_cart'
+            )
+        ]
+
     def __str__(self):
         if self.user:
             return f"Cart of {self.user.email}"
         return f"Cart for session {self.session_key}"
-    
-    def calculate_total_price(self):
-        return sum(item.product.get_price()* item.quantity for item in self.items.all())
 
 
 class CartItemModel(models.Model):
