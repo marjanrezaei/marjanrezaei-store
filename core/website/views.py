@@ -13,6 +13,20 @@ from django.utils.decorators import method_decorator
 from .forms import NewsLetterForm, ContactForm
 from shop.models import ProductModel
 
+
+# from django.contrib.auth import get_user_model
+# User = get_user_model()
+
+# def create_superuser(request):
+#     email = "admin@example.com"
+#     password = "admin11"
+
+#     if not User.objects.filter(email=email).exists():
+#         User.objects.create_superuser(email=email, password=password)
+#         return HttpResponse(f"Superuser with email {email} created successfully.")
+#     else:
+#         return HttpResponse(f"Superuser with email {email} already exists.")
+
     
 # ping
 logger = logging.getLogger(__name__)
