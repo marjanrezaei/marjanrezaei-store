@@ -1,3 +1,4 @@
+from django.utils.html import format_html
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import Profile
@@ -16,36 +17,19 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = ( 
         (
             "Authentication",
-            {
-                "fields": ("email", "password"),
-            },
+            {"fields": ("email", "password")},
         ),
         (
             "Permissions",
-            {
-                "fields": (
-                    "is_staff",
-                    "is_active",
-                    "is_superuser",
-                    "is_verified",
-                ),
-            },
+            {"fields": ("is_staff", "is_active", "is_superuser", "is_verified")},
         ),
         (
-            "grop permitions",
-            {
-                "fields": (
-                    "groups",
-                    "user_permissions", 
-                    "type", 
-                ),
-            },
+            "Group permissions",
+            {"fields": ("groups", "user_permissions", "type")},
         ),
         (
             "Important dates",
-            {
-                "fields": ("last_login",),
-            },
+            {"fields": ("last_login",)},
         ),
     )
     add_fieldsets = (
@@ -67,10 +51,19 @@ class CustomUserAdmin(UserAdmin):
         ),
     )
 
+
 class CustomProfileAdmin(admin.ModelAdmin):
-    list_display = ("user", "first_name", "last_name")
-    search_fields = ("user", "first_name", "last_name")
-    
+    list_display = ("user", "first_name", "last_name", "image_preview")
+    search_fields = ("user__email", "first_name", "last_name")
+    readonly_fields = ("image_preview",)
+
+    def image_preview(self, obj):
+        if obj.image_url:
+            return format_html('<img src="{}" style="max-height: 80px; border-radius: 50%;"/>', obj.image_url)
+        return "-"
+    image_preview.short_description = "Profile Image"
+
+
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Profile, CustomProfileAdmin)
 
@@ -78,6 +71,9 @@ admin.site.register(Profile, CustomProfileAdmin)
 class SessionAdmin(admin.ModelAdmin):
     def _session_data(self, obj):
         return obj.get_decoded()
+
     list_display = ['session_key', '_session_data', 'expire_date']
     readonly_fields = ['_session_data']
+
+
 admin.site.register(Session, SessionAdmin)

@@ -12,5 +12,6 @@ urlpatterns = [
     path("ping/", views.ping_view, name="ping"),
     path('migrate/', views.MigrateView.as_view(), name='migrate'),
     # path("create-superuser/", views.create_superuser, name="create_superuser"),
+
 ]
 

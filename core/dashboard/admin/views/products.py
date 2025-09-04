@@ -14,6 +14,7 @@ from django.core.exceptions import FieldError
 
 from shop.models import ProductModel, ProductCategoryModel, ProductImageModel
 from core.utils.liara_upload import upload_to_liara
+from core.utils.image_utils import handle_product_main_image,  handle_product_extra_images
 
 
 class AdminProductListView(AdminRequiredMixin, LoginRequiredMixin, ListView):
@@ -62,29 +63,10 @@ class AdminProductCreateView(AdminRequiredMixin, LoginRequiredMixin, SuccessMess
         product = form.instance
 
         main_image = self.request.FILES.get("image")
-        if main_image:
-            filename = f"{product.slug}_{main_image.name}"
-            if "onrender.com" in host:
-                image_url = upload_to_liara(main_image, filename, folder="products")
-                product.image_url = image_url
-                product.image = None
-            else:
-                product.image.save(filename, main_image)
-
-        response = super().form_valid(form)
+        handle_product_main_image(product, main_image, host)
 
         extra_images = self.request.FILES.getlist("extra_images")
-        for extra_file in extra_images:
-            filename = f"{product.slug}_extra_{extra_file.name}"
-            if "onrender.com" in host:
-                image_url = upload_to_liara(extra_file, filename, folder="products/extra")
-                ProductImageModel.objects.create(product=product, url=image_url)
-            else:
-                image_instance = ProductImageModel(product=product)
-                image_instance.file.save(filename, extra_file)
-                image_instance.save()
-
-        return response
+        handle_product_extra_images(product, extra_images, host)
 
     def get_success_url(self):
         return reverse_lazy("dashboard:admin:product-edit", kwargs={"pk": self.object.pk})
@@ -112,9 +94,7 @@ class AdminProductEditView(SuccessMessageMixin, UpdateView):
         if delete_extra_ids:
             extra_images = ProductImageModel.objects.filter(id__in=delete_extra_ids, product=self.object)
             for img in extra_images:
-                if img.file:
-                    img.file.delete(save=False)
-                img.url = None
+                img.delete_image()
                 img.delete()
 
         return super().post(request, *args, **kwargs)
@@ -122,43 +102,12 @@ class AdminProductEditView(SuccessMessageMixin, UpdateView):
     def form_valid(self, form):
         product = form.instance
         host = self.request.get_host()
+        
         main_image = self.request.FILES.get("image")
+        handle_product_main_image(product, main_image, host)
 
-        if main_image:
-            # اگر تصویر جدید انتخاب شد → جایگزین تصویر قبلی شود
-            filename = f"{product.id}_{main_image.name}"
-            if "onrender.com" in host:
-                image_url = upload_to_liara(main_image, filename, folder="products")
-                product.image_url = image_url
-                product.image = None
-            else:
-                # حذف تصویر قبلی اگر وجود داشت
-                if product.image:
-                    product.image.delete(save=False)
-                product.image.save(filename, main_image)
-                product.image_url = None
-        else:
-            # اگر تصویر جدید آپلود نشده و تیک حذف نزده → تصویر قبلی رو نگه دار
-            original_product = ProductModel.objects.get(pk=product.pk)
-            if not ('delete_image' in self.request.POST):
-                product.image = original_product.image
-                product.image_url = original_product.image_url
-
-        response = super().form_valid(form)
-
-        # ذخیره تصاویر اضافی جدید
         extra_images = self.request.FILES.getlist("extra_images")
-        for extra_file in extra_images:
-            filename = f"{product.id}_extra_{extra_file.name}"
-            if "onrender.com" in host:
-                image_url = upload_to_liara(extra_file, filename, folder="products/extra")
-                ProductImageModel.objects.create(product=product, url=image_url)
-            else:
-                image_instance = ProductImageModel(product=product)
-                image_instance.file.save(filename, extra_file)
-                image_instance.save()
-
-        return response
+        handle_product_extra_images(product, extra_images, host)
 
     def get_success_url(self):
         return reverse_lazy("dashboard:admin:product-edit", kwargs={"pk": self.object.pk})

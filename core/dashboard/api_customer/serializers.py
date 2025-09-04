@@ -2,7 +2,8 @@ from rest_framework import serializers
 from order.models import UserAddressModel, OrderModel, OrderItemModel, OrderStatusType
 from accounts.models import Profile
 from shop.models import WishlistProductModel
-from core.utils.liara_upload import upload_to_liara
+from core.utils.image_utils import handle_profile_image
+
 
 
 # Addresses
@@ -61,14 +62,7 @@ class CustomerProfileImageSerializer(serializers.ModelSerializer):
         image_file = validated_data.get('image')
         if image_file:
             host = self.context['request'].get_host()
-            filename = f"profile/{instance.user.id}_{image_file.name}"
-
-            # Liara vs local storage
-            if host == "marjanrezaei-store.onrender.com":
-                instance.image_url = upload_to_liara(image_file, filename)
-            else:
-                instance.image.save(filename, image_file)
-            instance.save()
+            handle_profile_image(instance, image_file, host)
         return instance
 
     

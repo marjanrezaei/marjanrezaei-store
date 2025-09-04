@@ -9,7 +9,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 
 from accounts.models import Profile
-from core.utils.liara_upload import upload_to_liara
+from core.utils.image_utils import handle_profile_image
 
 
 class AdminSecurityEditView(AdminRequiredMixin, LoginRequiredMixin, auth_views.PasswordChangeView, SuccessMessageMixin):
@@ -41,6 +41,7 @@ class AdminProfileEditView(AdminRequiredMixin, LoginRequiredMixin, UpdateView, S
     
 class AdminProfileImageEditView(AdminRequiredMixin, LoginRequiredMixin, UpdateView, SuccessMessageMixin):
     model = Profile
+    fields = ["image"]
     form_class = AdminProfileImageForm
     template_name = 'dashboard/admin/profile/profile-edit.html'
     success_url = reverse_lazy('dashboard:admin:profile-edit')
@@ -48,25 +49,12 @@ class AdminProfileImageEditView(AdminRequiredMixin, LoginRequiredMixin, UpdateVi
 
     def form_valid(self, form):
         profile = self.get_object()
-        image_file = self.request.FILES.get('image')
+        new_image = self.request.FILES.get('image')
+        host = self.request.get_host()
 
-        if image_file:
-            host = self.request.get_host()
-            filename = f"profile/{profile.user.id}_{image_file.name}"
-
-            if host == "marjanrezaei-store.onrender.com":
-                # ذخیره در لیارا
-                image_url = upload_to_liara(image_file, filename)
-                profile.image_url = image_url
-            else:
-                # ذخیره در لوکال
-                profile.image.save(filename, image_file)
-
-            profile.save()
-
+        handle_profile_image(profile, new_image, host)
         messages.success(self.request, self.success_message)
         return redirect(self.success_url)
-
 
     def form_invalid(self, form): 
         messages.error(self.request, "ارسال تصویر با مشکل مواجه شده لطفا مجدد تلاش نمایید")

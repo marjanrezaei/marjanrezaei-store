@@ -2,8 +2,11 @@ from django.db import models
 from decimal import Decimal
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.urls import reverse
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 from django.utils.translation import get_language
 from parler.models import TranslatableModel, TranslatedFields
+from core.utils.liara_upload import upload_to_liara, delete_from_liara
 
 
 class ProductStatusType(models.IntegerChoices):
@@ -51,6 +54,15 @@ class ProductModel(TranslatableModel):
     def __str__(self):
         return self.safe_translation_getter("title", any_language=True)
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # Save first to get an ID
+        # Upload main image to Liara if not uploaded yet
+        if self.image and not self.image_url:
+            uploaded_url = upload_to_liara(self.image, f"product-main-{self.id}.jpg", folder="product/img")
+            if uploaded_url:
+                self.image_url = uploaded_url
+                super().save(update_fields=['image_url'])
+
     def get_price(self):
         discount_amount = self.price * Decimal(self.discount_percent / 100)
         final_price = self.price - discount_amount
@@ -61,17 +73,23 @@ class ProductModel(TranslatableModel):
 
     def is_published(self):
         return self.status == ProductStatusType.publish.value
-    
+
     def get_absolute_url(self):
-        """
-        Return product detail URL using translated slug for current language.
-        Fallback to id if slug missing.
-        """
         lang = get_language()
         slug = self.safe_translation_getter("slug", language_code=lang, any_language=True)
         if not slug:
             return reverse("shop:product-detail", kwargs={"slug": self.id})
         return reverse("shop:product-detail", kwargs={"slug": slug})
+
+    def delete_main_image(self):
+        if self.image_url:
+            key = "/".join(self.image_url.split('/')[-2:])
+            delete_from_liara(key)
+            self.image_url = None
+        if self.image:
+            self.image.delete(save=False)
+            self.image = None
+        self.save()
 
 
 class ProductImageModel(models.Model):
@@ -82,6 +100,22 @@ class ProductImageModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # Save first to get an ID
+        # Upload extra image to Liara if not uploaded yet
+        if self.file and not self.url:
+            uploaded_url = upload_to_liara(self.file, f"product-extra-{self.id}.jpg", folder="product/extra-img")
+            if uploaded_url:
+                self.url = uploaded_url
+                super().save(update_fields=['url'])
+
+    def delete_image(self):
+        if self.url:
+            key = "/".join(self.url.split('/')[-2:])
+            delete_from_liara(key)
+        if self.file:
+            self.file.delete(save=False)
+
 
 class WishlistProductModel(models.Model):
     user = models.ForeignKey("accounts.User", on_delete=models.PROTECT)
@@ -89,3 +123,11 @@ class WishlistProductModel(models.Model):
 
     def __str__(self):
         return self.product.safe_translation_getter("title", any_language=True)
+
+
+@receiver(pre_delete, sender=ProductModel)
+def delete_product_images(sender, instance, **kwargs):
+    instance.delete_main_image()
+    for img in instance.extra_images.all():
+        img.delete_image()
+        img.delete()
