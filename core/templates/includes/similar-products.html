@@ -1,4 +1,4 @@
-{% load static %}
+{% load static i18n %}
 
 <!-- Card Grid -->
 <div class="container content-space-2 content-space-lg-3">
@@ -49,10 +49,10 @@
               href="{% url 'shop:product-detail' slug=similar_product.slug %}">{{similar_product.title}}</a>
           </h4>
           {% if similar_product.is_discounted %}
-          <h3 class="card-text text-dark formatted-price">{{similar_product.get_price}}</h3>
-          <span class="text-body ms-1 formatted-price text-decoration-line-through">{{similar_product.price}}</span>
+          <h3 class="card-text text-dark">{{similar_product.get_price}}</h3>
+          <span class="text-body ms-1 text-decoration-line-through">{{similar_product.price}}</span>
           {% else %}
-          <h3 class="card-text text-dark formatted-price">{{similar_product.price}}</h3>
+          <h3 class="card-text text-dark">{{similar_product.price}}</h3>
           {% endif %}
         </div>
 
@@ -73,7 +73,7 @@
 
           <button class="btn btn-outline-primary btn-sm btn-transition rounded-pill btn-add-to-cart"
             data-product-id="{{ similar_product.id }}">
-            افزودن به سبد خرید
+           {% trans "Add to Cart" %}
           </button>
         </div>
       </div>

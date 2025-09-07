@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-02 11:12+0000\n"
+"POT-Creation-Date: 2025-09-07 12:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic <LL@li.org>\n"
@@ -44,75 +44,77 @@ msgstr "تم إرسال رابط إعادة تعيين كلمة المرور إ�
 msgid "Your password was changed successfully. Please log in."
 msgstr "تم تغيير كلمة المرور بنجاح. الرجاء تسجيل الدخول"
 
-#: core/settings.py:117
+#: core/settings.py:118
 msgid "فارسی"
 msgstr "الفارسية"
 
-#: core/settings.py:118
+#: core/settings.py:119
 msgid "English"
 msgstr "الإنجليزية"
 
-#: core/settings.py:119
+#: core/settings.py:120
 msgid "العربية"
 msgstr "العربية"
 
 #: dashboard/admin/forms/profiles.py:10 dashboard/customer/forms/profiles.py:10
-msgid "Your previous password was entered incorrectly. Please correct it."
-msgstr "كلمة المرور السابقة تم إدخالها بشكل خاطئ. يرجى التصحيح"
+msgid "پسورد قبلی شما اشتباه وارد شده است. لطفا تصحیح نمایید."
+msgstr ""
 
 #: dashboard/admin/forms/profiles.py:12 dashboard/customer/forms/profiles.py:12
-msgid "The two entered passwords do not match"
-msgstr "كلمتا المرور المدخلة غير متطابقتين"
+msgid " دو پسورد ورودی با یکدیگر مطابقت ندارد "
+msgstr ""
 
 #: order/models.py:8
-msgid "Pending Payment"
-msgstr "في انتظار الدفع"
+msgid "در انتظار پرداخت"
+msgstr ""
 
 #: order/models.py:9
-msgid "Successful"
-msgstr "ناجح"
+msgid "موفقیت آمیز"
+msgstr ""
 
 #: order/models.py:10
-msgid "Cancelled"
-msgstr "ملغى"
+msgid "لغو شده"
+msgstr ""
 
 #: order/models.py:104
-msgid "Invalid Status"
-msgstr "حالة غير صالحة"
+msgid "وضعیت نامعتبر"
+msgstr ""
 
-#: templates/base.html:85
-msgid "Main Page"
-msgstr "الصفحة الرئيسية"
+#: templates/base.html:86
+msgid "Home"
+msgstr "الرئيسية"
 
-#: templates/base.html:87
+#: templates/base.html:88
 msgid "Product List"
 msgstr "قائمة المنتجات"
 
-#: templates/base.html:89
+#: templates/base.html:90
 msgid "About Us"
 msgstr "معلومات عنا"
 
-#: templates/base.html:91
+#: templates/base.html:92
 msgid "Contact Us"
 msgstr "اتصل بنا"
 
 #: templates/base.html:114
-msgid "profile"
+#, fuzzy
+#| msgid "profile"
+msgid "Profile"
 msgstr "الملف الشخصي"
 
 #: templates/base.html:115
-msgid "Logout"
-msgstr "تسجيل الخروج"
+msgid "Exit"
+msgstr ""
 
 #: templates/base.html:118
 msgid "Login"
 msgstr "تسجيل الدخول"
 
-#: templates/shop/product-detail.html:26
+#: templates/shop/product-detail.html:26 templates/shop/product-detail.html:28
 msgid "Extra Image"
 msgstr "صورة إضافية"
 
-#: templates/shop/product-detail.html:51
+#: templates/shop/product-detail.html:51 templates/shop/product-detail.html:54
 msgid "Image"
 msgstr "صورة"
 
@@ -120,39 +122,46 @@ msgstr "صورة"
 msgid "Add to Wishlist"
 msgstr "أضف إلى قائمة الرغبات"
 
-#: templates/shop/product-detail.html:95
+#: templates/shop/product-detail.html:98
 msgid "Total Price:"
 msgstr "السعر الإجمالي:"
 
-#: templates/shop/product-detail.html:107
+#: templates/shop/product-detail.html:110
 msgid "Select Quantity"
 msgstr "اختر الكمية"
 
-#: templates/shop/product-detail.html:154
+#: templates/shop/product-detail.html:157
 msgid "Free Shipping"
 msgstr "شحن مجاني"
 
-#: templates/shop/product-detail.html:161
-msgid "We offer free shipping..."
-msgstr "نحن نقدم شحنًا مجانيًا..."
+#: templates/shop/product-detail.html:164
+msgid "Get free standard shipping automatically on every order"
+msgstr "احصل على شحن قياسي مجاني تلقائيًا مع كل طلب"
 
-#: templates/shop/product-detail.html:184
+#: templates/shop/product-detail.html:187
 msgid "30 Days Return"
 msgstr "إرجاع خلال 30 يومًا"
 
-#: templates/shop/product-detail.html:191
-msgid "Return within 30 days for full refund..."
+#: templates/shop/product-detail.html:194
+msgid "Return within 30 days for full refund"
 msgstr "الإرجاع خلال 30 يومًا لاسترداد كامل"
 
-#: templates/shop/product-detail.html:199 templates/shop/product-grid.html:142
+msgid "Secure Checkout"
+msgstr "إتمام شراء آمن"
+
+msgid "Guaranteed Secure Checkout"
+msgstr "إتمام شراء آمن مضمون"
+
+#: templates/shop/product-detail.html:202 templates/shop/product-grid.html:142
+#: templates/shop/product-grid.html:199
 msgid "Add to Cart"
 msgstr "أضف إلى السلة"
 
-#: templates/shop/product-detail.html:233
+#: templates/shop/product-detail.html:236
 msgid "Details"
 msgstr "تفاصيل"
 
-#: templates/shop/product-detail.html:240
+#: templates/shop/product-detail.html:243
 msgid "Materials & Care"
 msgstr "المواد والعناية"
 
@@ -231,3 +240,46 @@ msgstr "عدد العناصر في الصفحة"
 #: templates/shop/product-grid.html:147 templates/shop/product-grid.html:215
 msgid "No products available"
 msgstr "لا توجد منتجات متاحة"
+
+#: templates/website/index.html:26
+msgid "View Details"
+msgstr "عرض التفاصيل"
+
+msgid "Latest Products"
+msgstr "أحدث المنتجات"
+
+msgid "Get the latest news"
+msgstr "احصل على آخر الأخبار"
+
+msgid "Enter your email"
+msgstr "أدخل بريدك الإلكتروني"
+
+msgid "Sign Up"
+msgstr "التسجيل"
+
+msgid "Share your comments and feedback"
+msgstr "شارك آرائك وانتقاداتك"
+
+msgid "Have enough knowledge when shopping"
+msgstr "امتلك المعرفة الكافية عند الشراء"
+
+msgid "Purchase Consultation"
+msgstr "استشارة الشراء"
+
+msgid "Contact Support"
+msgstr "اتصل بالدعم"
+
+msgid "View Questions"
+msgstr "عرض الأسئلة"
+
+msgid "Share your constructive suggestions with the developers"
+msgstr "قدّم اقتراحاتك البناءة إلى المطورين"
+
+msgid "Frequently Asked Questions (FAQ)"
+msgstr "الأسئلة الشائعة"
+
+msgid "Ask us your questions and find answers"
+msgstr "اسألنا أسئلتك واحصل على الإجابات"
+
+msgid "Contribute to Development"
+msgstr "المساهمة في التطوير"

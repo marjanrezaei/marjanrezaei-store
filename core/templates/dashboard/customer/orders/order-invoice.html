@@ -105,7 +105,7 @@
                                         <th>{{order_item.product.title}}</th>
                                         <td>{{order_item.quantity}}</td>
 
-                                        <td class="table-text-end formatted-price">{{order_item.price}}</td>
+                                        <td class="table-text-end">{{order_item.price}}</td>
                                     </tr>
                                     {% endfor %}
 
@@ -119,9 +119,9 @@
                         <div class="row mb-3">
                             <div class="row mb-3">
                                 <dt class="col-md-3">مبلغ قبل از تخفیف:</dt>
-                                <dl class="col-md-3 formatted-price">{{object.calculate_total_price}}</dl>
+                                <dl class="col-md-3">{{object.calculate_total_price}}</dl>
                                 <dt class="col-md-3">مالیات 9 درصد</dt>
-                                <dl class="col-md-3 formatted-price">{{object.calculate_tax}}</dl>
+                                <dl class="col-md-3">{{object.calculate_tax}}</dl>
                                 {% if object.coupon %}
                                 <dt class="col-md-3">تخفیف:</dt>
                                 <dl class="col-md-3 ">با اعمال {{object.coupon.discount_percent}} % تخفیف </dl>
@@ -130,7 +130,7 @@
                                 <dl class="col-md-3 ">0</dl>
                                 {% endif %}
                                 <dt class="col-md-3">مبلغ نهایی: </dt>
-                                <dl class="col-md-3 formatted-price ">{{object.final_price_with_tax}}</dl>
+                                <dl class="col-md-3">{{object.final_price_with_tax}}</dl>
 
                             </div>
                             <!-- End Row -->

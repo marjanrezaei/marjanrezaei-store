@@ -97,10 +97,10 @@
       <div class="mb-5">
         <span class="d-block mb-2">{% trans "Total Price:" %}</span>
         {% if object.is_discounted %}
-        <h3 class="card-text text-dark formatted-price">{{object.get_price}}</h3>
-        <span class="text-body ms-1 formatted-price text-decoration-line-through">{{object.price}}</span>
+        <h3 class="card-text text-dark">{{object.get_price}}</h3>
+        <span class="text-body ms-1 text-decoration-line-through">{{object.price}}</span>
         {% else %}
-        <h3 class="card-text text-dark formatted-price">{{object.price}}</h3>
+        <h3 class="card-text text-dark">{{object.price}}</h3>
         {% endif %}
       </div>
 
@@ -438,38 +438,9 @@
 <!-- End Review Section -->
 
 <!-- Subscribe -->
-<div class="bg-light">
-  <div class="container content-space-2">
-    <div class="w-md-75 w-lg-50 text-center mx-md-auto">
-      <div class="row justify-content-lg-between">
-        <!-- Heading -->
-        <div class="mb-5">
-          <span class="text-cap">ثبت نام</span>
-          <h2>اخبار جدید را دریافت کنید</h2>
-        </div>
-        <!-- End Heading -->
-
-        <form action="{% url 'website:newsletter' %}" method="post">
-          {% csrf_token %}
-          <!-- Input Card -->
-          <div class="input-card input-card-pill input-card-sm border mb-3">
-            <div class="input-card-form">
-              <label for="subscribeForm" class="form-label visually-hidden">ایمیل را وارد کنید</label>
-              <input type="text" class="form-control form-control-lg" name="email" id="subscribeForm"
-                placeholder="ایمیل خود را وارد نمایید" aria-label="ایمیل خود را وارد کنید">
-            </div>
-            <button type="submit" class="btn btn-primary btn-lg rounded-pill">ثبت نام</button>
-          </div>
-          <!-- End Input Card -->
-        </form>
-
-        <p class="small">می توانید در هر زمانی اشتراک خود را لغو کنید <a href="#">سیاست حفظ حریم خصوصی</a> ما را بخوانید
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
+  {% include 'subscribe.html' %}
 <!-- End Subscribe -->
+ 
 {% endblock content %}
 
 {% block extra_js %}

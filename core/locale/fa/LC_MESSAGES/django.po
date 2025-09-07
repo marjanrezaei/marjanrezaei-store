@@ -85,8 +85,8 @@ msgstr "لغو شده"
 msgid "Invalid Status"
 msgstr "وضعیت نامعتبر"
 
-#: templates/base.html:85
-msgid "Main Page"
+#: templates/base.html:86
+msgid "Home"
 msgstr "صفحه اصلی"
 
 #: templates/base.html:87
@@ -138,16 +138,22 @@ msgid "Free Shipping"
 msgstr "ارسال رایگان"
 
 #: templates/shop/product-detail.html:161
-msgid "We offer free shipping..."
-msgstr "ارسال رایگان ارائه می‌دهیم..."
+msgid "Get free standard shipping automatically on every order"
+msgstr "حمل و نقل استاندارد رایگان را به صورت خودکار در هر سفارش دریافت کنید"
 
 #: templates/shop/product-detail.html:184
 msgid "30 Days Return"
 msgstr "بازگشت ۳۰ روزه"
 
 #: templates/shop/product-detail.html:191
-msgid "Return within 30 days for full refund..."
-msgstr "بازگشت محصول تا ۳۰ روز برای بازپرداخت کامل..."
+msgid "Return within 30 days for full refund"
+msgstr "بازگشت محصول تا ۳۰ روز برای بازپرداخت کامل"
+
+msgid "Secure Checkout"
+msgstr "تسویه حساب ایمن"
+
+msgid "Guaranteed Secure Checkout"
+msgstr "تسویه حساب مطمئن تضمینی"
 
 #: templates/shop/product-detail.html:199 templates/shop/product-grid.html:142
 msgid "Add to Cart"
@@ -236,3 +242,47 @@ msgstr "تعداد آیتم در هر صفحه"
 #: templates/shop/product-grid.html:147 templates/shop/product-grid.html:215
 msgid "No products available"
 msgstr "هیچ محصولی موجود نیست"
+
+#: templates/website/index.html:68
+msgid "View Details"
+msgstr "نمایش جزئیات"
+
+
+msgid "Latest Products"
+msgstr "جدیدترین محصولات"
+
+msgid "Get the latest news"
+msgstr "اخبار جدید را دریافت کنید"
+
+msgid "Enter your email"
+msgstr "ایمیل خود را وارد کنید"
+
+msgid "Sign Up"
+msgstr "ثبت نام"
+
+msgid "Share your comments and feedback"
+msgstr "نظرات و انتقادات خود را بیان کنین"
+
+msgid "Have enough knowledge when shopping"
+msgstr "دانش کافی در زمان خرید داشته باشید"
+
+msgid "Purchase Consultation"
+msgstr "مشاوره خرید"
+
+msgid "Contact Support"
+msgstr "تماس با پشتیبانی"
+
+msgid "View Questions"
+msgstr "مشاهده سوالات"
+
+msgid "Share your constructive suggestions with the developers"
+msgstr "پیشنهادات سازنده خود را به توسعه دهندگان انتقال دهید"
+
+msgid "Frequently Asked Questions (FAQ)"
+msgstr "سوالات متداول"
+
+msgid "Ask us your questions and find answers"
+msgstr "سوالات خود را از ما بپرسید و پیدا کنین"
+
+msgid "Contribute to Development"
+msgstr "کمک به توسعه"

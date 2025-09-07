@@ -106,7 +106,7 @@
                                             href="{% url 'dashboard:admin:order-detail' pk=object.pk %}">{{object.id}}</a>
                                     </td>
                                     <td>{{object.user.user_profile.get_fullname}}</td>
-                                    <td class="formatted-price">{{object.final_price_with_tax}}</td>
+                                    <td>{{object.final_price_with_tax}}</td>
                                     <td>{{object.created_at|date:"Y-m-d h:i"}}</td>
                                     <td><span>{{object.get_status.label}}</span></td>
 

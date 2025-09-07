@@ -1,10 +1,10 @@
-{% load static %}
+{% load static i18n %}
 
 <!-- Card Grid -->
 <div class="container content-space-2 content-space-lg-3">
   <!-- Title -->
   <div class="w-md-75 w-lg-50 text-center mx-md-auto mb-5 mb-md-9">
-    <h2> جدیدترین محصولات </h2>
+    <h2>{% trans "Latest Products" %} </h2>
   </div>
   <!-- End Title -->
 
@@ -49,10 +49,10 @@
               href="{% url 'shop:product-detail' slug=latest_product.slug %}">{{latest_product.title}}</a>
           </h4>
           {% if latest_product.is_discounted %}
-          <h3 class="card-text text-dark formatted-price">{{latest_product.get_price}}</h3>
-          <span class="text-body ms-1 formatted-price text-decoration-line-through">{{latest_product.price}}</span>
+          <h3 class="card-text text-dark">{{latest_product.get_price}}</h3>
+          <span class="text-body ms-1 text-decoration-line-through">{{latest_product.price}}</span>
           {% else %}
-          <h3 class="card-text text-dark formatted-price">{{latest_product.price}}</h3>
+          <h3 class="card-text text-dark">{{latest_product.price}}</h3>
           {% endif %}
         </div>
 
@@ -73,7 +73,7 @@
 
           <button class="btn btn-outline-primary btn-sm btn-transition rounded-pill btn-add-to-cart"
             data-product-id="{{latest_product.id}}" >
-            افزودن به سبد خرید
+            {% trans "Add to Cart" %}
           </button>
         </div>
       </div>
@@ -90,8 +90,9 @@
   <!-- End Row -->
 
   <div class="text-center">
-    <a class="btn btn-outline-primary btn-transition rounded-pill" href="{% url 'shop:product-list' %}">مشاهده تمامی
-      محصولات</a>
+    <a class="btn btn-outline-primary btn-transition rounded-pill" href="{% url 'shop:product-list' %}">
+    {% trans "Product List" %}
+    </a>
   </div>
 </div>
 <!-- End Card Grid -->

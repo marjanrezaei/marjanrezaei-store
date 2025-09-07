@@ -5,18 +5,6 @@ function changePage(page_number){
   window.location.href = new_url
 }
 
-function fromatPriceInToman(element) {
-  let rawPrice = parseFloat(element.innerText);
-  let formatter = new Intl.NumberFormat('fa-IR');
-  let formattedPrice = formatter.format(rawPrice);
-  element.innerText = `${formattedPrice} تومان`; 
-}
-
-document.addEventListener("DOMContentLoaded", function(){
-  let priceElements = document.querySelectorAll('.formatted-price');
-  priceElements.forEach(element => fromatPriceInToman(element));
-});
-
 
 function changeProductQuantity(product_id, quantity) {
   $.ajax({

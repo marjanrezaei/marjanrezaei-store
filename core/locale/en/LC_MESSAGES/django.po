@@ -81,8 +81,8 @@ msgid "Invalid Status"
 msgstr "Invalid Status"
 
 #: templates/base.html:85
-msgid "Main Page"
-msgstr "Main Page"
+msgid "Home"
+msgstr "Home"
 
 #: templates/base.html:87
 msgid "Product List"
@@ -133,16 +133,22 @@ msgid "Free Shipping"
 msgstr "Free Shipping"
 
 #: templates/shop/product-detail.html:161
-msgid "We offer free shipping..."
-msgstr "We offer free shipping..."
+msgid "Get free standard shipping automatically on every order"
+msgstr "Get free standard shipping automatically on every order"
 
 #: templates/shop/product-detail.html:184
 msgid "30 Days Return"
 msgstr "30 Days Return"
 
 #: templates/shop/product-detail.html:191
-msgid "Return within 30 days for full refund..."
-msgstr "Return within 30 days for full refund..."
+msgid "Return within 30 days for full refund"
+msgstr "Return within 30 days for full refund"
+
+msgid "Secure Checkout"
+msgstr "Secure Checkout"
+
+msgid "Guaranteed Secure Checkout"
+msgstr "Guaranteed Secure Checkout"
 
 #: templates/shop/product-detail.html:199 templates/shop/product-grid.html:142
 msgid "Add to Cart"
@@ -231,3 +237,46 @@ msgstr "Items Per Page"
 #: templates/shop/product-grid.html:147 templates/shop/product-grid.html:215
 msgid "No products available"
 msgstr "No products available"
+
+#: templates/website/index.html:68
+msgid "View Details"
+msgstr "View Details"
+
+msgid "Latest Products"
+msgstr "Latest Products"
+
+msgid "Get the latest news"
+msgstr "Get the latest news"
+
+msgid "Enter your email"
+msgstr "Enter your email"
+
+msgid "Sign Up"
+msgstr "Sign Up"
+
+msgid "Share your comments and feedback"
+msgstr "Share your comments and feedback"
+
+msgid "Have enough knowledge when shopping"
+msgstr "Have enough knowledge when shopping"
+
+msgid "Purchase Consultation"
+msgstr "Purchase Consultation"
+
+msgid "Contact Support"
+msgstr "Contact Support"
+
+msgid "View Questions"
+msgstr "View Questions"
+
+msgid "Share your constructive suggestions with the developers"
+msgstr "Share your constructive suggestions with the developers"
+
+msgid "Frequently Asked Questions (FAQ)"
+msgstr "Frequently Asked Questions (FAQ)"
+
+msgid "Ask us your questions and find answers"
+msgstr "Ask us your questions and find answers"
+
+msgid "Contribute to Development"
+msgstr "Contribute to Development"
