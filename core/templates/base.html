@@ -34,11 +34,11 @@
               aria-expanded="false">
               <span class="d-flex align-items-center">
                 {% if LANGUAGE_CODE == 'fa' %}
-                <img src="{% static 'flags/ir.svg' %}" width="20" class="me-2">فارسی
+                <img src="{% static 'svg/flags/ir.svg' %}" width="20" class="me-2">فارسی
                 {% elif LANGUAGE_CODE == 'en' %}
-                <img src="{% static 'flags/gb.svg' %}" width="20" class="me-2">English
+                <img src="{% static 'svg/flags/gb.svg' %}" width="20" class="me-2">English
                 {% elif LANGUAGE_CODE == 'ar' %}
-                <img src="{% static 'flags/ae.svg' %}" width="20" class="me-2">العربية
+                <img src="{% static 'svg/flags/ae.svg' %}" width="20" class="me-2">العربية
                 {% endif %}
               </span>
             </button>
@@ -47,7 +47,7 @@
                 <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
                   <input name="next" type="hidden" value="{{ request.get_full_path }}">
                   <button class="dropdown-item d-flex align-items-center" type="submit" name="language" value="fa">
-                    <img src="{% static 'flags/ir.svg' %}" width="20" class="me-2">فارسی
+                    <img src="{% static 'svg/flags/ir.svg' %}" width="20" class="me-2">فارسی
                   </button>
                 </form>
               </li>
@@ -55,7 +55,7 @@
                 <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
                   <input name="next" type="hidden" value="{{ request.get_full_path }}">
                   <button class="dropdown-item d-flex align-items-center" type="submit" name="language" value="en">
-                    <img src="{% static 'flags/gb.svg' %}" width="20" class="me-2">English
+                    <img src="{% static 'svg/flags/gb.svg' %}" width="20" class="me-2">English
                   </button>
                 </form>
               </li>
@@ -63,7 +63,7 @@
                 <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
                   <input name="next" type="hidden" value="{{ request.get_full_path }}">
                   <button class="dropdown-item d-flex align-items-center" type="submit" name="language" value="ar">
-                    <img src="{% static 'flags/ae.svg' %}" width="20" class="me-2">العربية
+                    <img src="{% static 'svg/flags/ae.svg' %}" width="20" class="me-2">العربية
                   </button>
                 </form>
               </li>
