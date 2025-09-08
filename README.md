@@ -194,10 +194,3 @@ See the [LICENSE](LICENSE) file for full details.
 GitHub: [@marjanrezaei](https://github.com/marjanrezaei)  
 Live API: [marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com)
 
----
-
-## 💡 Want to Contribute?
-
-Feel free to open issues, suggest features, or submit pull requests.  
-If you'd like, I can help you add badges, a contributing guide, or CI/CD setup.
-
