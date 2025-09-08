@@ -16,6 +16,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['first_name', 'last_name', 'phone_number', 'image', 'image_url']
+        ref_name = "AccountsProfileSerializer"
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -72,3 +73,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
             'type': self.user.type
         }
         return data
+    
+
+class EmptySerializer(serializers.Serializer):
+    pass

@@ -3,12 +3,19 @@ from rest_framework.response import Response
 from rest_framework import generics, permissions
 from .models import OrderModel
 from .serializers import OrderSerializer, CheckoutSerializer
+from core.mixins import SwaggerSafeMixin
 
 
-class OrderStatusAPIView(generics.RetrieveAPIView):
+class OrderStatusAPIView(SwaggerSafeMixin, generics.RetrieveAPIView):
     queryset = OrderModel.objects.all()
     serializer_class = OrderSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if self.request.user.is_authenticated:
+            return qs.filter(user=self.request.user)
+        return qs.none()
 
     def get(self, request, *args, **kwargs):
         order = self.get_object()
@@ -19,20 +26,19 @@ class OrderStatusAPIView(generics.RetrieveAPIView):
             'total_price': data['total_price'],
             'items': data['items'],
         })
+  
     
-    def get_queryset(self):
-        return self.queryset.filter(user=self.request.user)
-    
-    
-class OrderDetailAPIView(generics.RetrieveAPIView):
+class OrderDetailAPIView(SwaggerSafeMixin, generics.RetrieveAPIView):
     queryset = OrderModel.objects.all()
     serializer_class = OrderSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        # Ensure users can only see their own orders
-        return self.queryset.filter(user=self.request.user)
-
+        qs = super().get_queryset()
+        if self.request.user.is_authenticated:
+            return qs.filter(user=self.request.user)
+        return qs.none()
+    
 
 class ValidateCouponAPIView(APIView):
     def post(self, request):

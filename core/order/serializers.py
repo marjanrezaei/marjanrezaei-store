@@ -14,13 +14,14 @@ class CouponSerializer(serializers.ModelSerializer):
     class Meta:
         model = CouponModel
         fields = ['code', 'discount_percent', 'max_limit_usage', 'expiration_date']
+        ref_name = "OrderOrderSerializer"
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItemModel
         fields = ['product', 'quantity', 'price']
-
+        ref_name = "OrderOrderItemSerializer"
 
 class OrderItemCreateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -38,6 +39,7 @@ class OrderSerializer(serializers.ModelSerializer):
             'id', 'user', 'address', 'state', 'city', 'zip_code',
             'coupon', 'total_price', 'status', 'items', 'created_at'
         ]
+        ref_name = "OrderOrderSerializer"
 
 
 class CheckoutSerializer(serializers.Serializer):

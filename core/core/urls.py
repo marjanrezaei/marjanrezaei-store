@@ -4,10 +4,24 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import handler500, handler404, handler403
 from django.views.i18n import set_language
-from django.conf.urls.i18n import i18n_patterns
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
+from drf_yasg import openapi
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
+)
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Marjan Rezaei Store API",
+        default_version="v1",
+        description="Comprehensive API documentation for MarjanRezaei Store project.\n"
+                    "Includes user, admin, products, orders, wishlist, and profile endpoints.",
+        contact=openapi.Contact(email="rezaei.marjann@gmail.com"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
 )
 
 # ---------- Error handlers ----------
@@ -19,7 +33,7 @@ handler500 = 'django.views.defaults.server_error'
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # تغییر زبان
+    # change language
     path('set-language/', set_language, name='set_language'),
 
 
@@ -48,6 +62,11 @@ urlpatterns = [
     # Dashboard APIs
     path('api/dashboard/admin/', include('dashboard.api_admin.api_urls')),
     path('api/dashboard/customer/', include('dashboard.api_customer.api_urls')),
+
+    # swagger
+    path('swagger.json', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
 
 # ---------- Static & Media Files ----------

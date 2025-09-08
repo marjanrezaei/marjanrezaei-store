@@ -12,41 +12,57 @@ from .serializers import (
     CustomerWishlistSerializer,
     CustomerProfileImageSerializer,
 )
+from core.mixins import SwaggerSafeMixin
 
 # Addresses
-class CustomerAddressViewSet(viewsets.ModelViewSet):
+class CustomerAddressViewSet(SwaggerSafeMixin, viewsets.ModelViewSet):
     serializer_class = CustomerAddressSerializer
     permission_classes = [permissions.IsAuthenticated]
+    queryset = UserAddressModel.objects.all()
 
     def get_queryset(self):
-        return UserAddressModel.objects.filter(user=self.request.user)
+        qs = super().get_queryset()
+        if self.request.user.is_authenticated:
+            return qs.filter(user=self.request.user)
+        return qs.none()
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
+
 # Orders
-class CustomerOrderViewSet(viewsets.ReadOnlyModelViewSet):
+class CustomerOrderViewSet(SwaggerSafeMixin, viewsets.ReadOnlyModelViewSet):
     serializer_class = OrderSerializer
     permission_classes = [permissions.IsAuthenticated]
+    queryset = OrderModel.objects.all()
 
     def get_queryset(self):
-        return OrderModel.objects.filter(user=self.request.user).order_by('-created_at')
+        qs = super().get_queryset()
+        if self.request.user.is_authenticated:
+            return qs.filter(user=self.request.user).order_by('-created_at')
+        return qs.none()
 
     @action(detail=True, methods=['get'])
     def invoice(self, request, pk=None):
         order = self.get_object()
         if order.status != OrderModel.Status.SUCCESS.value:
-            return Response({"detail": "Invoice only available for successful orders"}, status=400)
+            return Response(
+                {"detail": "Invoice only available for successful orders"},
+                status=400
+            )
         serializer = self.get_serializer(order)
         return Response(serializer.data)
-
+    
 # Profile
-class CustomerProfileViewSet(viewsets.GenericViewSet):
+class CustomerProfileViewSet(SwaggerSafeMixin, viewsets.GenericViewSet):
     serializer_class = CustomerProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
+    queryset = Profile.objects.all()
 
     def get_object(self):
-        profile, created = Profile.objects.get_or_create(user=self.request.user)
+        if getattr(self, 'swagger_fake_view', False):
+            return Profile()
+        profile, _ = Profile.objects.get_or_create(user=self.request.user)
         return profile
 
     def retrieve(self, request):
@@ -54,7 +70,9 @@ class CustomerProfileViewSet(viewsets.GenericViewSet):
         return Response(serializer.data)
 
     def update(self, request):
-        serializer = self.get_serializer(self.get_object(), data=request.data, partial=True)
+        serializer = self.get_serializer(
+            self.get_object(), data=request.data, partial=True
+        )
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
@@ -72,13 +90,18 @@ class CustomerProfileViewSet(viewsets.GenericViewSet):
         serializer.save()
         return Response({"detail": "Profile image updated successfully"})
     
+        
 # Wishlist
-class CustomerWishlistViewSet(viewsets.ModelViewSet):
+class CustomerWishlistViewSet(SwaggerSafeMixin, viewsets.ModelViewSet):
     serializer_class = CustomerWishlistSerializer
     permission_classes = [permissions.IsAuthenticated]
+    queryset = WishlistProductModel.objects.all()
 
     def get_queryset(self):
-        return WishlistProductModel.objects.filter(user=self.request.user)
+        qs = super().get_queryset()
+        if self.request.user.is_authenticated:
+            return qs.filter(user=self.request.user)
+        return qs.none()
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

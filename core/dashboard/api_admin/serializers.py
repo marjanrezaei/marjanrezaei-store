@@ -15,6 +15,7 @@ class CouponSerializer(serializers.ModelSerializer):
             'id', 'code', 'discount_percent', 'max_limit_usage',
             'expiration_date', 'used_by_count'
         ]
+        ref_name = "AdminCouponSerializer"
 
 
 # ---------- Orders ----------
@@ -22,6 +23,7 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderModel
         fields = '__all__'
+        ref_name = "AdminOrderSerializer"
 
 
 # ---------- Products ----------
@@ -41,6 +43,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'description', 'breif_description', 'stock', 'status',
             'price', 'discount_percent', 'extra_images'
         ]
+        ref_name = "AdminProductSerializer"
 
 
 # ---------- Reviews ----------
@@ -48,10 +51,13 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReviewModel
         fields = '__all__'
+        ref_name = "AdminReviewSerializer"
 
 
 # ---------- Profile ----------
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['id', 'user', 'image_url', 'bio']
+        fields = ['user', 'image_url']
+        ref_name = "AdminProfileSerializer"
+

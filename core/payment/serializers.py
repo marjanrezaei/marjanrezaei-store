@@ -31,3 +31,4 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderModel
         fields = ["id", "status", "status_display", "created_at", "updated_at"]
+        ref_name = "PymentOrderSerializer"

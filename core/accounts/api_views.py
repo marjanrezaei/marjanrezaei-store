@@ -16,7 +16,7 @@ from django.urls import reverse
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import AccessToken
 
-from .serializers import RegisterSerializer, MyTokenObtainPairSerializer
+from .serializers import RegisterSerializer, MyTokenObtainPairSerializer, EmptySerializer
 from .models.users import User
 
 User = get_user_model()
@@ -97,6 +97,7 @@ class ActivationApiView(generics.GenericAPIView):
     Activate a user via token in the URL
     """
     permission_classes = [AllowAny]
+    serializer_class = EmptySerializer
 
     def get(self, request, token, *args, **kwargs):
         try:

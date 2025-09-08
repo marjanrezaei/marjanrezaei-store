@@ -1,8 +1,6 @@
-from rest_framework import viewsets, filters
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import viewsets, filters, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
 from order.models import CouponModel, OrderModel
 from shop.models import ProductModel
 from review.models import ReviewModel
@@ -13,10 +11,12 @@ from .serializers import (
     ProductSerializer, ReviewSerializer,
     ProfileSerializer
 )
+from core.mixins import SwaggerSafeMixin
 
 
 class AdminDashboardAPIView(APIView):
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    """Provide counts for admin dashboard"""
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
 
     def get(self, request):
         data = {
@@ -29,21 +29,21 @@ class AdminDashboardAPIView(APIView):
         return Response(data)
 
 
-# ---------- Coupons ----------
 class CouponViewSet(viewsets.ModelViewSet):
+    """Manage coupons (Admin only)"""
     serializer_class = CouponSerializer
     queryset = CouponModel.objects.all()
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['code']
     ordering_fields = ['created_at', 'discount_percent']
 
 
-# ---------- Orders ----------
 class OrderViewSet(viewsets.ReadOnlyModelViewSet):
+    """View orders with filtering (Admin only)"""
     serializer_class = OrderSerializer
     queryset = OrderModel.objects.all()
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['id']
     ordering_fields = ['created_at', 'status']
@@ -56,11 +56,11 @@ class OrderViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
 
 
-# ---------- Products ----------
-class ProductViewSet(viewsets.ModelViewSet):
+class ProductViewSet(SwaggerSafeMixin, viewsets.ModelViewSet):
+    """Manage products (Admin only)"""
     serializer_class = ProductSerializer
     queryset = ProductModel.objects.all()
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['title']
     ordering_fields = ['price', 'created_at']
@@ -72,20 +72,24 @@ class ProductViewSet(viewsets.ModelViewSet):
         serializer.save()
 
 
-# ---------- Reviews ----------
 class ReviewViewSet(viewsets.ModelViewSet):
+    """Manage product reviews (Admin only)"""
     serializer_class = ReviewSerializer
     queryset = ReviewModel.objects.all()
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['product__title']
     ordering_fields = ['created_at', 'status']
 
 
-# ---------- Profile ----------
-class ProfileViewSet(viewsets.ModelViewSet):
+class ProfileViewSet(SwaggerSafeMixin, viewsets.ModelViewSet):
+    """Manage user profiles (Admin only)"""
     serializer_class = ProfileSerializer
-    permission_classes = [IsAuthenticated, IsAdminUser]
-
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser]
+    queryset = Profile.objects.all()
+    
     def get_queryset(self):
-        return Profile.objects.filter(user=self.request.user)
+        qs = super().get_queryset()
+        if hasattr(self.request, 'user') and self.request.user.is_authenticated:
+            return qs.filter(user=self.request.user)
+        return qs.none()

@@ -13,6 +13,7 @@ class ReviewSerializer(serializers.ModelSerializer):
             "status", "status_display", "created_at", "updated_at"
         ]
         read_only_fields = ["user", "status", "created_at", "updated_at"]
+        ref_name = "ReviewReviewSerializer"
 
     def get_status_display(self, obj):
         return obj.get_status()

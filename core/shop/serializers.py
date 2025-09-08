@@ -10,6 +10,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductModel
         fields = ["id", "title", "price", "category", "image"]
+        ref_name = "ShopProductSerializer"
     
     def get_title(self, obj):
         lang = translation.get_language() 
