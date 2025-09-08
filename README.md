@@ -2,7 +2,9 @@
 
 **Live API:** [https://marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com)
 
-Marjan Store is a fully functional e-commerce backend built with Django and Django REST Framework. It supports user authentication, product browsing, cart management, and order processing. The project also includes auto-generated API documentation using Swagger and ReDoc.
+Marjan Store is a fully-featured e-commerce backend built with Django and Django REST Framework.  
+It supports user authentication, product browsing, cart management, and order processing.  
+Interactive API documentation is available via Swagger and ReDoc.
 
 ---
 
@@ -11,37 +13,36 @@ Marjan Store is a fully functional e-commerce backend built with Django and Djan
 - 🔐 JWT-based user authentication (register/login)
 - 🛒 Product listing and detail views
 - 🛍️ Cart management per user
-- 📦 Order creation and history
-- 🧑‍💼 Admin panel for product management
-- 📚 Interactive API documentation (Swagger & ReDoc)
+- 📦 Order creation and order history
+- 🧑‍💼 Admin panel for product and order management
+- 📚 Auto-generated API documentation (Swagger & ReDoc)
 
 ---
 
 ## 🧰 Tech Stack
 
-- **Backend:** Django, Django REST Framework
-- **Auth:** JWT (via `djangorestframework-simplejwt`)
-- **Docs:** Swagger UI & ReDoc (`drf-yasg`)
-- **Database:** PostgreSQL (or SQLite for local dev)
-- **Deployment:** Render
+- **Backend:** Django, Django REST Framework  
+- **Authentication:** JWT via `djangorestframework-simplejwt`  
+- **Documentation:** Swagger UI & ReDoc via `drf-yasg`  
+- **Database:** PostgreSQL (or SQLite for local development)  
+- **Deployment:** Render  
+- **Local Dev:** Docker & Docker Compose
 
 ---
 
 ## 📚 API Documentation
 
-This project includes auto-generated API docs for developers:
+Explore and test the API directly from your browser:
 
-| Tool | URL |
-|------|-----|
-| **Swagger UI** | [`/swagger/`](https://marjanrezaei-store.onrender.com/swagger/) |
+| Tool           | URL                                                                 |
+|----------------|----------------------------------------------------------------------|
+| **Swagger UI** | [`/swagger/`](https://marjanrezaei-store.onrender.com/swagger/)     |
 | **Swagger JSON** | [`/swagger.json`](https://marjanrezaei-store.onrender.com/swagger.json) |
-| **ReDoc** | [`/redoc/`](https://marjanrezaei-store.onrender.com/redoc/) |
-
-These endpoints allow you to explore and test the API directly from your browser.
+| **ReDoc**      | [`/redoc/`](https://marjanrezaei-store.onrender.com/redoc/)         |
 
 ---
 
-## 🛠️ Installation & Setup
+## 🛠️ Manual Installation (Without Docker)
 
 ### 1. Clone the repository
 ```bash
@@ -65,7 +66,7 @@ pip install -r requirements.txt
 python manage.py migrate
 ```
 
-### 5. Create superuser (optional for admin access)
+### 5. Create superuser (optional)
 ```bash
 python manage.py createsuperuser
 ```
@@ -79,41 +80,80 @@ Visit: `http://127.0.0.1:8000`
 
 ---
 
+## 🐳 Local Development with Docker
+
+For local development, use the Docker Compose file located in the `devops/` directory.
+
+### Included Services
+
+| Service       | Description                          | Port(s)     |
+|---------------|--------------------------------------|-------------|
+| `db`          | PostgreSQL 15 with persistent volume | 5432        |
+| `redis`       | Redis for caching and Celery broker  | 6379        |
+| `backend`     | Django development server            | 8000        |
+| `worker`      | Celery worker                        | —           |
+| `celery_beat` | Celery beat scheduler                | —           |
+| `mailhog`     | Local SMTP testing tool              | 8025 (UI), 1025 (SMTP) |
+
+### Run Locally with Docker
+
+```bash
+docker-compose -f devops/docker-compose.yml up --build
+```
+
+To stop the containers:
+
+```bash
+docker-compose -f devops/docker-compose.yml down
+```
+
+---
+
 ## 🔐 Authentication Flow
 
-- Register: `POST /api/auth/register/`
-- Login: `POST /api/auth/login/`
+- **Register:** `POST /api/auth/register/`  
+- **Login:** `POST /api/auth/login/`  
 - Use the returned JWT token in the `Authorization` header:
-  ```
-  Authorization: Bearer <your_token>
-  ```
+
+```http
+Authorization: Bearer <your_token>
+```
 
 ---
 
 ## 📡 API Endpoints Overview
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/products/` | GET | List all products |
-| `/api/products/<id>/` | GET | Retrieve product details |
-| `/api/cart/` | GET/POST | View or add to cart |
-| `/api/orders/` | GET/POST | View or create orders |
-| `/api/auth/register/` | POST | Register a new user |
-| `/api/auth/login/` | POST | Login and receive JWT token |
+| Endpoint                  | Method     | Description             |
+|---------------------------|------------|-------------------------|
+| `/api/products/`          | GET        | List all products       |
+| `/api/products/<id>/`     | GET        | Retrieve product details|
+| `/api/cart/`              | GET/POST   | View or add to cart     |
+| `/api/orders/`            | GET/POST   | View or create orders   |
+| `/api/auth/register/`     | POST       | Register a new user     |
+| `/api/auth/login/`        | POST       | Login and receive token |
 
 ---
 
 ## 🧪 Running Tests
 
+To run tests manually:
+
 ```bash
 python manage.py test
+```
+
+Or inside Docker:
+
+```bash
+docker exec backend python manage.py test
 ```
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License**.  
+See the [LICENSE](LICENSE) file for full details.
 
 ---
 
@@ -123,6 +163,4 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 GitHub: [@marjanrezaei](https://github.com/marjanrezaei)  
 Live API: [marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com)
 
----
-
-If you'd like, I can help you add badges (build status, license, deployment), or even a contributing guide for collaborators. Just say the word!
+اگه دوست داری بخش فارسی هم به README اضافه کنیم یا یه نسخه‌ی خلاصه برای صفحه‌ی گیت‌هاب بذاریم، با کمال میل انجامش می‌دم. فقط بگو چطور دوست داری دیده بشه.
