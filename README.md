@@ -1,10 +1,9 @@
-🛍️ Marjan Store – E-commerce API with Django REST Framework
+🛍️ Marjan Store – Multilingual E-commerce API with Django REST Framework
 
-**Live API:** [https://marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com)
+**Live API:** [https://marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com)  
+**Author:** [@marjanrezaei](https://github.com/marjanrezaei)
 
-Marjan Store is a fully-featured e-commerce backend built with Django and Django REST Framework.  
-It supports user authentication, product browsing, cart management, and order processing.  
-Interactive API documentation is available via Swagger and ReDoc.
+Marjan Store is a fully-featured, multilingual e-commerce backend built with Django and Django REST Framework. It supports user authentication, product browsing, cart management, and order processing. The API is documented with Swagger and ReDoc, and supports Persian, English, and Arabic languages.
 
 ---
 
@@ -15,18 +14,75 @@ Interactive API documentation is available via Swagger and ReDoc.
 - 🛍️ Cart management per user
 - 📦 Order creation and order history
 - 🧑‍💼 Admin panel for product and order management
+- 🌐 Multilingual support (fa, en, ar)
 - 📚 Auto-generated API documentation (Swagger & ReDoc)
 
 ---
 
 ## 🧰 Tech Stack
 
-- **Backend:** Django, Django REST Framework  
-- **Authentication:** JWT via `djangorestframework-simplejwt`  
-- **Documentation:** Swagger UI & ReDoc via `drf-yasg`  
-- **Database:** PostgreSQL (or SQLite for local development)  
-- **Deployment:** Render  
-- **Local Dev:** Docker & Docker Compose
+| Layer            | Technology                              |
+|------------------|------------------------------------------|
+| Backend          | Django, Django REST Framework            |
+| Auth             | JWT via `djangorestframework-simplejwt` |
+| Docs             | Swagger UI & ReDoc via `drf-yasg`        |
+| Database         | PostgreSQL (or SQLite for local dev)     |
+| Task Queue       | Celery + Redis                           |
+| Deployment       | Render                                   |
+| Local Dev        | Docker & Docker Compose                  |
+| i18n             | Django gettext + django-parler           |
+
+---
+
+## 🌍 Multilingual Support
+
+Marjan Store supports Persian (`fa`), English (`en`), and Arabic (`ar`) using Django’s internationalization framework and `django-parler` for model translations.
+
+### Configuration
+
+```python
+# settings.py
+
+LANGUAGE_CODE = 'fa'
+
+LANGUAGES = [
+    ('fa', _('فارسی')),
+    ('en', _('English')),
+    ('ar', _('العربية')),
+]
+
+LOCALE_PATHS = [BASE_DIR / 'locale']
+
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'fa'},
+        {'code': 'en'},
+        {'code': 'ar'},
+    ),
+    'default': {
+        'fallbacks': ['fa'],
+        'hide_untranslated': False,
+    }
+}
+```
+
+### Language Switching
+
+Use the endpoint:
+
+```http
+POST /set-language/
+```
+
+Include the desired language code in the request body or session.
+
+### Translation Files
+
+Translations are stored in `.po` files under `locale/<lang>/LC_MESSAGES/django.po`. Compile them using:
+
+```bash
+django-admin compilemessages
+```
 
 ---
 
@@ -45,33 +101,39 @@ Explore and test the API directly from your browser:
 ## 🛠️ Manual Installation (Without Docker)
 
 ### 1. Clone the repository
+
 ```bash
 git clone https://github.com/marjanrezaei/marjanrezaei-store.git
 cd marjanrezaei-store
 ```
 
 ### 2. Create and activate virtual environment
+
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
 ### 3. Install dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
 ### 4. Run migrations
+
 ```bash
 python manage.py migrate
 ```
 
 ### 5. Create superuser (optional)
+
 ```bash
 python manage.py createsuperuser
 ```
 
 ### 6. Start the development server
+
 ```bash
 python manage.py runserver
 ```
@@ -82,7 +144,7 @@ Visit: `http://127.0.0.1:8000`
 
 ## 🐳 Local Development with Docker
 
-For local development, use the Docker Compose file located in the `devops/` directory.
+Use the Docker Compose file located in the `devops/` directory.
 
 ### Included Services
 
@@ -111,9 +173,10 @@ docker-compose -f devops/docker-compose.yml down
 
 ## 🔐 Authentication Flow
 
-- **Register:** `POST /api/auth/register/`  
-- **Login:** `POST /api/auth/login/`  
-- Use the returned JWT token in the `Authorization` header:
+- **Register:** `POST /api/auth/register/`
+- **Login:** `POST /api/auth/login/`
+
+Use the returned JWT token in the `Authorization` header:
 
 ```http
 Authorization: Bearer <your_token>
@@ -140,6 +203,7 @@ Authorization: Bearer <your_token>
 core/                 # Django project source code
 devops/               # Docker Compose for local development
 envs/dev/django/.env  # Local environment variables
+locale/               # Translation files (.po/.mo)
 Dockerfile            # Used for deployment and local builds
 README.md             # Project documentation
 ```
@@ -158,10 +222,7 @@ handler403 = 'django.views.defaults.permission_denied'
 handler500 = 'django.views.defaults.server_error'
 ```
 
-These handlers use Django’s default error views.  
-You can later customize them by creating your own views or templates (e.g., `404.html`, `500.html`) for a better user experience.
-
-📁 [View on GitHub](https://github.com/marjanrezaei/marjanrezaei-store/blob/main/core/core/urls.py)
+You can customize these views by creating templates like `404.html`, `500.html`, etc.
 
 ---
 
@@ -185,12 +246,3 @@ docker exec backend python manage.py test
 
 This project is licensed under the **MIT License**.  
 See the [LICENSE](LICENSE) file for full details.
-
----
-
-## 👩‍💻 Author
-
-**Marjan Rezaei**  
-GitHub: [@marjanrezaei](https://github.com/marjanrezaei)  
-Live API: [marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com)
-
