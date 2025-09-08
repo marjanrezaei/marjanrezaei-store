@@ -1,4 +1,9 @@
-🛍️ Marjan Store – E-commerce API with Django REST Framework
+حتماً مرجان جان! اینم نسخه‌ی کامل و بازنویسی‌شده‌ی README پروژه‌ی Marjan Store، با اضافه شدن بخش حرفه‌ای مربوط به Error Handling. من جای این بخش رو درست بعد از "Project Structure" گذاشتم تا هم منطقی باشه، هم برای توسعه‌دهنده‌ها راحت پیدا بشه:
+
+---
+
+```markdown
+# 🛍️ Marjan Store – E-commerce API with Django REST Framework
 
 **Live API:** [https://marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com)
 
@@ -134,6 +139,37 @@ Authorization: Bearer <your_token>
 
 ---
 
+## 📂 Project Structure
+
+```
+core/                 # Django project source code
+devops/               # Docker Compose for local development
+envs/dev/django/.env  # Local environment variables
+Dockerfile            # Used for deployment and local builds
+README.md             # Project documentation
+```
+
+---
+
+## ⚠️ Error Handling
+
+Custom error handlers are defined in the main URL configuration to gracefully handle common HTTP errors when `DEBUG = False`.
+
+```python
+# core/core/urls.py
+
+handler404 = 'django.views.defaults.page_not_found'
+handler403 = 'django.views.defaults.permission_denied'
+handler500 = 'django.views.defaults.server_error'
+```
+
+These handlers use Django’s default error views.  
+You can later customize them by creating your own views or templates (e.g., `404.html`, `500.html`) for a better user experience.
+
+📁 [View on GitHub](https://github.com/marjanrezaei/marjanrezaei-store/blob/main/core/core/urls.py)
+
+---
+
 ## 🧪 Running Tests
 
 To run tests manually:
@@ -162,3 +198,11 @@ See the [LICENSE](LICENSE) file for full details.
 **Marjan Rezaei**  
 GitHub: [@marjanrezaei](https://github.com/marjanrezaei)  
 Live API: [marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com)
+
+---
+
+## 💡 Want to Contribute?
+
+Feel free to open issues, suggest features, or submit pull requests.  
+If you'd like, I can help you add badges, a contributing guide, or CI/CD setup.
+
