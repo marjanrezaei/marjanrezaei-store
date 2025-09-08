@@ -1,9 +1,4 @@
-حتماً مرجان جان! اینم نسخه‌ی کامل و بازنویسی‌شده‌ی README پروژه‌ی Marjan Store، با اضافه شدن بخش حرفه‌ای مربوط به Error Handling. من جای این بخش رو درست بعد از "Project Structure" گذاشتم تا هم منطقی باشه، هم برای توسعه‌دهنده‌ها راحت پیدا بشه:
-
----
-
-```markdown
-# 🛍️ Marjan Store – E-commerce API with Django REST Framework
+🛍️ Marjan Store – E-commerce API with Django REST Framework
 
 **Live API:** [https://marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com)
 
