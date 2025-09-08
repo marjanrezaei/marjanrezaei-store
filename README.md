@@ -162,5 +162,3 @@ See the [LICENSE](LICENSE) file for full details.
 **Marjan Rezaei**  
 GitHub: [@marjanrezaei](https://github.com/marjanrezaei)  
 Live API: [marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com)
-
-اگه دوست داری بخش فارسی هم به README اضافه کنیم یا یه نسخه‌ی خلاصه برای صفحه‌ی گیت‌هاب بذاریم، با کمال میل انجامش می‌دم. فقط بگو چطور دوست داری دیده بشه.
