@@ -1,122 +1,176 @@
-# Marjan Store – E-commerce API (Django REST Framework)
+🛍️ Marjan Store – Multilingual E-commerce API
 
-🚀 **Live API:** [https://marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com)
+**Live Demo:** [https://marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com)  
+**Author:** [@marjanrezaei](https://github.com/marjanrezaei)
 
-Marjan Store is an **API-based e-commerce backend** built with **Django REST Framework (DRF)**.
-It provides a complete RESTful API for managing products, users, shopping carts, and orders.
-The project is deployed on **Render**, so you can directly interact with the API endpoints online.
-
----
-
-## ✨ Features
-
-* 🔑 **Authentication & Authorization**
-
-  * User registration & login
-  * JWT-based authentication for secure API access
-
-* 🛍️ **Product Management**
-
-  * List, search, and filter products
-  * Admin-only endpoints for creating, updating, and deleting products
-
-* 🛒 **Shopping Cart**
-
-  * Add, update, and remove items from the cart
-  * Retrieve cart details per user
-
-* 📦 **Order Management**
-
-  * Create orders from cart
-  * View user-specific order history
-
-* ⚡ **API-first Design**
-
-  * Built entirely on DRF for use with web frontends, mobile apps, or third-party integrations
+Marjan Store is a scalable, multilingual e-commerce backend built with Django and Django REST Framework. It supports user authentication, product browsing, cart management, and order processing. The API is documented with Swagger and ReDoc, and supports Persian, English, and Arabic languages.
 
 ---
 
-## 🌍 Live API on Render
+## 🚀 Features
 
-The backend is deployed and accessible here:
-👉 [https://marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com)
-
-### Example Endpoints
-
-| Endpoint              | Method | Description                |
-| --------------------- | ------ | -------------------------- |
-| `/api/products/`      | GET    | List all products          |
-| `/api/products/<id>/` | GET    | Get single product details |
-| `/api/auth/register/` | POST   | Register a new user        |
-| `/api/auth/login/`    | POST   | Login & get JWT token      |
-| `/api/cart/`          | GET    | View cart for current user |
-| `/api/cart/`          | POST   | Add product to cart        |
-| `/api/orders/`        | POST   | Create a new order         |
-| `/api/orders/`        | GET    | List user’s past orders    |
+- 🔐 JWT-based user authentication (register/login)
+- 🛒 Product listing and detail views
+- 🛍️ Cart management per user
+- 📦 Order creation and order history
+- 🧑‍💼 Admin panel for product and order management
+- 🌐 Multilingual support (fa, en, ar)
+- 📚 Auto-generated API documentation (Swagger & ReDoc)
+- 🧭 Visual database diagram for model relationships
 
 ---
 
-## ⚙️ Local Development Setup
+## 🧭 Database Diagram
 
-1. **Clone the repository**
+The following diagram illustrates the relationships between core models such as `User`, `Product`, `Cart`, and `Order`.
 
-   ```bash
-   git clone https://github.com/marjanrezaei/marjanrezaei-store.git
-   cd marjanrezaei-store
-   ```
+![Database Diagram](https://raw.githubusercontent.com/marjanrezaei/marjanrezaei-store/main/docs/dbDiagram.png)
 
-2. **Create a virtual environment & activate it**
-
-   ```bash
-   python -m venv venv
-   source venv/bin/activate   # On Windows: venv\Scripts\activate
-   ```
-
-3. **Install dependencies**
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Run migrations**
-
-   ```bash
-   python manage.py migrate
-   ```
-
-5. **Create a superuser (for admin access)**
-
-   ```bash
-   python manage.py createsuperuser
-   ```
-
-6. **Start the server**
-
-   ```bash
-   python manage.py runserver
-   ```
-
-Now open: `http://127.0.0.1:8000`
+You can also [view the editable diagram](https://github.com/marjanrezaei/marjanrezaei-store/blob/main/docs/dbDiagram.drawio) using draw.io.
 
 ---
 
-## 🧪 Testing
+## 🧰 Tech Stack
 
-Run unit tests with:
+| Layer            | Technology                              |
+|------------------|------------------------------------------|
+| Backend          | Django, Django REST Framework            |
+| Auth             | JWT via `djangorestframework-simplejwt` |
+| Docs             | Swagger UI & ReDoc via `drf-yasg`        |
+| Database         | PostgreSQL (or SQLite for local dev)     |
+| Task Queue       | Celery + Redis                           |
+| Deployment       | Render                                   |
+| Local Dev        | Docker & Docker Compose                  |
+| i18n             | Django gettext + django-parler           |
+
+---
+
+## 🌍 Multilingual Support
+
+Supports Persian (`fa`), English (`en`), and Arabic (`ar`) using Django’s internationalization framework and `django-parler`.
+
+```python
+LANGUAGES = [
+    ('fa', _('فارسی')),
+    ('en', _('English')),
+    ('ar', _('العربية')),
+]
+```
+
+Use `/set-language/` endpoint to switch interface language dynamically.
+
+---
+
+## 📚 API Documentation
+
+Explore and test the API directly from your browser:
+
+- [Swagger UI](https://marjanrezaei-store.onrender.com/swagger/)
+- [Swagger JSON](https://marjanrezaei-store.onrender.com/swagger.json)
+- [ReDoc](https://marjanrezaei-store.onrender.com/redoc/)
+
+---
+
+## 🛠️ Manual Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/marjanrezaei/marjanrezaei-store.git
+cd marjanrezaei-store
+
+# Create and activate virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run migrations
+python manage.py migrate
+
+# Create superuser (optional)
+python manage.py createsuperuser
+
+# Start the development server
+python manage.py runserver
+```
+
+Visit: `http://127.0.0.1:8000`
+
+---
+
+## 🐳 Docker Setup
+
+Use the Docker Compose file located in the `devops/` directory:
+
+```bash
+docker-compose -f devops/docker-compose.yml up --build
+```
+
+To stop the containers:
+
+```bash
+docker-compose -f devops/docker-compose.yml down
+```
+
+---
+
+## 🔐 Authentication Flow
+
+- **Register:** `POST /api/auth/register/`
+- **Login:** `POST /api/auth/login/`
+
+Use the returned JWT token in the `Authorization` header:
+
+```http
+Authorization: Bearer <your_token>
+```
+
+---
+
+## 📡 API Endpoints Overview
+
+| Endpoint                  | Method     | Description             |
+|---------------------------|------------|-------------------------|
+| `/api/products/`          | GET        | List all products       |
+| `/api/products/<id>/`     | GET        | Retrieve product details|
+| `/api/cart/`              | GET/POST   | View or add to cart     |
+| `/api/orders/`            | GET/POST   | View or create orders   |
+| `/api/auth/register/`     | POST       | Register a new user     |
+| `/api/auth/login/`        | POST       | Login and receive token |
+| `/set-language/`          | POST       | Switch interface language|
+
+---
+
+## ⚠️ Error Handling
+
+Custom error handlers are defined in the main URL configuration to gracefully handle common HTTP errors when `DEBUG = False`.
+
+```python
+handler404 = 'django.views.defaults.page_not_found'
+handler403 = 'django.views.defaults.permission_denied'
+handler500 = 'django.views.defaults.server_error'
+```
+
+---
+
+## 🧪 Running Tests
+
+To run tests manually:
 
 ```bash
 python manage.py test
+```
+
+Or inside Docker:
+
+```bash
+docker exec backend python manage.py test
 ```
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
-
----
-
-## 👩‍💻 Author
-
-* GitHub: [marjanrezaei](https://github.com/marjanrezaei)
-* Live API: [marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com) 
+This project is licensed under the **MIT License**.  
+See the [LICENSE](LICENSE) file for full details.
