@@ -1,0 +1,75 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: backend
+    restart: always
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./core:/usr/src/app
+    working_dir: /usr/src/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+    env_file:
+      - ./envs/dev/django/.env
+    depends_on:
+      - db
+      - redis
+      - mailhog
+
+  worker:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: worker
+    command: celery -A core worker -l INFO
+    volumes:
+      - ./core:/usr/src/app
+    depends_on:
+      - backend
+      - redis
+
+  celery_beat:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: celery_beat
+    command: celery -A core beat -l INFO
+    volumes:
+      - ./core:/usr/src/app
+    depends_on:
+      - worker
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    restart: always
+    ports:
+      - "8025:8025"  
+      - "1025:1025" 
+
+volumes:
+  postgres-data:
