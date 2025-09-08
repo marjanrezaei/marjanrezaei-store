@@ -47,7 +47,7 @@ You can also [view the editable diagram](https://github.com/marjanrezaei/marjanr
 
 ## 🌍 Multilingual Support
 
-Marjan Store supports Persian (`fa`), English (`en`), and Arabic (`ar`) using Django’s internationalization framework and `django-parler` for model translations.
+Supports Persian (`fa`), English (`en`), and Arabic (`ar`) using Django’s internationalization framework and `django-parler`.
 
 ```python
 LANGUAGES = [
@@ -57,7 +57,7 @@ LANGUAGES = [
 ]
 ```
 
-Use `/set-language/` endpoint to switch languages dynamically.
+Use `/set-language/` endpoint to switch interface language dynamically.
 
 ---
 
@@ -65,51 +65,33 @@ Use `/set-language/` endpoint to switch languages dynamically.
 
 Explore and test the API directly from your browser:
 
-| Tool           | URL                                                                 |
-|----------------|----------------------------------------------------------------------|
-| **Swagger UI** | [`/swagger/`](https://marjanrezaei-store.onrender.com/swagger/)     |
-| **Swagger JSON** | [`/swagger.json`](https://marjanrezaei-store.onrender.com/swagger.json) |
-| **ReDoc**      | [`/redoc/`](https://marjanrezaei-store.onrender.com/redoc/)         |
+- [Swagger UI](https://marjanrezaei-store.onrender.com/swagger/)
+- [Swagger JSON](https://marjanrezaei-store.onrender.com/swagger.json)
+- [ReDoc](https://marjanrezaei-store.onrender.com/redoc/)
 
 ---
 
 ## 🛠️ Manual Installation
 
-### 1. Clone the repository
-
 ```bash
+# Clone the repository
 git clone https://github.com/marjanrezaei/marjanrezaei-store.git
 cd marjanrezaei-store
-```
 
-### 2. Create and activate virtual environment
-
-```bash
+# Create and activate virtual environment
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
 
-### 3. Install dependencies
-
-```bash
+# Install dependencies
 pip install -r requirements.txt
-```
 
-### 4. Run migrations
-
-```bash
+# Run migrations
 python manage.py migrate
-```
 
-### 5. Create superuser (optional)
-
-```bash
+# Create superuser (optional)
 python manage.py createsuperuser
-```
 
-### 6. Start the development server
-
-```bash
+# Start the development server
 python manage.py runserver
 ```
 
@@ -117,9 +99,9 @@ Visit: `http://127.0.0.1:8000`
 
 ---
 
-## 🐳 Local Development with Docker
+## 🐳 Docker Setup
 
-Use the Docker Compose file located in the `devops/` directory.
+Use the Docker Compose file located in the `devops/` directory:
 
 ```bash
 docker-compose -f devops/docker-compose.yml up --build
