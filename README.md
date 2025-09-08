@@ -1,9 +1,9 @@
-🛍️ Marjan Store – Multilingual E-commerce API with Django REST Framework
+🛍️ Marjan Store – Multilingual E-commerce API
 
-**Live API:** [https://marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com)  
+**Live Demo:** [https://marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com)  
 **Author:** [@marjanrezaei](https://github.com/marjanrezaei)
 
-Marjan Store is a fully-featured, multilingual e-commerce backend built with Django and Django REST Framework. It supports user authentication, product browsing, cart management, and order processing. The API is documented with Swagger and ReDoc, and supports Persian, English, and Arabic languages.
+Marjan Store is a scalable, multilingual e-commerce backend built with Django and Django REST Framework. It supports user authentication, product browsing, cart management, and order processing. The API is documented with Swagger and ReDoc, and supports Persian, English, and Arabic languages.
 
 ---
 
@@ -16,6 +16,17 @@ Marjan Store is a fully-featured, multilingual e-commerce backend built with Dja
 - 🧑‍💼 Admin panel for product and order management
 - 🌐 Multilingual support (fa, en, ar)
 - 📚 Auto-generated API documentation (Swagger & ReDoc)
+- 🧭 Visual database diagram for model relationships
+
+---
+
+## 🧭 Database Diagram
+
+The following diagram illustrates the relationships between core models such as `User`, `Product`, `Cart`, and `Order`.
+
+![Database Diagram](https://raw.githubusercontent.com/marjanrezaei/marjanrezaei-store/main/docs/dbDiagram.png)
+
+You can also [view the editable diagram](https://github.com/marjanrezaei/marjanrezaei-store/blob/main/docs/dbDiagram.drawio) using draw.io.
 
 ---
 
@@ -38,51 +49,15 @@ Marjan Store is a fully-featured, multilingual e-commerce backend built with Dja
 
 Marjan Store supports Persian (`fa`), English (`en`), and Arabic (`ar`) using Django’s internationalization framework and `django-parler` for model translations.
 
-### Configuration
-
 ```python
-# settings.py
-
-LANGUAGE_CODE = 'fa'
-
 LANGUAGES = [
     ('fa', _('فارسی')),
     ('en', _('English')),
     ('ar', _('العربية')),
 ]
-
-LOCALE_PATHS = [BASE_DIR / 'locale']
-
-PARLER_LANGUAGES = {
-    None: (
-        {'code': 'fa'},
-        {'code': 'en'},
-        {'code': 'ar'},
-    ),
-    'default': {
-        'fallbacks': ['fa'],
-        'hide_untranslated': False,
-    }
-}
 ```
 
-### Language Switching
-
-Use the endpoint:
-
-```http
-POST /set-language/
-```
-
-Include the desired language code in the request body or session.
-
-### Translation Files
-
-Translations are stored in `.po` files under `locale/<lang>/LC_MESSAGES/django.po`. Compile them using:
-
-```bash
-django-admin compilemessages
-```
+Use `/set-language/` endpoint to switch languages dynamically.
 
 ---
 
@@ -98,7 +73,7 @@ Explore and test the API directly from your browser:
 
 ---
 
-## 🛠️ Manual Installation (Without Docker)
+## 🛠️ Manual Installation
 
 ### 1. Clone the repository
 
@@ -146,19 +121,6 @@ Visit: `http://127.0.0.1:8000`
 
 Use the Docker Compose file located in the `devops/` directory.
 
-### Included Services
-
-| Service       | Description                          | Port(s)     |
-|---------------|--------------------------------------|-------------|
-| `db`          | PostgreSQL 15 with persistent volume | 5432        |
-| `redis`       | Redis for caching and Celery broker  | 6379        |
-| `backend`     | Django development server            | 8000        |
-| `worker`      | Celery worker                        | —           |
-| `celery_beat` | Celery beat scheduler                | —           |
-| `mailhog`     | Local SMTP testing tool              | 8025 (UI), 1025 (SMTP) |
-
-### Run Locally with Docker
-
 ```bash
 docker-compose -f devops/docker-compose.yml up --build
 ```
@@ -194,19 +156,7 @@ Authorization: Bearer <your_token>
 | `/api/orders/`            | GET/POST   | View or create orders   |
 | `/api/auth/register/`     | POST       | Register a new user     |
 | `/api/auth/login/`        | POST       | Login and receive token |
-
----
-
-## 📂 Project Structure
-
-```
-core/                 # Django project source code
-devops/               # Docker Compose for local development
-envs/dev/django/.env  # Local environment variables
-locale/               # Translation files (.po/.mo)
-Dockerfile            # Used for deployment and local builds
-README.md             # Project documentation
-```
+| `/set-language/`          | POST       | Switch interface language|
 
 ---
 
@@ -215,14 +165,10 @@ README.md             # Project documentation
 Custom error handlers are defined in the main URL configuration to gracefully handle common HTTP errors when `DEBUG = False`.
 
 ```python
-# core/core/urls.py
-
 handler404 = 'django.views.defaults.page_not_found'
 handler403 = 'django.views.defaults.permission_denied'
 handler500 = 'django.views.defaults.server_error'
 ```
-
-You can customize these views by creating templates like `404.html`, `500.html`, etc.
 
 ---
 
@@ -241,12 +187,6 @@ docker exec backend python manage.py test
 ```
 
 ---
-
-## 👩‍💻 Author
-
-**Marjan Rezaei**  
-GitHub: [@marjanrezaei](https://github.com/marjanrezaei)  
-Live API: [marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com)
 
 ## 📄 License
 
