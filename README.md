@@ -242,6 +242,12 @@ docker exec backend python manage.py test
 
 ---
 
+## 👩‍💻 Author
+
+**Marjan Rezaei**  
+GitHub: [@marjanrezaei](https://github.com/marjanrezaei)  
+Live API: [marjanrezaei-store.onrender.com](https://marjanrezaei-store.onrender.com)
+
 ## 📄 License
 
 This project is licensed under the **MIT License**.  
