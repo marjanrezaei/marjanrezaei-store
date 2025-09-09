@@ -2,12 +2,11 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-02 11:12+0000\n"
+"POT-Creation-Date: 2025-09-09 17:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Farsi <LL@li.org>\n"
@@ -49,75 +48,88 @@ msgstr "لینک بازیابی رمز عبور به ایمیل شما ارسا�
 msgid "Your password was changed successfully. Please log in."
 msgstr "رمز عبور شما با موفقیت تغییر یافت. لطفا وارد شوید."
 
-#: core/settings.py:117
+#: core/settings.py:121
 msgid "فارسی"
 msgstr "فارسی"
 
-#: core/settings.py:118
+#: core/settings.py:122
 msgid "English"
 msgstr "انگلیسی"
 
-#: core/settings.py:119
+#: core/settings.py:123
 msgid "العربية"
 msgstr "عربی"
 
 #: dashboard/admin/forms/profiles.py:10 dashboard/customer/forms/profiles.py:10
-msgid "Your previous password was entered incorrectly. Please correct it."
-msgstr "پسورد قبلی شما اشتباه است. لطفا اصلاح کنید."
+msgid "پسورد قبلی شما اشتباه وارد شده است. لطفا تصحیح نمایید."
+msgstr ""
 
 #: dashboard/admin/forms/profiles.py:12 dashboard/customer/forms/profiles.py:12
-msgid "The two entered passwords do not match"
-msgstr "دو رمز عبور وارد شده با هم مطابقت ندارند."
+msgid " دو پسورد ورودی با یکدیگر مطابقت ندارد "
+msgstr ""
 
 #: order/models.py:8
-msgid "Pending Payment"
-msgstr "در انتظار پرداخت"
+msgid "در انتظار پرداخت"
+msgstr ""
 
 #: order/models.py:9
-msgid "Successful"
-msgstr "موفق"
+msgid "موفقیت آمیز"
+msgstr ""
 
 #: order/models.py:10
-msgid "Cancelled"
-msgstr "لغو شده"
+msgid "لغو شده"
+msgstr ""
 
 #: order/models.py:104
-msgid "Invalid Status"
-msgstr "وضعیت نامعتبر"
+msgid "وضعیت نامعتبر"
+msgstr ""
 
 #: templates/base.html:86
 msgid "Home"
 msgstr "صفحه اصلی"
 
-#: templates/base.html:87
+#: templates/base.html:88 templates/includes/latest-products.html:94
 msgid "Product List"
 msgstr "لیست محصولات"
 
-#: templates/base.html:89
+#: templates/base.html:90
 msgid "About Us"
 msgstr "درباره ما"
 
-#: templates/base.html:91
+#: templates/base.html:92 templates/website/contact.html:9
 msgid "Contact Us"
 msgstr "ارتباط با ما"
 
 #: templates/base.html:114
-msgid "profile"
+#, fuzzy
+#| msgid "profile"
+msgid "Profile"
 msgstr "پروفایل"
 
 #: templates/base.html:115
-msgid "Logout"
-msgstr "خروج"
+msgid "Exit"
+msgstr ""
 
 #: templates/base.html:118
 msgid "Login"
 msgstr "ورود"
 
-#: templates/shop/product-detail.html:26
+#: templates/includes/latest-products.html:7
+msgid "Latest Products"
+msgstr "جدیدترین محصولات"
+
+#: templates/includes/latest-products.html:76
+#: templates/includes/similar-products.html:76
+#: templates/shop/product-detail.html:202 templates/shop/product-grid.html:142
+#: templates/shop/product-grid.html:199
+msgid "Add to Cart"
+msgstr "افزودن به سبد خرید"
+
+#: templates/shop/product-detail.html:26 templates/shop/product-detail.html:28
 msgid "Extra Image"
 msgstr "تصویر اضافه"
 
-#: templates/shop/product-detail.html:51
+#: templates/shop/product-detail.html:51 templates/shop/product-detail.html:54
 msgid "Image"
 msgstr "تصویر"
 
@@ -125,45 +137,37 @@ msgstr "تصویر"
 msgid "Add to Wishlist"
 msgstr "افزودن به علاقه‌مندی‌ها"
 
-#: templates/shop/product-detail.html:95
+#: templates/shop/product-detail.html:98
 msgid "Total Price:"
 msgstr "قیمت کل:"
 
-#: templates/shop/product-detail.html:107
+#: templates/shop/product-detail.html:110
 msgid "Select Quantity"
 msgstr "انتخاب تعداد"
 
-#: templates/shop/product-detail.html:154
+#: templates/shop/product-detail.html:157 templates/website/index.html:144
 msgid "Free Shipping"
 msgstr "ارسال رایگان"
 
-#: templates/shop/product-detail.html:161
-msgid "Get free standard shipping automatically on every order"
-msgstr "حمل و نقل استاندارد رایگان را به صورت خودکار در هر سفارش دریافت کنید"
+#: templates/shop/product-detail.html:164
+msgid "We offer free shipping..."
+msgstr ""
 
-#: templates/shop/product-detail.html:184
+#: templates/shop/product-detail.html:187 templates/website/index.html:124
 msgid "30 Days Return"
 msgstr "بازگشت ۳۰ روزه"
 
-#: templates/shop/product-detail.html:191
-msgid "Return within 30 days for full refund"
+#: templates/shop/product-detail.html:194
+#, fuzzy
+#| msgid "Return within 30 days for full refund"
+msgid "Return within 30 days for full refund..."
 msgstr "بازگشت محصول تا ۳۰ روز برای بازپرداخت کامل"
 
-msgid "Secure Checkout"
-msgstr "تسویه حساب ایمن"
-
-msgid "Guaranteed Secure Checkout"
-msgstr "تسویه حساب مطمئن تضمینی"
-
-#: templates/shop/product-detail.html:199 templates/shop/product-grid.html:142
-msgid "Add to Cart"
-msgstr "افزودن به سبد خرید"
-
-#: templates/shop/product-detail.html:233
+#: templates/shop/product-detail.html:236
 msgid "Details"
 msgstr "جزئیات"
 
-#: templates/shop/product-detail.html:240
+#: templates/shop/product-detail.html:243
 msgid "Materials & Care"
 msgstr "مواد و نگهداری"
 
@@ -243,46 +247,197 @@ msgstr "تعداد آیتم در هر صفحه"
 msgid "No products available"
 msgstr "هیچ محصولی موجود نیست"
 
-#: templates/website/index.html:68
-msgid "View Details"
-msgstr "نمایش جزئیات"
-
-
-msgid "Latest Products"
-msgstr "جدیدترین محصولات"
-
+#: templates/subscribe.html:10
 msgid "Get the latest news"
 msgstr "اخبار جدید را دریافت کنید"
 
+#: templates/subscribe.html:19 templates/subscribe.html:21
 msgid "Enter your email"
 msgstr "ایمیل خود را وارد کنید"
 
+#: templates/subscribe.html:23
 msgid "Sign Up"
 msgstr "ثبت نام"
 
+#: templates/website/about.html:9
+msgid "About Me"
+msgstr "درباره من"
+
+#: templates/website/about.html:17
+msgid ""
+"Hello! I'm Marjan Rezaei, a web developer specializing in Django and REST "
+"APIs."
+msgstr ""
+"سلام! من مرجان رضایی هستم، توسعه‌دهنده وب با تخصص در Django و REST APIs."
+
+#: templates/website/about.html:18
+msgid ""
+"I love building clean, secure, and scalable applications that deliver great "
+"user experiences."
+msgstr ""
+"عاشق ساختن اپلیکیشن‌های تمیز، امن و مقیاس‌پذیرم که تجربه کاربری عالی ارائه "
+"دهند."
+
+#: templates/website/about.html:22
+msgid ""
+"My expertise lies in designing and implementing online stores, content "
+"management systems,"
+msgstr ""
+"تخصص من در طراحی و پیاده‌سازی فروشگاه‌های آنلاین و سیستم‌های مدیریت محتواست،"
+
+#: templates/website/about.html:23
+msgid ""
+"and multilingual user interfaces. In this project, I used Django, DRF, "
+"Parler for language support."
+msgstr ""
+"و رابط‌های کاربری چندزبانه. در این پروژه از Django، DRF و Parler برای "
+"پشتیبانی زبان‌ها استفاده کردم."
+
+#: templates/website/about.html:29
+msgid "Skills"
+msgstr "مهارت‌ها"
+
+#: templates/website/about.html:31
+msgid "Python & Django"
+msgstr "پایتون و جنگو"
+
+#: templates/website/about.html:32
+msgid "Django REST Framework"
+msgstr "جنگو REST فریم‌ورک"
+
+#: templates/website/about.html:33
+msgid "HTML, CSS, JavaScript"
+msgstr "HTML، CSS، جاوااسکریپت"
+
+#: templates/website/about.html:34
+msgid "Bootstrap"
+msgstr "Bootstrap"
+
+#: templates/website/about.html:35
+msgid "PostgreSQL & SQLite"
+msgstr "PostgreSQL و SQLite"
+
+#: templates/website/about.html:36
+msgid "Git & GitHub"
+msgstr "گیت و گیت‌هاب"
+
+#: templates/website/about.html:38
+msgid "Docker & Render"
+msgstr "داکر و رندر"
+
+#: templates/website/about.html:39
+msgid "SEO Optimization"
+msgstr "سئو و بهینه‌سازی سایت"
+
+#: templates/website/about.html:45
+msgid "Connect with Me"
+msgstr "ارتباط با من"
+
+#: templates/website/about.html:46
+msgid "To see my projects and activities, feel free to visit:"
+msgstr "برای دیدن پروژه‌ها و فعالیت‌های من، می‌تونی به صفحه‌های زیر سر بزنی:"
+
+#: templates/website/about.html:64
+msgid "Why I Built This Store"
+msgstr "چرا این فروشگاه رو ساختم"
+
+#: templates/website/about.html:66
+msgid ""
+"This project was a way to combine my technical skills with real-world user "
+"experience. I wanted to create something that was both challenging to build "
+"and enjoyable to use."
+msgstr ""
+"هدفم از ساخت این فروشگاه، ترکیب مهارت‌های فنی با تجربه‌ی کاربری واقعی بود. "
+"می‌خواستم پروژه‌ای داشته باشم که هم از نظر کدنویسی چالش‌برانگیز باشه، هم از نظر "
+"طراحی و تعامل با کاربر."
+
+#: templates/website/about.html:69
+msgid ""
+"If you have any questions or would like to collaborate, feel free to reach "
+"out via the"
+msgstr "اگر سوالی داشتی یا دوست داشتی همکاری کنیم، خوشحال می‌شم از طریق"
+
+#: templates/website/about.html:70
+msgid "Contact"
+msgstr "تماس با من"
+
+#: templates/website/about.html:71
+msgid "page."
+msgstr "پیام بدی."
+
+#: templates/website/contact.html:11
 msgid "Share your comments and feedback"
 msgstr "نظرات و انتقادات خود را بیان کنین"
 
-msgid "Have enough knowledge when shopping"
-msgstr "دانش کافی در زمان خرید داشته باشید"
-
+#: templates/website/contact.html:34
 msgid "Purchase Consultation"
 msgstr "مشاوره خرید"
 
+#: templates/website/contact.html:37
+msgid "Have enough knowledge when shopping"
+msgstr "دانش کافی در زمان خرید داشته باشید"
+
+#: templates/website/contact.html:43 templates/website/contact.html:113
 msgid "Contact Support"
 msgstr "تماس با پشتیبانی"
 
-msgid "View Questions"
-msgstr "مشاهده سوالات"
-
-msgid "Share your constructive suggestions with the developers"
-msgstr "پیشنهادات سازنده خود را به توسعه دهندگان انتقال دهید"
-
+#: templates/website/contact.html:69
 msgid "Frequently Asked Questions (FAQ)"
 msgstr "سوالات متداول"
 
+#: templates/website/contact.html:72
 msgid "Ask us your questions and find answers"
 msgstr "سوالات خود را از ما بپرسید و پیدا کنین"
 
+#: templates/website/contact.html:78
+msgid "View Questions"
+msgstr "مشاهده سوالات"
+
+#: templates/website/contact.html:104
 msgid "Contribute to Development"
 msgstr "کمک به توسعه"
+
+#: templates/website/contact.html:107
+msgid "Share your constructive suggestions with the developers"
+msgstr "پیشنهادات سازنده خود را به توسعه دهندگان انتقال دهید"
+
+#: templates/website/index.html:26
+msgid "View Details"
+msgstr "نمایش جزئیات"
+
+#: templates/website/index.html:105
+msgid "Secure Checkout"
+msgstr "تسویه حساب ایمن"
+
+#: templates/website/index.html:108
+msgid "Guaranteed Secure Checkout"
+msgstr "تسویه حساب مطمئن تضمینی"
+
+#: templates/website/index.html:127
+msgid "Return within 30 days for full refund"
+msgstr "بازگشت محصول تا ۳۰ روز برای بازپرداخت کامل"
+
+#: templates/website/index.html:147
+msgid "Get free standard shipping automatically on every order"
+msgstr "حمل و نقل استاندارد رایگان را به صورت خودکار در هر سفارش دریافت کنید"
+
+#~ msgid "Your previous password was entered incorrectly. Please correct it."
+#~ msgstr "پسورد قبلی شما اشتباه است. لطفا اصلاح کنید."
+
+#~ msgid "The two entered passwords do not match"
+#~ msgstr "دو رمز عبور وارد شده با هم مطابقت ندارند."
+
+#~ msgid "Pending Payment"
+#~ msgstr "در انتظار پرداخت"
+
+#~ msgid "Successful"
+#~ msgstr "موفق"
+
+#~ msgid "Cancelled"
+#~ msgstr "لغو شده"
+
+#~ msgid "Invalid Status"
+#~ msgstr "وضعیت نامعتبر"
+
+#~ msgid "Logout"
+#~ msgstr "خروج"

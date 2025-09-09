@@ -1,86 +1,78 @@
 {% extends 'base.html' %}
+{% load static i18n %}
 
-{% load static %}
+{% block content %}
+<div class="container content-space-t-3 content-space-t-lg-5">
+  <div class="w-lg-75 mx-auto">
+    <!-- Heading -->
+    <div class="mb-5 text-center">
+      <h1 class="display-4 mb-4">{% trans "About Me" %}</h1>
 
-{% block content %} 
-  <!-- Gallery -->
-    <div class="container content-space-t-3 content-space-t-lg-5">
-      <div class="w-lg-75 text-center mx-lg-auto">
-        <!-- Heading -->
-        <div class="mb-5 mb-md-10">
-          <h1 class="display-4">درباره ما</h1>
-          <p class="lead">Front یک شرکت وب است که وب سایت می سازد. کسب‌وکارها در هر اندازه‌ای - از استارت‌آپ‌های جدید گرفته تا شرکت‌های عمومی - از موضوع ما برای ایجاد و مدیریت آنلاین کسب‌وکارشان استفاده می‌کنند.</p>
-        </div>
-        <!-- End Heading -->
-      </div>
+      <!-- Profile Image -->
+      <img src="{% static 'img/profile.jpg' %}" alt="Profile photo of Marjan Rezaei"
+        class="rounded-circle shadow-lg mb-4" style="width: 180px; height: 180px; object-fit: cover;">
 
-      <div class="row gx-3">
-        <div class="col mb-3">
-          <div class="bg-img-start" style="background-image: url('/static/img/480x320/img17.jpg'); height: 15rem;"></div>
-        </div>
-        <!-- End Col -->
+      <!-- Intro Text -->
+      <p class="lead">
+        {% trans "Hello! I'm Marjan Rezaei, a web developer specializing in Django and REST APIs." %} 
+        {% trans "I love building clean, secure, and scalable applications that deliver great user experiences." %}
+      </p>
 
-        <div class="col-3 d-none d-md-block mb-3">
-          <div class="bg-img-start" style="background-image: url('/static/img/480x320/img6.jpg'); height: 15rem;"></div>
-        </div>
-        <!-- End Col -->
-
-        <div class="col mb-3">
-          <div class="bg-img-start" style="background-image: url('/static/img/480x320/img14.jpg'); height: 15rem;"></div>
-        </div>
-        <!-- End Col -->
-
-        <div class="w-100"></div>
-
-        <div class="col mb-3 mb-md-0">
-          <div class="bg-img-start" style="background-image: url('/static/img/480x320/img25.jpg'); height: 15rem;"></div>
-        </div>
-        <!-- End Col -->
-
-        <div class="col-4 d-none d-md-block mb-3 mb-md-0">
-          <div class="bg-img-start" style="background-image: url('/static/img/480x320/img16.jpg'); height: 15rem;"></div>
-        </div>
-        <!-- End Col -->
-
-        <div class="col">
-          <div class="bg-img-start" style="background-image: url('/static/img/480x320/img12.jpg'); height: 15rem;"></div>
-        </div>
-        <!-- End Col -->
-      </div>
-      <!-- End Row -->
+      <p class="mt-3">
+        {% trans "My expertise lies in designing and implementing online stores, content management systems," %} 
+        {% trans "and multilingual user interfaces. In this project, I used Django, DRF, Parler for language support." %} 
+      </p>
     </div>
-    <!-- End Gallery -->
 
-    <!-- Feature Stats -->
-    <div class="container content-space-2 content-space-lg-3">
-      <div class="row justify-content-lg-center">
-        <div class="col-sm-4 col-lg-3 mb-7 mb-sm-0">
-          <div class="text-center">
-            <h2 class="display-4">7</h2>
-            <p class="small">سال در تجارت</p>
-          </div>
+    <!-- Skills -->
+    <div class="mb-5">
+      <h2 class="h3 text-center mb-4">{% trans "Skills" %}</h2>
+      <div class="row row-cols-2 row-cols-md-4 g-3 text-center">
+        <div class="col"><span class="badge bg-primary p-3"><i class="bi bi-code-slash me-1"></i>{% trans "Python & Django" %}</span></div>
+        <div class="col"><span class="badge bg-secondary p-3"><i class="bi bi-diagram-3 me-1"></i>{% trans "Django REST Framework" %}</span></div>
+        <div class="col"><span class="badge bg-info p-3"><i class="bi bi-braces me-1"></i>{% trans "HTML, CSS, JavaScript" %}</span></div>
+        <div class="col"><span class="badge bg-success p-3"><i class="bi bi-bootstrap-fill me-1"></i>{% trans "Bootstrap" %}</span></div>
+        <div class="col"><span class="badge bg-warning text-dark p-3"><i class="bi bi-database me-1"></i>{% trans "PostgreSQL & SQLite" %}</span></div>
+        <div class="col"><span class="badge bg-dark p-3"><i class="bi bi-git me-1"></i>{% trans "Git & GitHub" %}</span>
         </div>
-        <!-- End Col -->
-
-        <div class="col-sm-4 col-lg-3 mb-7 mb-sm-0">
-          <div class="text-center">
-            <h2 class="display-4">3,5k+</h2>
-            <p class="small">نسخه های فروخته شده</p>
-          </div>
-        </div>
-        <!-- End Col -->
-
-        <div class="col-sm-4 col-lg-3">
-          <div class="text-center">
-            <h2 class="display-4">85%</h2>
-            <p class="small">مشتریان خوشحال</p>
-          </div>
-        </div>
-        <!-- End Col -->
+        <div class="col"><span class="badge bg-danger p-3"><i class="bi bi-box-seam me-1"></i>{% trans "Docker & Render" %}</span></div>
+        <div class="col"><span class="badge bg-light text-dark p-3"><i class="bi bi-graph-up-arrow me-1"></i>{% trans "SEO Optimization" %}</span></div>
       </div>
-      <!-- End Row -->
     </div>
-    <!-- End Feature Stats -->
 
-    <div class="border-top mx-auto" style="max-width: 25rem;"></div>
-{% endblock content %} 
+    <!-- Connect -->
+    <div class="mb-5 text-center">
+      <h2 class="h3 mb-3">{% trans "Connect with Me" %}</h2>
+      <p>{% trans "To see my projects and activities, feel free to visit:" %}</p>
+      <ul class="list-inline">
+        <li class="list-inline-item mx-2">
+          <a href="https://github.com/marjanrezaei" target="_blank" class="btn btn-outline-dark">
+            <i class="bi bi-github me-1"></i> GitHub
+          </a>
+        </li>
+        <li class="list-inline-item mx-2">
+          <a href="https://www.linkedin.com/in/marjan-rezaei-055a53312/" target="_blank"
+            class="btn btn-outline-primary">
+            <i class="bi bi-linkedin me-1"></i> LinkedIn
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Why I Built This -->
+    <div class="mb-5 text-center">
+      <h2 class="h3 mb-3">{% trans "Why I Built This Store" %}</h2>
+      <p>
+        {% trans "This project was a way to combine my technical skills with real-world user experience. I wanted to create something that was both challenging to build and enjoyable to use." %}
+      </p>
+      <p>
+        {% trans "If you have any questions or would like to collaborate, feel free to reach out via the" %}
+        <a href="{% url 'website:contact' %}">{% trans "Contact" %}</a>
+        {% trans "page." %}
+      </p>
+    </div>
+
+    <div class="border-top mx-auto mt-5" style="max-width: 25rem;"></div>
+  </div>
+</div>
+{% endblock content %}

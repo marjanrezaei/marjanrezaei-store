@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-07 12:07+0000\n"
+"POT-Creation-Date: 2025-09-09 17:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic <LL@li.org>\n"
@@ -44,15 +44,15 @@ msgstr "تم إرسال رابط إعادة تعيين كلمة المرور إ�
 msgid "Your password was changed successfully. Please log in."
 msgstr "تم تغيير كلمة المرور بنجاح. الرجاء تسجيل الدخول"
 
-#: core/settings.py:118
+#: core/settings.py:121
 msgid "فارسی"
 msgstr "الفارسية"
 
-#: core/settings.py:119
+#: core/settings.py:122
 msgid "English"
 msgstr "الإنجليزية"
 
-#: core/settings.py:120
+#: core/settings.py:123
 msgid "العربية"
 msgstr "العربية"
 
@@ -84,7 +84,7 @@ msgstr ""
 msgid "Home"
 msgstr "الرئيسية"
 
-#: templates/base.html:88
+#: templates/base.html:88 templates/includes/latest-products.html:94
 msgid "Product List"
 msgstr "قائمة المنتجات"
 
@@ -92,7 +92,7 @@ msgstr "قائمة المنتجات"
 msgid "About Us"
 msgstr "معلومات عنا"
 
-#: templates/base.html:92
+#: templates/base.html:92 templates/website/contact.html:9
 msgid "Contact Us"
 msgstr "اتصل بنا"
 
@@ -109,6 +109,17 @@ msgstr ""
 #: templates/base.html:118
 msgid "Login"
 msgstr "تسجيل الدخول"
+
+#: templates/includes/latest-products.html:7
+msgid "Latest Products"
+msgstr "أحدث المنتجات"
+
+#: templates/includes/latest-products.html:76
+#: templates/includes/similar-products.html:76
+#: templates/shop/product-detail.html:202 templates/shop/product-grid.html:142
+#: templates/shop/product-grid.html:199
+msgid "Add to Cart"
+msgstr "أضف إلى السلة"
 
 #: templates/shop/product-detail.html:26 templates/shop/product-detail.html:28
 msgid "Extra Image"
@@ -130,32 +141,23 @@ msgstr "السعر الإجمالي:"
 msgid "Select Quantity"
 msgstr "اختر الكمية"
 
-#: templates/shop/product-detail.html:157
+#: templates/shop/product-detail.html:157 templates/website/index.html:144
 msgid "Free Shipping"
 msgstr "شحن مجاني"
 
 #: templates/shop/product-detail.html:164
-msgid "Get free standard shipping automatically on every order"
-msgstr "احصل على شحن قياسي مجاني تلقائيًا مع كل طلب"
+msgid "We offer free shipping..."
+msgstr ""
 
-#: templates/shop/product-detail.html:187
+#: templates/shop/product-detail.html:187 templates/website/index.html:124
 msgid "30 Days Return"
 msgstr "إرجاع خلال 30 يومًا"
 
 #: templates/shop/product-detail.html:194
-msgid "Return within 30 days for full refund"
+#, fuzzy
+#| msgid "Return within 30 days for full refund"
+msgid "Return within 30 days for full refund..."
 msgstr "الإرجاع خلال 30 يومًا لاسترداد كامل"
-
-msgid "Secure Checkout"
-msgstr "إتمام شراء آمن"
-
-msgid "Guaranteed Secure Checkout"
-msgstr "إتمام شراء آمن مضمون"
-
-#: templates/shop/product-detail.html:202 templates/shop/product-grid.html:142
-#: templates/shop/product-grid.html:199
-msgid "Add to Cart"
-msgstr "أضف إلى السلة"
 
 #: templates/shop/product-detail.html:236
 msgid "Details"
@@ -241,45 +243,171 @@ msgstr "عدد العناصر في الصفحة"
 msgid "No products available"
 msgstr "لا توجد منتجات متاحة"
 
+#: templates/subscribe.html:10
+msgid "Get the latest news"
+msgstr "احصل على آخر الأخبار"
+
+#: templates/subscribe.html:19 templates/subscribe.html:21
+msgid "Enter your email"
+msgstr "أدخل بريدك الإلكتروني"
+
+#: templates/subscribe.html:23
+msgid "Sign Up"
+msgstr "التسجيل"
+
+#: templates/website/about.html:9
+msgid "About Me"
+msgstr "من أنا"
+
+#: templates/website/about.html:17
+msgid ""
+"Hello! I'm Marjan Rezaei, a web developer specializing in Django and REST "
+"APIs."
+msgstr "مرحبًا! أنا مرجان رضائي، مطورة ويب متخصصة في Django وواجهات REST API."
+
+#: templates/website/about.html:18
+msgid ""
+"I love building clean, secure, and scalable applications that deliver great "
+"user experiences."
+msgstr "أحب بناء تطبيقات نظيفة وآمنة وقابلة للتوسع توفر تجربة مستخدم رائعة."
+
+#: templates/website/about.html:22
+msgid ""
+"My expertise lies in designing and implementing online stores, content "
+"management systems,"
+msgstr "تخصصي يشمل تصميم وتنفيذ المتاجر الإلكترونية وأنظمة إدارة المحتوى،"
+
+#: templates/website/about.html:23
+msgid ""
+"and multilingual user interfaces. In this project, I used Django, DRF, "
+"Parler for language support."
+msgstr ""
+"وواجهات المستخدم متعددة اللغات. في هذا المشروع استخدمت Django وDRF وParler "
+"لدعم اللغات."
+
+#: templates/website/about.html:29
+msgid "Skills"
+msgstr "المهارات"
+
+#: templates/website/about.html:31
+msgid "Python & Django"
+msgstr "بايثون و Django"
+
+#: templates/website/about.html:32
+msgid "Django REST Framework"
+msgstr "إطار Django REST"
+
+#: templates/website/about.html:33
+msgid "HTML, CSS, JavaScript"
+msgstr "HTML، CSS، JavaScript"
+
+#: templates/website/about.html:34
+msgid "Bootstrap"
+msgstr "Bootstrap"
+
+#: templates/website/about.html:35
+msgid "PostgreSQL & SQLite"
+msgstr "PostgreSQL و SQLite"
+
+#: templates/website/about.html:36
+msgid "Git & GitHub"
+msgstr "Git و GitHub"
+
+#: templates/website/about.html:38
+msgid "Docker & Render"
+msgstr "Docker و Render"
+
+#: templates/website/about.html:39
+msgid "SEO Optimization"
+msgstr "تحسين محركات البحث (SEO)"
+
+#: templates/website/about.html:45
+msgid "Connect with Me"
+msgstr "تواصل معي"
+
+#: templates/website/about.html:46
+msgid "To see my projects and activities, feel free to visit:"
+msgstr "لمشاهدة مشاريعي وأنشطتي، تفضل بزيارة الروابط التالية:"
+
+#: templates/website/about.html:64
+msgid "Why I Built This Store"
+msgstr "لماذا أنشأت هذا المتجر"
+
+#: templates/website/about.html:66
+msgid ""
+"This project was a way to combine my technical skills with real-world user "
+"experience. I wanted to create something that was both challenging to build "
+"and enjoyable to use."
+msgstr ""
+"كان هذا المشروع وسيلة لدمج مهاراتي التقنية مع تجربة المستخدم الواقعية. أردت "
+"إنشاء شيء يمثل تحديًا في البناء وممتعًا في الاستخدام."
+
+#: templates/website/about.html:69
+msgid ""
+"If you have any questions or would like to collaborate, feel free to reach "
+"out via the"
+msgstr "إذا كان لديك أي سؤال أو ترغب في التعاون، يسعدني أن تتواصل معي عبر"
+
+#: templates/website/about.html:70
+msgid "Contact"
+msgstr "اتصل بي"
+
+#: templates/website/about.html:71
+msgid "page."
+msgstr "الصفحة."
+
+#: templates/website/contact.html:11
+msgid "Share your comments and feedback"
+msgstr "شارك آرائك وانتقاداتك"
+
+#: templates/website/contact.html:34
+msgid "Purchase Consultation"
+msgstr "استشارة الشراء"
+
+#: templates/website/contact.html:37
+msgid "Have enough knowledge when shopping"
+msgstr "امتلك المعرفة الكافية عند الشراء"
+
+#: templates/website/contact.html:43 templates/website/contact.html:113
+msgid "Contact Support"
+msgstr "اتصل بالدعم"
+
+#: templates/website/contact.html:69
+msgid "Frequently Asked Questions (FAQ)"
+msgstr "الأسئلة الشائعة"
+
+#: templates/website/contact.html:72
+msgid "Ask us your questions and find answers"
+msgstr "اسألنا أسئلتك واحصل على الإجابات"
+
+#: templates/website/contact.html:78
+msgid "View Questions"
+msgstr "عرض الأسئلة"
+
+#: templates/website/contact.html:104
+msgid "Contribute to Development"
+msgstr "المساهمة في التطوير"
+
+#: templates/website/contact.html:107
+msgid "Share your constructive suggestions with the developers"
+msgstr "قدّم اقتراحاتك البناءة إلى المطورين"
+
 #: templates/website/index.html:26
 msgid "View Details"
 msgstr "عرض التفاصيل"
 
-msgid "Latest Products"
-msgstr "أحدث المنتجات"
+#: templates/website/index.html:105
+msgid "Secure Checkout"
+msgstr "إتمام شراء آمن"
 
-msgid "Get the latest news"
-msgstr "احصل على آخر الأخبار"
+#: templates/website/index.html:108
+msgid "Guaranteed Secure Checkout"
+msgstr "إتمام شراء آمن مضمون"
 
-msgid "Enter your email"
-msgstr "أدخل بريدك الإلكتروني"
+#: templates/website/index.html:127
+msgid "Return within 30 days for full refund"
+msgstr "الإرجاع خلال 30 يومًا لاسترداد كامل"
 
-msgid "Sign Up"
-msgstr "التسجيل"
-
-msgid "Share your comments and feedback"
-msgstr "شارك آرائك وانتقاداتك"
-
-msgid "Have enough knowledge when shopping"
-msgstr "امتلك المعرفة الكافية عند الشراء"
-
-msgid "Purchase Consultation"
-msgstr "استشارة الشراء"
-
-msgid "Contact Support"
-msgstr "اتصل بالدعم"
-
-msgid "View Questions"
-msgstr "عرض الأسئلة"
-
-msgid "Share your constructive suggestions with the developers"
-msgstr "قدّم اقتراحاتك البناءة إلى المطورين"
-
-msgid "Frequently Asked Questions (FAQ)"
-msgstr "الأسئلة الشائعة"
-
-msgid "Ask us your questions and find answers"
-msgstr "اسألنا أسئلتك واحصل على الإجابات"
-
-msgid "Contribute to Development"
-msgstr "المساهمة في التطوير"
+#: templates/website/index.html:147
+msgid "Get free standard shipping automatically on every order"
+msgstr "احصل على شحن قياسي مجاني تلقائيًا مع كل طلب"
