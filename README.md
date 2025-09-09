@@ -141,7 +141,21 @@ Authorization: Bearer <your_token>
 | `/set-language/`          | POST       | Switch interface language|
 
 ---
+## 🗺️ Sitemap Integration
 
+This project includes a dynamic, multilingual sitemap powered by Django’s `sitemaps` framework. It helps search engines index key pages like products and static views.
+
+### ✅ Included in Sitemap:
+- Published products (`shop.ProductModel`)
+- Static pages: Home, About, Contact, Newsletter (`website`)
+- Multilingual support via `django-parler`
+
+### 🔗 Access Sitemap:
+Once the server is running, visit:
+```
+/sitemap.xml
+```
+---
 ## ⚠️ Error Handling
 
 Custom error handlers are defined in the main URL configuration to gracefully handle common HTTP errors when `DEBUG = False`.
