@@ -11,6 +11,15 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+from django.contrib.sitemaps.views import sitemap
+from shop.sitemap import ProductSitemap
+from website.sitemap import StaticViewSitemap
+
+sitemaps = {
+    'products': ProductSitemap,
+    'static': StaticViewSitemap, 
+}
+
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -33,7 +42,7 @@ handler500 = 'django.views.defaults.server_error'
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # change language
+    # Change language
     path('set-language/', set_language, name='set_language'),
 
 
@@ -63,10 +72,13 @@ urlpatterns = [
     path('api/dashboard/admin/', include('dashboard.api_admin.api_urls')),
     path('api/dashboard/customer/', include('dashboard.api_customer.api_urls')),
 
-    # swagger
+    # Swagger
     path('swagger.json', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    
+    # Sitemap
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
 ]
 
 # ---------- Static & Media Files ----------
