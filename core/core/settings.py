@@ -109,7 +109,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # ========================
 # بین‌المللی سازی
 # ========================
-LANGUAGE_CODE = 'fa'
+LANGUAGE_CODE = 'en'
+
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
@@ -125,7 +126,8 @@ LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
 
-PARLER_DEFAULT_LANGUAGE_CODE = 'fa'
+PARLER_DEFAULT_LANGUAGE_CODE = 'en'
+
 PARLER_LANGUAGES = {
     None: (
         {'code': 'fa'},
@@ -133,7 +135,7 @@ PARLER_LANGUAGES = {
         {'code': 'ar'},
     ),
     'default': {
-        'fallbacks': ['fa'],  
+        'fallbacks': ['en'],  
         'hide_untranslated': False,
     }
 }

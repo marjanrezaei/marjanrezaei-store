@@ -67,9 +67,8 @@
 <script>
   const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
 
-  // تبدیل قیمت به فرمت ایرانی
   function formatPrice(price) {
-    return Number(price).toLocaleString('fa-IR') + ' تومان';
+    return Number(price).toLocaleString('en-US');
   }
 
   // ---- رندر آیتم ----

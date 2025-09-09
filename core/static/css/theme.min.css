@@ -24744,3 +24744,17 @@ a:hover .text-inherit {
     max-width: none !important;
   }
 }
+
+html[lang="en"] {
+  --bs-body-font-family: Inter, Arial, sans-serif;
+}
+
+html[lang="fa"],
+html[lang="ar"] {
+  --bs-body-font-family: vazir, Inter, sans-serif;
+}
+
+
+body {
+  font-family: var(--bs-body-font-family);
+}

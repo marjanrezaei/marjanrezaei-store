@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="{{ LANGUAGE_CODE }}"
+  dir="{% if LANGUAGE_CODE == 'fa' or LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}">
 
 <head>
     <!-- Required Meta Tags Always Come First -->
