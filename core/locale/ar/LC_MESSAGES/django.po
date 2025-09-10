@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-09 17:40+0000\n"
+"POT-Creation-Date: 2025-09-10 09:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic <LL@li.org>\n"
@@ -392,6 +392,22 @@ msgstr "المساهمة في التطوير"
 msgid "Share your constructive suggestions with the developers"
 msgstr "قدّم اقتراحاتك البناءة إلى المطورين"
 
+#: templates/website/contact.html:142
+msgid "Support Contact Form"
+msgstr "نموذج الاتصال بالدعم"
+
+#: templates/website/contact.html:143
+msgid "Share your questions or feedback with us"
+msgstr "شارك آرائك وانتقاداتك"
+
+#: templates/website/contact.html:198
+msgid "Submit Request"
+msgstr "إرسال الطلب"
+
+#: templates/website/contact.html:228
+msgid "An error occurred while sending your message."
+msgstr "حدث خطأ أثناء إرسال رسالتك."
+
 #: templates/website/index.html:26
 msgid "View Details"
 msgstr "عرض التفاصيل"
@@ -411,3 +427,57 @@ msgstr "الإرجاع خلال 30 يومًا لاسترداد كامل"
 #: templates/website/index.html:147
 msgid "Get free standard shipping automatically on every order"
 msgstr "احصل على شحن قياسي مجاني تلقائيًا مع كل طلب"
+
+#: website/api_views.py:34 website/views.py:83
+#, fuzzy
+#| msgid "Contact Us"
+msgid "Contact Request from"
+msgstr "اتصل بنا"
+
+#: website/api_views.py:35 website/views.py:84
+msgid "Email"
+msgstr ""
+
+#: website/api_views.py:36 website/views.py:85
+msgid "Phone"
+msgstr ""
+
+#: website/api_views.py:37 website/forms.py:16 website/views.py:86
+msgid "Message"
+msgstr "الرسالة"
+
+#: website/api_views.py:43 website/views.py:91
+msgid "Your message was sent successfully!"
+msgstr ""
+
+#: website/forms.py:12 website/forms.py:21
+msgid "First Name"
+msgstr "الاسم الأول"
+
+#: website/forms.py:13 website/forms.py:26
+msgid "Last Name"
+msgstr "اسم العائلة"
+
+#: website/forms.py:14
+msgid "Email Address"
+msgstr "عنوان البريد الإلكتروني"
+
+#: website/forms.py:15
+msgid "Phone Number (optional)"
+msgstr "رقم الهاتف (اختياري)"
+
+#: website/forms.py:31
+msgid "email@site.com"
+msgstr "البريد@الموقع.com"
+
+#: website/forms.py:36
+msgid "e.g. +971501234567"
+msgstr "مثال: +٩٧١٥٠١٢٣٤٥٦٧"
+
+#: website/forms.py:42
+msgid "Write your message here..."
+msgstr "اكتب رسالتك هنا..."
+
+#: website/views.py:95
+msgid "Please enter valid information."
+msgstr ""

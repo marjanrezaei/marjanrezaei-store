@@ -9,6 +9,7 @@ import logging
 import os
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.utils.translation import gettext as _
 
 from .forms import NewsLetterForm, ContactForm
 from shop.models import ProductModel
@@ -79,23 +80,21 @@ class ContactView(FormView):
 
     def form_valid(self, form):
         send_mail(
-            subject=f"Contact Request from {form.cleaned_data['first_name']} {form.cleaned_data['last_name']}",
-            message=(
-                f"Email: {form.cleaned_data['email']}\n"
-                f"Phone: {form.cleaned_data['phone_number']}\n"
-                f"Message: {form.cleaned_data['details']}"
-            ),
+            subject=_("Contact Request from") + f" {form.cleaned_data['first_name']} {form.cleaned_data['last_name']}",
+            message=_("Email") + f": {form.cleaned_data['email']}\n" +
+                    _("Phone") + f": {form.cleaned_data['phone_number']}\n" +
+                    _("Message") + f": {form.cleaned_data['details']}",
             from_email=form.cleaned_data['email'],
-            recipient_list=["your_email@example.com"],
+            recipient_list=["rezaei.marjann@gmail.com"],
         )
         form.save()
-        messages.success(self.request, "پیام شما با موفقیت ارسال شد!")
+        messages.success(self.request, _("Your message was sent successfully!"))
         return redirect(self.success_url)
 
     def form_invalid(self, form):
-        messages.error(self.request, "لطفاً اطلاعات را به درستی وارد کنید.")
+        messages.error(self.request, _("Please enter valid information."))
         return self.render_to_response(self.get_context_data(form=form))
-
+    
 
 class NewsletterView(FormView):
     form_class = NewsLetterForm

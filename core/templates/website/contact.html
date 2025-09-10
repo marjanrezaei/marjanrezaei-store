@@ -4,12 +4,82 @@
 {% block content %}
 <!-- Hero -->
 <div class="position-relative bg-img-start" style="background-image: url(./assets/svg/components/card-11.svg);">
-    <div class="container content-space-t-3 content-space-t-lg-5 content-space-b-2 position-relative zi-2">
+    <div class="container content-space-t-1 content-space-t-lg-2 content-space-b-2 position-relative zi-2">
         <div class="w-md-75 w-lg-50 text-center mx-md-auto mb-5 mb-md-9">
-            <h1>{% trans "Contact Us" %}</h1>
-            <p>
-                {% trans "Share your comments and feedback" %}
-            </p>
+            <!-- Contact Form -->
+            <div class="container content-space-1 content-space-lg-1">
+                <div class="mx-auto" style="max-width: 35rem;">
+                    <!-- Card -->
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- Heading -->
+                            <div class="text-center mb-5 mb-md-9">
+                                <h2>{% trans "Support Contact Form" %}</h2>
+                                <p>{% trans "Share your questions or feedback with us" %}</p>
+                            </div>
+                            <!-- End Heading -->
+
+                            <!-- Form -->
+                            <form id="contact-form" action="{% url 'website:contact' %}" method="post">
+                                {% csrf_token %}
+
+                                {% if form.errors %}
+                                <div class="alert alert-danger">
+                                    {{ form.non_field_errors }}
+                                </div>
+                                {% endif %}
+
+                                <div class="row gx-3">
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            {{ form.first_name.label_tag }}
+                                            {{ form.first_name }}
+                                            {{ form.first_name.errors }}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            {{ form.last_name.label_tag }}
+                                            {{ form.last_name }}
+                                            {{ form.last_name.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row gx-3">
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            {{ form.email.label_tag }}
+                                            {{ form.email }}
+                                            {{ form.email.errors }}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            {{ form.phone_number.label_tag }}
+                                            {{ form.phone_number }}
+                                            {{ form.phone_number.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    {{ form.details.label_tag }}
+                                    {{ form.details }}
+                                    {{ form.details.errors }}
+                                </div>
+
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg">{% trans "Submit Request" %}</button>
+                                </div>
+                            </form>
+                            <!-- End Form -->
+                        </div>
+                    </div>
+                    <!-- End Card -->
+                </div>
+            </div>
+            <!-- End Contact Form -->
         </div>
 
         <div class="row">
@@ -131,73 +201,29 @@
 </div>
 <!-- End Hero -->
 
-<!-- Contact Form -->
-<div class="container content-space-1 content-space-lg-1">
-    <div class="mx-auto" style="max-width: 35rem;">
-        <!-- Card -->
-        <div class="card">
-            <div class="card-body">
-                <!-- Heading -->
-                <div class="text-center mb-5 mb-md-9">
-                    <h2>فرم تماس با پشتیبانی</h2>
-                    <p>سوال یا نظرات خود را مطرح کنین</p>
-                </div>
-                <!-- End Heading -->
-
-                <!-- Form -->
-                <form id="contact-form" action="{% url 'website:contact' %}" method="post">
-                    {% csrf_token %}
-                    <div class="row gx-3">
-                        <div class="col-sm-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="hireUsFormFirstName">نام</label>
-                                <input type="text" class="form-control form-control-lg" name="first_name"
-                                    id="hireUsFormFirstName" placeholder="نام">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="hireUsFormLastName">نام خانوادگی</label>
-                                <input type="text" class="form-control form-control-lg" name="last_name"
-                                    id="hireUsFormLastName" placeholder="نام خانوادگی">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row gx-3">
-                        <div class="col-sm-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="hireUsFormWorkEmail">آدرس ایمیل</label>
-                                <input type="email" class="form-control form-control-lg" name="email"
-                                    id="hireUsFormWorkEmail" placeholder="email@site.com" required>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="hireUsFormPhone">شماره همراه (اختیاری)</label>
-                                <input type="text" class="form-control form-control-lg" name="phone_number"
-                                    id="hireUsFormPhone" placeholder="+9891200000">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label" for="hireUsFormDetails">توضیحات</label>
-                        <textarea class="form-control form-control-lg" name="details" id="hireUsFormDetails" rows="4"
-                            required></textarea>
-                    </div>
-
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary btn-lg">ارسال درخواست</button>
-                    </div>
-
-                </form>
-
-                <!-- End Form -->
-            </div>
-        </div>
-        <!-- End Card -->
-    </div>
-</div>
-<!-- End Contact Form -->
 {% endblock content %}
+
+{% block extra_js %}
+<script>
+    document.getElementById("contact-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        fetch("{% url 'website_api:contact_api' %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+            },
+            body: formData,
+        })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message);
+                this.reset();
+            })
+            .catch(err => {
+                alert("{% trans 'An error occurred while sending your message.' %}");
+                console.error(err);
+            });
+    });
+</script>
+{% endblock extra_js %}

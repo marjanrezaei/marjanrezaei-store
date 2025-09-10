@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-09 17:41+0000\n"
+"POT-Creation-Date: 2025-09-10 09:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Farsi <LL@li.org>\n"
@@ -401,6 +401,22 @@ msgstr "کمک به توسعه"
 msgid "Share your constructive suggestions with the developers"
 msgstr "پیشنهادات سازنده خود را به توسعه دهندگان انتقال دهید"
 
+#: templates/website/contact.html:142
+msgid "Support Contact Form"
+msgstr "فرم تماس با پشتیبانی"
+
+#: templates/website/contact.html:143
+msgid "Share your questions or feedback with us"
+msgstr "نظرات و انتقادات خود را بیان کنین"
+
+#: templates/website/contact.html:198
+msgid "Submit Request"
+msgstr "ارسال درخواست"
+
+#: templates/website/contact.html:228
+msgid "An error occurred while sending your message."
+msgstr "خطایی در ارسال پیام شما رخ داد."
+
 #: templates/website/index.html:26
 msgid "View Details"
 msgstr "نمایش جزئیات"
@@ -420,6 +436,60 @@ msgstr "بازگشت محصول تا ۳۰ روز برای بازپرداخت ک�
 #: templates/website/index.html:147
 msgid "Get free standard shipping automatically on every order"
 msgstr "حمل و نقل استاندارد رایگان را به صورت خودکار در هر سفارش دریافت کنید"
+
+#: website/api_views.py:34 website/views.py:83
+#, fuzzy
+#| msgid "Contact Us"
+msgid "Contact Request from"
+msgstr "ارتباط با ما"
+
+#: website/api_views.py:35 website/views.py:84
+msgid "Email"
+msgstr ""
+
+#: website/api_views.py:36 website/views.py:85
+msgid "Phone"
+msgstr ""
+
+#: website/api_views.py:37 website/forms.py:16 website/views.py:86
+msgid "Message"
+msgstr "پیام"
+
+#: website/api_views.py:43 website/views.py:91
+msgid "Your message was sent successfully!"
+msgstr ""
+
+#: website/forms.py:12 website/forms.py:21
+msgid "First Name"
+msgstr "نام"
+
+#: website/forms.py:13 website/forms.py:26
+msgid "Last Name"
+msgstr "نام خانوادگی"
+
+#: website/forms.py:14
+msgid "Email Address"
+msgstr "آدرس ایمیل"
+
+#: website/forms.py:15
+msgid "Phone Number (optional)"
+msgstr "شماره همراه (اختیاری)"
+
+#: website/forms.py:31
+msgid "email@site.com"
+msgstr "ایمیل@سایت.com"
+
+#: website/forms.py:36
+msgid "e.g. +971501234567"
+msgstr "مثلاً +۹۸۹۱۲۳۴۵۶۷۸۹"
+
+#: website/forms.py:42
+msgid "Write your message here..."
+msgstr "پیام خود را اینجا بنویسید..."
+
+#: website/views.py:95
+msgid "Please enter valid information."
+msgstr ""
 
 #~ msgid "Your previous password was entered incorrectly. Please correct it."
 #~ msgstr "پسورد قبلی شما اشتباه است. لطفا اصلاح کنید."
