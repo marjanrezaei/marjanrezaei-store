@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" id="flag-icons-gb" viewBox="0 0 640 480">
-  <path fill="#012169" d="M0 0h640v480H0z"/>
-  <path fill="#fff" d="M75 0l222 165V0h46v165L565 0h75v62L403 240l237 178v62h-75L343 317v163h-46V317L75 480H0v-62l237-178L0 62V0h75z"/>
-  <path fill="#c8102e" d="M424 280l216 160v40l-270-200h54zm-184 0l-216 160v40l270-200h-54zm-240-208l246 188h-54L0 52v20zm640 0v20l-192 144h-54l246-188z"/>
-  <path fill="#fff" d="M240 0h160v480H240zM0 160h640v160H0z"/>
-  <path fill="#c8102e" d="M0 193h640v94H0zM273 0h94v480h-94z"/>
+<svg xmlns="http://www.w3.org/2000/svg" id="flag-icons-gb" viewBox="0 0 512 512">
+  <path fill="#012169" d="M0 0h512v512H0z"/>
+  <path fill="#FFF" d="M512 0v64L322 256l190 187v69h-67L254 324 68 512H0v-68l186-187L0 74V0h62l192 188L440 0z"/>
+  <path fill="#C8102E" d="m184 324 11 34L42 512H0v-3l184-185zm124-12 54 8 150 147v45L308 312zM512 0 320 196l-4-44L466 0h46zM0 1l193 189-59-8L0 49V1z"/>
+  <path fill="#FFF" d="M176 0v512h160V0H176zM0 176v160h512V176H0z"/>
+  <path fill="#C8102E" d="M0 208v96h512v-96H0zM208 0v512h96V0h-96z"/>
 </svg>
