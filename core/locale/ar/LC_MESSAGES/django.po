@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-10 09:49+0000\n"
+"POT-Creation-Date: 2025-09-11 15:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic <LL@li.org>\n"
@@ -80,6 +80,126 @@ msgstr ""
 msgid "وضعیت نامعتبر"
 msgstr ""
 
+#: templates/accounts/login.html:6 templates/accounts/login.html:20
+#: templates/base.html:118
+msgid "Login"
+msgstr "تسجيل الدخول"
+
+#: templates/accounts/login.html:10 templates/accounts/password_reset.html:12
+#: templates/accounts/signup.html:11 website/api_views.py:35
+#: website/views.py:84
+msgid "Email"
+msgstr "البريد الإلكتروني"
+
+#: templates/accounts/login.html:15 templates/accounts/signup.html:16
+msgid "Password"
+msgstr "كلمة المرور"
+
+#: templates/accounts/login.html:27 templates/accounts/signup.html:6
+#: templates/accounts/signup.html:41 templates/subscribe.html:23
+msgid "Sign Up"
+msgstr "إنشاء حساب"
+
+#: templates/accounts/login.html:28 templates/accounts/signup.html:48
+msgid "Forgot Password?"
+msgstr "نسيت كلمة المرور؟"
+
+#: templates/accounts/login.html:41
+msgid "Please enter your email and password."
+msgstr "يرجى إدخال البريد الإلكتروني وكلمة المرور."
+
+#: templates/accounts/login.html:42
+msgid "Login failed."
+msgstr "فشل تسجيل الدخول."
+
+#: templates/accounts/login.html:43 templates/accounts/signup.html:70
+msgid "Server connection error."
+msgstr "خطأ في الاتصال بالخادم."
+
+#: templates/accounts/password_reset.html:6
+msgid "Forgot Password"
+msgstr "نسيت كلمة المرور"
+
+#: templates/accounts/password_reset.html:7
+msgid "Enter your email to receive a password reset link."
+msgstr "أدخل بريدك الإلكتروني لتلقي رابط إعادة تعيين كلمة المرور."
+
+#: templates/accounts/password_reset.html:16
+msgid "Send Reset Link"
+msgstr "إرسال رابط إعادة التعيين"
+
+#: templates/accounts/password_reset.html:34
+msgid "Please enter your email."
+msgstr "يرجى إدخال بريدك الإلكتروني."
+
+#: templates/accounts/password_reset.html:35
+msgid "A password reset link has been sent to your email."
+msgstr "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني."
+
+#: templates/accounts/password_reset.html:36
+msgid "Email not found."
+msgstr "البريد الإلكتروني غير موجود."
+
+#: templates/accounts/password_reset.html:37
+msgid "Server connection error. Please try again."
+msgstr "خطأ في الاتصال بالخادم. يرجى المحاولة مرة أخرى."
+
+#: templates/accounts/password_reset_confirm.html:6
+#: templates/accounts/password_reset_confirm.html:20
+msgid "Reset Password"
+msgstr "إعادة تعيين كلمة المرور"
+
+#: templates/accounts/password_reset_confirm.html:7
+msgid "Enter your new password below."
+msgstr "أدخل كلمة المرور الجديدة أدناه."
+
+#: templates/accounts/password_reset_confirm.html:12
+msgid "New Password"
+msgstr "كلمة المرور الجديدة"
+
+#: templates/accounts/password_reset_confirm.html:16
+#: templates/accounts/signup.html:21
+msgid "Confirm Password"
+msgstr "تأكيد كلمة المرور"
+
+#: templates/accounts/password_reset_confirm.html:39
+#: templates/accounts/signup.html:68
+msgid "Passwords do not match."
+msgstr "كلمتا المرور غير متطابقتين."
+
+#: templates/accounts/password_reset_confirm.html:40
+msgid "Invalid or missing token."
+msgstr "رمز غير صالح أو مفقود."
+
+#: templates/accounts/password_reset_confirm.html:41
+msgid "Server error. Try again later."
+msgstr "خطأ في الخادم. حاول مرة أخرى لاحقًا."
+
+#: templates/accounts/signup.html:26 website/forms.py:12 website/forms.py:21
+msgid "First Name"
+msgstr "الاسم الأول"
+
+#: templates/accounts/signup.html:31 website/forms.py:13 website/forms.py:26
+msgid "Last Name"
+msgstr "اسم العائلة"
+
+#: templates/accounts/signup.html:36
+msgid "Phone Number"
+msgstr "رقم الهاتف"
+
+#: templates/accounts/signup.html:37 website/forms.py:36
+msgid "e.g. +971501234567"
+msgstr "مثال: +٩٧١٥٠١٢٣٤٥٦٧"
+
+#: templates/accounts/signup.html:47
+msgid "Login to your account"
+msgstr "تسجيل الدخول إلى حسابك"
+
+#: templates/accounts/signup.html:69
+msgid ""
+"Registration successful! Please check your email to activate your account."
+msgstr "تم التسجيل بنجاح! يرجى التحقق من بريدك الإلكتروني لتفعيل الحساب."
+
 #: templates/base.html:86
 msgid "Home"
 msgstr "الرئيسية"
@@ -92,7 +212,7 @@ msgstr "قائمة المنتجات"
 msgid "About Us"
 msgstr "معلومات عنا"
 
-#: templates/base.html:92 templates/website/contact.html:9
+#: templates/base.html:92
 msgid "Contact Us"
 msgstr "اتصل بنا"
 
@@ -106,9 +226,65 @@ msgstr "الملف الشخصي"
 msgid "Exit"
 msgstr ""
 
-#: templates/base.html:118
-msgid "Login"
-msgstr "تسجيل الدخول"
+#: templates/cart/cart-summary.html:10
+msgid "Shopping Cart"
+msgstr "سلة التسوق"
+
+#: templates/cart/cart-summary.html:14 templates/cart/cart-summary.html:75
+msgid "Loading..."
+msgstr "جارٍ التحميل..."
+
+#: templates/cart/cart-summary.html:19
+msgid "Continue Shopping"
+msgstr "متابعة التسوق"
+
+#: templates/cart/cart-summary.html:31
+msgid "Order Summary"
+msgstr "ملخص الطلب"
+
+#: templates/cart/cart-summary.html:35
+msgid "Tax"
+msgstr "الضريبة"
+
+#: templates/cart/cart-summary.html:36
+msgid "Includes 9 percent at checkout"
+msgstr "يشمل ٩٪ عند الدفع"
+
+#: templates/cart/cart-summary.html:38
+msgid "Total"
+msgstr "الإجمالي"
+
+#: templates/cart/cart-summary.html:43
+msgid "Place Order"
+msgstr "تأكيد الطلب"
+
+#: templates/cart/cart-summary.html:55
+msgid "Need help?"
+msgstr "هل تحتاج إلى مساعدة؟"
+
+#: templates/cart/cart-summary.html:56
+msgid "Submit a ticket"
+msgstr "إرسال تذكرة دعم"
+
+#: templates/cart/cart-summary.html:76
+msgid "Your cart is empty."
+msgstr "سلة التسوق فارغة."
+
+#: templates/cart/cart-summary.html:77
+msgid "Error loading cart."
+msgstr "حدث خطأ أثناء تحميل السلة."
+
+#: templates/cart/cart-summary.html:78
+msgid "Error updating quantity."
+msgstr "حدث خطأ أثناء تحديث الكمية."
+
+#: templates/cart/cart-summary.html:79
+msgid "Error removing product."
+msgstr "حدث خطأ أثناء إزالة المنتج."
+
+#: templates/cart/cart-summary.html:89
+msgid "Unit Price"
+msgstr "سعر الوحدة"
 
 #: templates/includes/latest-products.html:7
 msgid "Latest Products"
@@ -141,7 +317,7 @@ msgstr "السعر الإجمالي:"
 msgid "Select Quantity"
 msgstr "اختر الكمية"
 
-#: templates/shop/product-detail.html:157 templates/website/index.html:144
+#: templates/shop/product-detail.html:157 templates/website/index.html:143
 msgid "Free Shipping"
 msgstr "شحن مجاني"
 
@@ -149,7 +325,7 @@ msgstr "شحن مجاني"
 msgid "We offer free shipping..."
 msgstr ""
 
-#: templates/shop/product-detail.html:187 templates/website/index.html:124
+#: templates/shop/product-detail.html:187 templates/website/index.html:123
 msgid "30 Days Return"
 msgstr "إرجاع خلال 30 يومًا"
 
@@ -250,10 +426,6 @@ msgstr "احصل على آخر الأخبار"
 #: templates/subscribe.html:19 templates/subscribe.html:21
 msgid "Enter your email"
 msgstr "أدخل بريدك الإلكتروني"
-
-#: templates/subscribe.html:23
-msgid "Sign Up"
-msgstr "التسجيل"
 
 #: templates/website/about.html:9
 msgid "About Me"
@@ -356,55 +528,51 @@ msgstr "اتصل بي"
 msgid "page."
 msgstr "الصفحة."
 
-#: templates/website/contact.html:11
-msgid "Share your comments and feedback"
-msgstr "شارك آرائك وانتقاداتك"
-
-#: templates/website/contact.html:34
-msgid "Purchase Consultation"
-msgstr "استشارة الشراء"
-
-#: templates/website/contact.html:37
-msgid "Have enough knowledge when shopping"
-msgstr "امتلك المعرفة الكافية عند الشراء"
-
-#: templates/website/contact.html:43 templates/website/contact.html:113
-msgid "Contact Support"
-msgstr "اتصل بالدعم"
-
-#: templates/website/contact.html:69
-msgid "Frequently Asked Questions (FAQ)"
-msgstr "الأسئلة الشائعة"
-
-#: templates/website/contact.html:72
-msgid "Ask us your questions and find answers"
-msgstr "اسألنا أسئلتك واحصل على الإجابات"
-
-#: templates/website/contact.html:78
-msgid "View Questions"
-msgstr "عرض الأسئلة"
-
-#: templates/website/contact.html:104
-msgid "Contribute to Development"
-msgstr "المساهمة في التطوير"
-
-#: templates/website/contact.html:107
-msgid "Share your constructive suggestions with the developers"
-msgstr "قدّم اقتراحاتك البناءة إلى المطورين"
-
-#: templates/website/contact.html:142
+#: templates/website/contact.html:16
 msgid "Support Contact Form"
 msgstr "نموذج الاتصال بالدعم"
 
-#: templates/website/contact.html:143
+#: templates/website/contact.html:17
 msgid "Share your questions or feedback with us"
 msgstr "شارك آرائك وانتقاداتك"
 
-#: templates/website/contact.html:198
+#: templates/website/contact.html:72
 msgid "Submit Request"
 msgstr "إرسال الطلب"
 
-#: templates/website/contact.html:228
+#: templates/website/contact.html:102
+msgid "Purchase Consultation"
+msgstr "استشارة الشراء"
+
+#: templates/website/contact.html:105
+msgid "Have enough knowledge when shopping"
+msgstr "امتلك المعرفة الكافية عند الشراء"
+
+#: templates/website/contact.html:111 templates/website/contact.html:179
+msgid "Contact Support"
+msgstr "اتصل بالدعم"
+
+#: templates/website/contact.html:136
+msgid "Frequently Asked Questions (FAQ)"
+msgstr "الأسئلة الشائعة"
+
+#: templates/website/contact.html:139
+msgid "Ask us your questions and find answers"
+msgstr "اسألنا أسئلتك واحصل على الإجابات"
+
+#: templates/website/contact.html:145
+msgid "View Questions"
+msgstr "عرض الأسئلة"
+
+#: templates/website/contact.html:170
+msgid "Contribute to Development"
+msgstr "المساهمة في التطوير"
+
+#: templates/website/contact.html:173
+msgid "Share your constructive suggestions with the developers"
+msgstr "قدّم اقتراحاتك البناءة إلى المطورين"
+
+#: templates/website/contact.html:220
 msgid "An error occurred while sending your message."
 msgstr "حدث خطأ أثناء إرسال رسالتك."
 
@@ -412,19 +580,19 @@ msgstr "حدث خطأ أثناء إرسال رسالتك."
 msgid "View Details"
 msgstr "عرض التفاصيل"
 
-#: templates/website/index.html:105
+#: templates/website/index.html:104
 msgid "Secure Checkout"
 msgstr "إتمام شراء آمن"
 
-#: templates/website/index.html:108
+#: templates/website/index.html:107
 msgid "Guaranteed Secure Checkout"
 msgstr "إتمام شراء آمن مضمون"
 
-#: templates/website/index.html:127
+#: templates/website/index.html:126
 msgid "Return within 30 days for full refund"
 msgstr "الإرجاع خلال 30 يومًا لاسترداد كامل"
 
-#: templates/website/index.html:147
+#: templates/website/index.html:146
 msgid "Get free standard shipping automatically on every order"
 msgstr "احصل على شحن قياسي مجاني تلقائيًا مع كل طلب"
 
@@ -433,10 +601,6 @@ msgstr "احصل على شحن قياسي مجاني تلقائيًا مع كل 
 #| msgid "Contact Us"
 msgid "Contact Request from"
 msgstr "اتصل بنا"
-
-#: website/api_views.py:35 website/views.py:84
-msgid "Email"
-msgstr ""
 
 #: website/api_views.py:36 website/views.py:85
 msgid "Phone"
@@ -450,14 +614,6 @@ msgstr "الرسالة"
 msgid "Your message was sent successfully!"
 msgstr ""
 
-#: website/forms.py:12 website/forms.py:21
-msgid "First Name"
-msgstr "الاسم الأول"
-
-#: website/forms.py:13 website/forms.py:26
-msgid "Last Name"
-msgstr "اسم العائلة"
-
 #: website/forms.py:14
 msgid "Email Address"
 msgstr "عنوان البريد الإلكتروني"
@@ -468,11 +624,7 @@ msgstr "رقم الهاتف (اختياري)"
 
 #: website/forms.py:31
 msgid "email@site.com"
-msgstr "البريد@الموقع.com"
-
-#: website/forms.py:36
-msgid "e.g. +971501234567"
-msgstr "مثال: +٩٧١٥٠١٢٣٤٥٦٧"
+msgstr ""
 
 #: website/forms.py:42
 msgid "Write your message here..."
@@ -481,3 +633,9 @@ msgstr "اكتب رسالتك هنا..."
 #: website/views.py:95
 msgid "Please enter valid information."
 msgstr ""
+
+#~ msgid "Share your comments and feedback"
+#~ msgstr "شارك آرائك وانتقاداتك"
+
+#~ msgid "Includes 9% at checkout"
+#~ msgstr "يشمل ٩٪ عند الدفع"

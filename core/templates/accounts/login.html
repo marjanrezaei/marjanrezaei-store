@@ -1,30 +1,31 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
+
 {% block content %}
-<div class="container mt-5" style="max-width: 28rem;">
-  <h2 class="mb-4 text-center">ورود</h2>
+<div class="container content-space-t-5 content-space-b-lg-2" style="max-width: 28rem;">
+  <h2 class="mb-4 text-center">{% trans "Login" %}</h2>
   <form id="login-form" method="post" novalidate>
     {% csrf_token %}
     <div class="mb-3">
-      <label for="email">ایمیل</label>
+      <label for="email">{% trans "Email" %}</label>
       <input type="email" id="email" class="form-control" placeholder="email@site.com" required>
     </div>
 
     <div class="mb-3">
-      <label for="password">کلمه عبور</label>
+      <label for="password">{% trans "Password" %}</label>
       <input type="password" id="password" class="form-control" placeholder="********" required>
     </div>
 
     <div class="d-grid">
-      <button type="submit" class="btn btn-primary">ورود</button>
+      <button type="submit" class="btn btn-primary">{% trans "Login" %}</button>
     </div>
     <div id="login-message" class="text-danger mt-2"></div>
   </form>
 
-  <!-- 🔗 لینک‌ها -->
+  <!-- Links -->
   <div class="mt-3 text-center">
-    <a href="{% url 'accounts:signup' %}">ثبت‌ نام</a> |
-    <a href="{% url 'accounts:reset-password' %}">فراموشی رمز عبور</a>
+    <a href="{% url 'accounts:signup' %}">{% trans "Sign Up" %}</a> |
+    <a href="{% url 'accounts:reset-password' %}">{% trans "Forgot Password?" %}</a>
   </div>
 </div>
 {% endblock content %}
@@ -36,6 +37,12 @@
     const form = document.getElementById('login-form');
     const message = document.getElementById('login-message');
 
+    const texts = {
+      required: "{% trans 'Please enter your email and password.' %}",
+      loginError: "{% trans 'Login failed.' %}",
+      serverError: "{% trans 'Server connection error.' %}"
+    };
+
     form.addEventListener('submit', async e => {
       e.preventDefault();
       message.innerText = '';
@@ -44,7 +51,7 @@
       const password = document.getElementById('password').value;
 
       if (!email || !password) {
-        message.innerText = 'لطفا ایمیل و رمز عبور را وارد کنید';
+        message.innerText = texts.required;
         return;
       }
 
@@ -61,14 +68,13 @@
           localStorage.setItem('access', data.access);
           localStorage.setItem('refresh', data.refresh);
           localStorage.setItem('user', JSON.stringify(data.user));
-
           window.location.href = '/';
         } else {
-          message.innerText = data.detail || 'خطا در ورود';
+          message.innerText = data.detail || texts.loginError;
         }
       } catch (err) {
         console.error(err);
-        message.innerText = 'خطا در ارتباط با سرور';
+        message.innerText = texts.serverError;
       }
     });
   });

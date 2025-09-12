@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
 {% block content %}
 <div class="container content-space-t-4 content-space-b-2">
@@ -7,16 +7,16 @@
     <!-- Cart Items Column -->
     <div class="col-lg-8 mb-7 mb-lg-0">
       <div class="d-flex justify-content-between align-items-end border-bottom pb-3 mb-7">
-        <h1 class="h3 mb-0">سبد خرید</h1>
+        <h1 class="h3 mb-0">{% trans "Shopping Cart" %}</h1>
       </div>
 
       <ul class="list-group list-group-flush list-group-no-gutters mb-3" id="cart-items-list">
-        <li class="list-group-item text-center p-2 text-sm">در حال بارگذاری...</li>
+        <li class="list-group-item text-center p-2 text-sm">{% trans "Loading..." %}</li>
       </ul>
 
       <div class="d-sm-flex justify-content-end">
         <a class="link" href="{% url 'shop:product-list' %}">
-          به خرید ادامه دهید <i class="bi-chevron-left small ms-1"></i>
+          {% trans "Continue Shopping" %} <i class="bi-chevron-left small ms-1"></i>
         </a>
       </div>
     </div>
@@ -28,19 +28,19 @@
         <div class="card card-sm shadow-sm mb-4">
           <div class="card-body">
             <div class="border-bottom pb-4 mb-4">
-              <h3 class="card-header-title">خلاصه هزینه</h3>
+              <h3 class="card-header-title">{% trans "Order Summary" %}</h3>
             </div>
 
             <dl class="row mb-4">
-              <dt class="col-sm-6">مالیات</dt>
-              <dd class="col-sm-12 text-sm-end mb-0">به همراه 9% در هنگام پرداخت</dd>
+              <dt class="col-sm-6">{% trans "Tax" %}</dt>
+              <dd class="col-sm-12 text-sm-end mb-0">{% trans "Includes 9 percent at checkout" %}</dd>
 
-              <dt class="col-sm-6">جمع</dt>
+              <dt class="col-sm-6">{% trans "Total" %}</dt>
               <dd class="col-sm-12 text-sm-end mb-0" id="total-payment-price">0</dd>
             </dl>
 
             <div class="d-grid">
-              <a class="btn btn-primary btn-lg" href="{% url 'order:checkout' %}">ثبت سفارش</a>
+              <a class="btn btn-primary btn-lg" href="{% url 'order:checkout' %}">{% trans "Place Order" %}</a>
             </div>
           </div>
         </div>
@@ -52,8 +52,8 @@
             </div>
           </div>
           <div class="flex-grow-1 ms-2">
-            <span class="small me-1">نیاز به پشتیبانی دارید؟</span>
-            <a class="link small" href="#">ارسال تیکت</a>
+            <span class="small me-1">{% trans "Need help?" %}</span>
+            <a class="link small" href="#">{% trans "Submit a ticket" %}</a>
           </div>
         </div>
       </div>
@@ -71,7 +71,14 @@
     return Number(price).toLocaleString('en-US');
   }
 
-  // ---- رندر آیتم ----
+  const texts = {
+    loading: "{% trans 'Loading...' %}",
+    empty: "{% trans 'Your cart is empty.' %}",
+    fetchError: "{% trans 'Error loading cart.' %}",
+    quantityError: "{% trans 'Error updating quantity.' %}",
+    removeError: "{% trans 'Error removing product.' %}"
+  };
+
   function renderCartItem(item) {
     return `
 <li id="cart-item-${item.product_id}" class="list-group-item d-flex flex-column flex-sm-row justify-content-between align-items-center p-2 opacity-0 transition">
@@ -79,14 +86,13 @@
     <img src="${item.product_image || '/static/img/default.jpg'}" class="rounded" style="width:40px;height:40px;object-fit:cover;" alt="${item.product_name}">
     <div>
       <h5 class="mb-0 small">${item.product_name}</h5>
-      <p class="text-muted small mb-0">قیمت واحد: ${formatPrice(item.unit_price)}</p>
+      <p class="text-muted small mb-0">{% trans "Unit Price" %}: ${formatPrice(item.unit_price)}</p>
     </div>
   </div>
   <div class="d-flex align-items-center gap-1 mt-1 mt-sm-0 w-100 w-sm-33">
     <select class="form-select form-select-sm" onchange="changeProductQuantity(${item.product_id}, this.value)">
       ${[...Array(10).keys()].map(i => `
-      <option value="${i + 1}" ${i + 1 === item.quantity ? 'selected' : ''}>${i + 1}</option>`
-    ).join('')}
+      <option value="${i + 1}" ${i + 1 === item.quantity ? 'selected' : ''}>${i + 1}</option>`).join('')}
     </select>
     <span id="cart-item-total-${item.product_id}" class="fw-bold small ms-2">${formatPrice(item.total_price)}</span>
     <button onclick="removeProduct(${item.product_id})" class="btn btn-link btn-sm text-danger p-0 ms-2">
@@ -96,28 +102,24 @@
 </li>`;
   }
 
-  // ---- بارگذاری خلاصه سبد خرید ----
   async function fetchCartSummary() {
     const list = document.getElementById('cart-items-list');
-    if (list) list.innerHTML = '<li class="text-center text-muted p-2 small">در حال بارگذاری...</li>';
+    if (list) list.innerHTML = `<li class="text-center text-muted p-2 small">${texts.loading}</li>`;
 
     try {
       const response = await fetch('/api/cart/summary/');
-      if (!response.ok) throw new Error("خطا در دریافت اطلاعات سبد خرید");
+      if (!response.ok) throw new Error(texts.fetchError);
 
       const data = await response.json();
 
-      // شمارنده بالای هدر
       document.getElementById('total-cart-item-count').textContent = data.total_quantity || 0;
 
-      // جمع کل
       const totalPriceEl = document.getElementById('total-payment-price');
       if (totalPriceEl) totalPriceEl.textContent = formatPrice(data.total_payment_price || 0);
 
-      // لیست محصولات (فقط وقتی صفحه summary هستیم)
       if (list) {
         if (!data.cart_items || data.cart_items.length === 0) {
-          list.innerHTML = '<li class="text-center text-muted p-2 small">سبد خرید شما خالی است.</li>';
+          list.innerHTML = `<li class="text-center text-muted p-2 small">${texts.empty}</li>`;
           return;
         }
 
@@ -130,11 +132,10 @@
       }
     } catch (err) {
       console.error(err);
-      if (list) list.innerHTML = '<li class="text-center text-danger p-2 small">خطا در بارگذاری سبد خرید.</li>';
+      if (list) list.innerHTML = `<li class="text-center text-danger p-2 small">${texts.fetchError}</li>`;
     }
   }
 
-  // ---- تغییر تعداد ----
   async function changeProductQuantity(productId, quantity) {
     quantity = parseInt(quantity, 10);
     const itemEl = document.getElementById(`cart-item-${productId}`);
@@ -150,18 +151,15 @@
 
       if (!response.ok) throw new Error(await response.text());
 
-      // بعد از موفقیت دوباره خلاصه رو آپدیت می‌کنیم
       await fetchCartSummary();
-
     } catch (err) {
-      console.error('خطا در تغییر تعداد محصول:', err);
-      alert('خطا در تغییر تعداد محصول.');
+      console.error(texts.quantityError, err);
+      alert(texts.quantityError);
     } finally {
       if (itemEl) itemEl.classList.remove('opacity-50');
     }
   }
 
-  // ---- حذف محصول ----
   async function removeProduct(productId) {
     const itemEl = document.getElementById(`cart-item-${productId}`);
     if (itemEl) {
@@ -180,21 +178,16 @@
 
           if (!response.ok) throw new Error(await response.text());
 
-          // حذف از DOM
           itemEl.remove();
-
-          // دوباره خلاصه رو آپدیت کن
           await fetchCartSummary();
-
         } catch (err) {
-          console.error("خطا در حذف محصول:", err);
-          alert('خطا در حذف محصول.');
+          console.error(texts.removeError, err);
+          alert(texts.removeError);
         }
       }, 500);
     }
   }
 
-  // اجرای اولیه بعد از لود
   document.addEventListener('DOMContentLoaded', fetchCartSummary);
 </script>
 {% endblock %}

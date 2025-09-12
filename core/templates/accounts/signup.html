@@ -1,51 +1,51 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
 {% block content %}
-<div class="container mt-5" style="max-width: 28rem;">
-  <h2 class="mb-4 text-center">ثبت نام</h2>
+<div class="container content-space-t-3 content-space-b-lg-2" style="max-width: 28rem;">
+  <h2 class="mb-4 text-center">{% trans "Sign Up" %}</h2>
   <form id="register-form" novalidate>
     {% csrf_token %}
 
     <div class="mb-3">
-      <label for="email">ایمیل</label>
+      <label for="email">{% trans "Email" %}</label>
       <input type="email" id="email" class="form-control" placeholder="email@site.com" required>
     </div>
 
     <div class="mb-3">
-      <label for="password">کلمه عبور</label>
+      <label for="password">{% trans "Password" %}</label>
       <input type="password" id="password" class="form-control" placeholder="********" required>
     </div>
 
     <div class="mb-3">
-      <label for="password1">تکرار کلمه عبور</label>
+      <label for="password1">{% trans "Confirm Password" %}</label>
       <input type="password" id="password1" class="form-control" placeholder="********" required>
     </div>
 
     <div class="mb-3">
-      <label for="first_name">نام</label>
+      <label for="first_name">{% trans "First Name" %}</label>
       <input type="text" id="first_name" class="form-control" required>
     </div>
 
     <div class="mb-3">
-      <label for="last_name">نام خانوادگی</label>
+      <label for="last_name">{% trans "Last Name" %}</label>
       <input type="text" id="last_name" class="form-control" required>
     </div>
 
     <div class="mb-3">
-      <label for="phone_number">شماره تلفن</label>
-      <input type="text" id="phone_number" class="form-control" placeholder="09123456789" required>
+      <label for="phone_number">{% trans "Phone Number" %}</label>
+      <input type="text" id="phone_number" class="form-control" placeholder="{% trans 'e.g. +971501234567' %}" required>
     </div>
 
     <div class="d-grid">
-      <button type="submit" class="btn btn-primary">ثبت نام</button>
+      <button type="submit" class="btn btn-primary">{% trans "Sign Up" %}</button>
     </div>
 
     <div id="register-message" class="text-danger mt-2"></div>
 
     <div class="mt-3 text-center">
-      <a href="{% url 'accounts:login' %}">ورود به حساب کاربری</a> |
-      <a href="{% url 'accounts:reset-password' %}">فراموشی کلمه عبور</a>
+      <a href="{% url 'accounts:login' %}">{% trans "Login to your account" %}</a> |
+      <a href="{% url 'accounts:reset-password' %}">{% trans "Forgot Password?" %}</a>
     </div>
   </form>
 </div>
@@ -62,12 +62,16 @@ document.getElementById('register-form').addEventListener('submit', async e => {
   const first_name = document.getElementById('first_name').value.trim();
   const last_name = document.getElementById('last_name').value.trim();
   const phone_number = document.getElementById('phone_number').value.trim();
-
   const msg = document.getElementById('register-message');
 
-  // Password match validation
+  const texts = {
+    mismatch: "{% trans 'Passwords do not match.' %}",
+    success: "{% trans 'Registration successful! Please check your email to activate your account.' %}",
+    serverError: "{% trans 'Server connection error.' %}"
+  };
+
   if (password !== password1) {
-    msg.innerText = "کلمه عبور و تکرار آن یکسان نیست";
+    msg.innerText = texts.mismatch;
     return;
   }
 
@@ -83,7 +87,7 @@ document.getElementById('register-form').addEventListener('submit', async e => {
     if (response.ok) {
       msg.classList.remove('text-danger');
       msg.classList.add('text-success');
-      msg.innerText = "ثبت نام موفق! لطفا ایمیل خود را برای فعال سازی بررسی کنید.";
+      msg.innerText = texts.success;
       document.getElementById('register-form').reset();
     } else {
       msg.classList.remove('text-success');
@@ -93,7 +97,7 @@ document.getElementById('register-form').addEventListener('submit', async e => {
   } catch (err) {
     msg.classList.remove('text-success');
     msg.classList.add('text-danger');
-    msg.innerText = "خطا در ارتباط با سرور";
+    msg.innerText = texts.serverError;
   }
 });
 </script>
