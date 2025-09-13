@@ -16,7 +16,7 @@ class Profile(models.Model):
         max_length=11, validators=[validate_iranian_phone], unique=True, blank=True, null=True
     )
 
-    image = models.ImageField(upload_to="profile/", default="profile/default.jpg")
+    image = models.ImageField(upload_to="profile/", blank=True, null=True)
     image_url = models.URLField(blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)

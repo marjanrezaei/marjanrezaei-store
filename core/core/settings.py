@@ -4,6 +4,7 @@ import dj_database_url
 import os
 from datetime import timedelta
 from django.utils.translation import gettext_lazy as _
+import redis
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -52,14 +53,14 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',  
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware', 
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware', 
+    'django.contrib.messages.middleware.MessageMiddleware', 
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'cart.middleware.CartMiddleware',
+    'cart.middleware.CartMiddleware', 
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -93,8 +94,7 @@ DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:postgres@db:5432
 DATABASES = {
     "default": dj_database_url.parse(
         DATABASE_URL,
-        conn_max_age=600,
-        ssl_require=os.getenv("ENV") == "production"  # Enable SSL only if using remote DB
+        conn_max_age=600
     )
 }
 # ========================
@@ -193,9 +193,25 @@ LIARA_OBJECT_STORAGE = {
 # ========================
 # Celery
 # ========================
-CELERY_BROKER_URL = config('CELERY_BROKER_URL', default="redis://127.0.0.1:6379/0")
-CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND', default="redis://127.0.0.1:6379/0")
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+CELERY_BROKER_URL = config('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND')
+
+redis_ssl = config("REDIS_SSL", default=False, cast=bool)
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": config("REDIS_URL"),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_CLASS": redis.SSLConnection 
+        }
+    }
+}
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+
 
 # ========================
 # پرداخت

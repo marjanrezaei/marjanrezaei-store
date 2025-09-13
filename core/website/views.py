@@ -15,12 +15,9 @@ from .forms import NewsLetterForm, ContactForm
 from shop.models import ProductModel
 
 
-# from django.contrib.auth import get_user_model
-# User = get_user_model()
-
 # def create_superuser(request):
-#     email = "admin@example.com"
-#     password = "admin11"
+#     email = "admin@gmail.com"
+#     password = "admin123"
 
 #     if not User.objects.filter(email=email).exists():
 #         User.objects.create_superuser(email=email, password=password)
