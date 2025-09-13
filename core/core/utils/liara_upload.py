@@ -1,18 +1,14 @@
 import boto3
 from django.conf import settings
+from celery import shared_task
+import gc
 
-def upload_to_liara(file, filename, folder="profile"):
-    """
-    Upload a Django file to Liara Object Storage and return public URL.
-    :param file: Django UploadedFile instance (request.FILES['file'])
-    :param filename: Name of the file to store
-    :param folder: Folder path in bucket
-    :return: Public URL of uploaded file, or None if failed
-    """
-    if not file:
-        return None
-
-    file.seek(0)  # Ensure we read from the beginning
+@shared_task(ignore_result=True)
+def upload_to_liara(file_content, filename, folder="profile", model_type=None, object_id=None):
+    import boto3
+    from django.conf import settings
+    from io import BytesIO
+    import gc
 
     config = settings.LIARA_OBJECT_STORAGE
     bucket_name = config['bucket_name']
@@ -28,18 +24,34 @@ def upload_to_liara(file, filename, folder="profile"):
     )
 
     try:
+        file_obj = BytesIO(file_content)
         s3.upload_fileobj(
-            Fileobj=file,
+            Fileobj=file_obj,
             Bucket=bucket_name,
             Key=key,
             ExtraArgs={'ACL': 'public-read'}
         )
-        print(f"✅ Liara upload successful: {public_url}")
-        return public_url
-    except Exception as e:
-        print(f"❌ Liara upload failed: {e}")
-        return None
 
+        if model_type == "profile":
+            from accounts.models import Profile
+            Profile.objects.filter(pk=object_id).update(image_url=public_url)
+
+        elif model_type == "product":
+            from shop.models import ProductModel
+            ProductModel.objects.filter(pk=object_id).update(image_url=public_url)
+
+        elif model_type == "product_image":
+            from shop.models import ProductImageModel
+            ProductImageModel.objects.filter(pk=object_id).update(url=public_url)
+
+        print(f"✅ Async Liara upload successful: {public_url}")
+
+    except Exception as e:
+        print(f"❌ Async Liara upload failed: {e}")
+
+    finally:
+        gc.collect()
+          
 
 def delete_from_liara(key: str):
     """

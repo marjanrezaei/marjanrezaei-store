@@ -1,17 +1,16 @@
 from core.utils.liara_upload import upload_to_liara
 from shop.models import ProductImageModel
 
-
 def handle_profile_image(profile, image_file, host):
-    """Upload new profile image and delete old one if exists."""
     if image_file:
-        # Delete old image
         profile.delete_image()
-
-        # Save new image
         filename = f"profile/{profile.user.id}_{image_file.name}"
+
         if "onrender.com" in host:
-            profile.image_url = upload_to_liara(image_file, filename)
+            upload_to_liara.delay(
+                image_file.read(), filename,
+                folder="profile", model_type="profile", object_id=profile.pk
+            )
         else:
             profile.image.save(filename, image_file)
 
@@ -19,16 +18,20 @@ def handle_profile_image(profile, image_file, host):
 
 
 def handle_product_main_image(product, image_file, host):
-    """Upload new main product image and delete old one if exists."""
     if image_file:
         product.delete_main_image()
         filename = f"products/{product.id}_{image_file.name}"
+
         if "onrender.com" in host:
-            product.image_url = upload_to_liara(image_file, filename, folder="products")
+            upload_to_liara.delay(
+                image_file.read(), filename,
+                folder="products", model_type="product", object_id=product.pk
+            )
         else:
             product.image.save(filename, image_file)
-        product.save()
 
+        product.save()
+        
 def handle_product_extra_images(product, extra_files, host):
     """Upload extra images for product."""
 
