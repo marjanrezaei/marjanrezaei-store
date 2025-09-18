@@ -46,7 +46,7 @@
 
           <h4 class="card-title">
             <a class="text-dark"
-              href="{% url 'shop:product-detail' slug=latest_product.slug %}">{{latest_product.title}}</a>
+              href="{{ latest_product.get_absolute_url }}">{{latest_product.title}}</a>
           </h4>
           {% if latest_product.is_discounted %}
           <h3 class="card-text text-dark">{{latest_product.get_price}}</h3>

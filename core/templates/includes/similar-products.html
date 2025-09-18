@@ -46,7 +46,7 @@
 
           <h4 class="card-title">
             <a class="text-dark"
-              href="{% url 'shop:product-detail' slug=similar_product.slug %}">{{similar_product.title}}</a>
+              href="{{ similar_product.get_absolute_url }}">{{similar_product.title}}</a>
           </h4>
           {% if similar_product.is_discounted %}
           <h3 class="card-text text-dark">{{similar_product.get_price}}</h3>

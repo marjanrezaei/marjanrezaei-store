@@ -87,16 +87,18 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # دیتابیس
 # ========================
 # Get DATABASE_URL from environment or use local default
+ENVIRONMENT = os.getenv("ENV", "local")
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:postgres@db:5432/postgres")
 
-# Configure Django DATABASES
 DATABASES = {
     "default": dj_database_url.parse(
         DATABASE_URL,
         conn_max_age=600,
-        ssl_require=os.getenv("ENV") == "production"  # Enable SSL only if using remote DB
+        ssl_require=ENVIRONMENT == "production"
     )
 }
+LIARA_UPLOAD_ENABLED = ENVIRONMENT == "production"
+
 # ========================
 # رمز عبور
 # ========================
@@ -221,4 +223,19 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
     'AUTH_HEADER_TYPES': ('Bearer',),
+}
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
 }

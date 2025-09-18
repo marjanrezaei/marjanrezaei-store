@@ -19,7 +19,7 @@
     <div class="card-header border-bottom d-flex justify-content-between align-items-center">
         <h5 class="card-header-title">ویرایش محصول</h5>
         {% if object.is_published %}
-        <a class="btn btn-sm btn-primary" target="_blank" href="{% url 'shop:product-detail' slug=object.slug %}">نمایش
+        <a class="btn btn-sm btn-primary" target="_blank" href="{{ object.get_absolute_url }}">نمایش
             محصول</a>
         {% endif %}
     </div>

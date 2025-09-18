@@ -97,7 +97,7 @@
                                     href="{% url 'dashboard:admin:product-edit' pk=object.pk %}"><i class="bi-pencil-square"></i></a>
                                 {% if object.is_published %}
                                 <a class="btn btn-sm btn-icon btn-ghost-primary" target="_blank"
-                                    href="{% url 'shop:product-detail' slug=object.slug %}"><i class="bi-eye"></i></a>
+                                    href="{{ object.get_absolute_url }}"><i class="bi-eye"></i></a>
                                 {% endif %}
                             </td>
                         </tr>

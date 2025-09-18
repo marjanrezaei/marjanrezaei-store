@@ -1,32 +1,21 @@
 from django import forms
-from shop.models import ProductModel
 from parler.forms import TranslatableModelForm
-from django import forms
 from shop.models import ProductModel
 
 class ProductForm(TranslatableModelForm):
     image = forms.ImageField(required=False)
-
     extra_images = forms.FileField(
         widget=forms.ClearableFileInput(attrs={'multiple': True, 'class': 'form-control'}),
         required=False,
-        label="تصاویر اضافی"
+        label="Extra Images"
     )
 
     class Meta:
         model = ProductModel
         fields = [
-            'category',
-            'title',
-            'slug',
-            'image',
-            'image_url',
-            'description',
-            'breif_description',
-            'stock',
-            'status',
-            'price',
-            'discount_percent',
+            'user', 'category', 'title', 'slug', 'image', 'image_url',
+            'description', 'breif_description', 'stock', 'status',
+            'price', 'discount_percent',
         ]
 
     def __init__(self, *args, **kwargs):

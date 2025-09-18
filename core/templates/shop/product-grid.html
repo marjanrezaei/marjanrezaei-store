@@ -115,7 +115,7 @@
               </div>
 
               <h4 class="card-title">
-                <a class="text-dark" href="{% url 'shop:product-detail' slug=object.slug %}">{{ object.title }}</a>
+                <a class="text-dark" href="{{ object.get_absolute_url }}">{{ object.title }}</a>
               </h4>
 
               {% if object.is_discounted %}
@@ -165,7 +165,7 @@
             <div class="col-md-9">
               <div class="card-body">
                 <h5 class="card-title">
-                  <a class="text-dark" href="{% url 'shop:product-detail' slug=object.slug %}">{{ object.title }}</a>
+                  <a class="text-dark" href="{{ object.get_absolute_url }}">{{ object.title }}</a>
                 </h5>
 
                 <p>
