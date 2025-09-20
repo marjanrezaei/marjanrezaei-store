@@ -1,0 +1,18 @@
+    {% load static i18n %}
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="border-top">
+    <div class="container">
+      <div class="row justify-content-lg-between content-space-t-2 content-space-b-lg-2">
+        <div class="col-lg-3 mb-5">
+          <div class="d-flex align-items-start flex-column h-100">
+            <a class="w-100 mb-3 mb-lg-auto" href="{% url 'website:index' %}" aria-label="Front">
+              <img class="brand" src="{% static 'svg/logos/logo.svg' %}" alt="Logo">
+            </a>
+            <p class="text-muted small mb-0">&copy; Marjan Rezaei</p>
+          </div>
+        </div>
+        {% block footer_content %}{% endblock footer_content %}
+      </div>
+    </div>
+  </footer>

@@ -1,5 +1,5 @@
 {% extends 'dashboard/admin/base.html' %}
-{% load static %}
+{% load static i18n %}
 {% block Breadcrumb %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb breadcrumb-light mb-0">
@@ -12,7 +12,7 @@
 </nav>
 {% endblock %}
 
-{% block content %}
+{% block dashboard_content %}
 <div class="col-lg-9">
   <!-- Card -->
   <div class="card mb-3">

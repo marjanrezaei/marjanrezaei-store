@@ -1,5 +1,5 @@
 {% extends 'dashboard/admin/base.html' %}
-{% load static %}
+{% load static i18n %}
 
 {% block breadcrumb %}
 <nav aria-label="breadcrumb">
@@ -14,7 +14,7 @@
 </nav>
 {% endblock %}
 
-{% block content %}
+{% block dashboard_content %}
 <div class="card">
     <!-- Header -->
     <div class="card-header border-bottom d-flex justify-content-between align-items-center">
