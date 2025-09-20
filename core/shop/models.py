@@ -10,6 +10,7 @@ from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 import os
 
+
 class ProductStatusType(models.IntegerChoices):
     publish = 1, ("Show")
     draft = 2, ("Hide")
@@ -17,13 +18,17 @@ class ProductStatusType(models.IntegerChoices):
 
 class ProductCategoryModel(TranslatableModel):
     translations = TranslatedFields(
-        title=models.CharField(max_length=255),
-        slug=models.SlugField(allow_unicode=True),
+        title=models.CharField(max_length=200),
+        slug=models.SlugField(max_length=200, unique=False),
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
+        return self.safe_translation_getter("title", any_language=True)
+    
+    @property
+    def safe_title(self):
         return self.safe_translation_getter("title", any_language=True)
 
 
@@ -134,3 +139,5 @@ def delete_product_images(sender, instance, **kwargs):
     for img in instance.extra_images.all():
         img.delete_image()
         img.delete()
+
+

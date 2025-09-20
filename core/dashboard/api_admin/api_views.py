@@ -2,14 +2,14 @@ from rest_framework import viewsets, filters, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from order.models import CouponModel, OrderModel
-from shop.models import ProductModel
+from shop.models import ProductModel, ProductCategoryModel
 from review.models import ReviewModel
 from dashboard.permissions import IsAdminUser
 from accounts.models import Profile
 from .serializers import (
     CouponSerializer, OrderSerializer,
     ProductSerializer, ReviewSerializer,
-    ProfileSerializer
+    ProfileSerializer, ProductCategorySerializer
 )
 from core.mixins import SwaggerSafeMixin
 
@@ -93,3 +93,10 @@ class ProfileViewSet(SwaggerSafeMixin, viewsets.ModelViewSet):
         if hasattr(self.request, 'user') and self.request.user.is_authenticated:
             return qs.filter(user=self.request.user)
         return qs.none()
+
+
+# -------------------- Category --------------------
+class ProductCategoryViewSet(viewsets.ModelViewSet):
+    queryset = ProductCategoryModel.objects.all()
+    serializer_class = ProductCategorySerializer
+

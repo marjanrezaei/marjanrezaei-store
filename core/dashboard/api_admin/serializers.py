@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from order.models import CouponModel, OrderModel
-from shop.models import ProductModel, ProductImageModel
+from shop.models import ProductModel, ProductImageModel, ProductCategoryModel
 from review.models import ReviewModel
 from accounts.models import Profile
 
@@ -61,3 +61,39 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = ['user', 'image_url']
         ref_name = "AdminProfileSerializer"
 
+
+ # -------------------- Category --------------------
+class ProductCategorySerializer(serializers.ModelSerializer):
+    translations = serializers.DictField(write_only=True, required=False)
+    all_translations = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = ProductCategoryModel
+        fields = ["id", "all_translations", "translations"]
+
+    def get_all_translations(self, obj):
+        return {lang: {
+                    "title": obj.safe_translation_getter("title", language_code=lang),
+                    "slug": obj.safe_translation_getter("slug", language_code=lang),
+                } for lang in ["fa", "en", "ar"]}
+
+    def create(self, validated_data):
+        translations = validated_data.pop("translations", {})
+        category = ProductCategoryModel.objects.create(**validated_data)
+        for lang, data in translations.items():
+            category.set_current_language(lang)
+            category.title = data.get("title", "")
+            category.slug = data.get("slug", "")
+            category.save()
+        return category
+
+    def update(self, instance, validated_data):
+        translations = validated_data.pop("translations", {})
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        for lang, data in translations.items():
+            instance.set_current_language(lang)
+            instance.title = data.get("title", instance.title)
+            instance.slug = data.get("slug", instance.slug)
+            instance.save()
+        return instance

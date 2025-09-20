@@ -8,6 +8,7 @@ router.register(r'orders', api_views.OrderViewSet, basename='admin-orders')
 router.register(r'products', api_views.ProductViewSet, basename='admin-products')
 router.register(r'reviews', api_views.ReviewViewSet, basename='admin-reviews')
 router.register(r'profile', api_views.ProfileViewSet, basename='admin-profile')
+router.register(r'categories', api_views.ProductCategoryViewSet, basename='category')
 
 urlpatterns = [
     path('', api_views.AdminDashboardAPIView.as_view(), name='admin-dashboard-api'),

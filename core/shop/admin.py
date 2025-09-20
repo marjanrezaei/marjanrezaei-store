@@ -43,7 +43,7 @@ class ProductAdmin(TranslatableAdmin):
 
 @admin.register(ProductCategoryModel)
 class ProductCategoryAdmin(TranslatableAdmin):
-    list_display = ("id", "title", "created_at")
+    list_display = ("id", "title", "created_at", "updated_at")
     search_fields = ("translations__title",)
     
 

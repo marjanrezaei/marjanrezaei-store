@@ -1,0 +1,182 @@
+{% extends 'dashboard/admin/base.html' %}
+{% load i18n static %}
+
+{% block Breadcrumb %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb breadcrumb-light mb-0">
+    <li class="breadcrumb-item">{% trans "Account" %}</li>
+    <li class="breadcrumb-item">{% trans "Admin Dashboard" %}</li>
+    <li class="breadcrumb-item active" aria-current="page">
+      {% if object_id %}{% trans "Edit Category" %}{% else %}{% trans "Create Category" %}{% endif %}
+    </li>
+  </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header border-bottom d-flex justify-content-between align-items-center">
+    <h5>{% if object_id %}{% trans "Edit Category" %}{% else %}{% trans "Create Category" %}{% endif %}</h5>
+  </div>
+
+  <form id="category-form">
+    {% csrf_token %}
+    <!-- Language Tabs -->
+    <ul class="nav nav-tabs">
+      {% for lang in languages %}
+      <li class="nav-item">
+        <a class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="tab" href="#{{ lang }}">{{ lang|upper }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <div class="tab-content mt-3">
+      {% for lang in languages %}
+      <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="{{ lang }}">
+        <div class="mb-3">
+          <label>{% trans "Title" %} ({{ lang|upper }})</label>
+          <input type="text" name="title_{{ lang }}" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label>{% trans "Slug" %} ({{ lang|upper }})</label>
+          <input type="text" name="slug_{{ lang }}" class="form-control">
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="d-flex justify-content-end mt-4">
+      <button type="submit" class="btn btn-primary">{% trans "Save Category" %}</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{# ... header of template stays the same ... #}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- Config (comes from Django view) ---
+  // languages_json is injected by the view (e.g. '["fa","en","ar"]')
+  const categoryLanguages = JSON.parse('{{ languages_json|escapejs }}');
+  const form = document.getElementById("category-form");
+  const token = localStorage.getItem("access"); // JWT access token
+  const categoryId = "{{ object_id|default:'' }}"; // empty string when creating
+  const apiUrl = "/api/dashboard/admin/categories/"; // API base
+
+  // helper: show message and optionally redirect to login
+  function handleUnauthorized() {
+    alert("Session expired or unauthorized. Please log in again.");
+    window.location.href = "/accounts/login/";
+  }
+
+  if (!form) return; // safety
+
+  if (!token) {
+    // If you don't have an access token, send user to login
+    alert("You must be logged in to manage categories.");
+    window.location.href = "/accounts/login/";
+    return;
+  }
+
+  // --- Load existing category when editing ---
+  async function loadCategory() {
+    if (!categoryId) return; // create mode -> nothing to load
+
+    try {
+      const res = await fetch(apiUrl + categoryId + "/", {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Accept": "application/json"
+        }
+      });
+
+      if (res.status === 401) {
+        handleUnauthorized();
+        return;
+      }
+
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("Failed to load category:", text);
+        alert("Failed to load category data. Check console.");
+        return;
+      }
+
+      const data = await res.json();
+
+      // API may return translations under different keys:
+      // try all_translations first (as your serializer provides), fallback to translations
+      const translations = data.all_translations || data.translations || {};
+
+      categoryLanguages.forEach(lang => {
+        const t = translations[lang] || {};
+        const titleEl = form.querySelector(`[name="title_${lang}"]`);
+        const slugEl = form.querySelector(`[name="slug_${lang}"]`);
+        if (titleEl) titleEl.value = t.title || "";
+        if (slugEl)  slugEl.value = t.slug  || "";
+      });
+
+    } catch (err) {
+      console.error("Error loading category:", err);
+      alert("Network error while loading category. See console.");
+    }
+  }
+
+  loadCategory();
+
+  // --- Submit (create or update) ---
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // collect translations from inputs
+    const translations = {};
+    categoryLanguages.forEach(lang => {
+      const title = form.querySelector(`[name="title_${lang}"]`)?.value || "";
+      const slug  = form.querySelector(`[name="slug_${lang}"]`)?.value || "";
+      translations[lang] = { title, slug };
+    });
+
+    const payload = { translations }; // matches serializer.writeable field
+
+    const method = categoryId ? "PUT" : "POST";
+    const endpoint = categoryId ? `${apiUrl}${categoryId}/` : apiUrl;
+
+    try {
+      const res = await fetch(endpoint, {
+        method,
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (res.status === 401) {
+        handleUnauthorized();
+        return;
+      }
+
+      if (res.ok) {
+        // success — redirect to list page
+        alert("Category saved successfully.");
+        window.location.href = "/dashboard/admin/category/list/";
+      } else {
+        // Read JSON (if possible) or text for error details
+        let err;
+        try { err = await res.json(); } catch(e) { err = await res.text(); }
+        console.error("Failed to save category:", err);
+        alert("Failed to save category. See console for details.");
+      }
+    } catch (err) {
+      console.error("Network error saving category:", err);
+      alert("Network error while saving category. See console.");
+    }
+  });
+});
+</script>
+{% endblock %}
+

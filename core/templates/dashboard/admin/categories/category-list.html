@@ -1,0 +1,81 @@
+{% extends 'dashboard/admin/base.html' %}
+{% load i18n static %}
+
+{% block Breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-light mb-0">
+        <li class="breadcrumb-item">{% trans "Account" %}</li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans "Admin Dashboard" %}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5>{% trans "Categories" %}</h5>
+        <a href="{% url 'dashboard:admin:category-form' %}" class="btn btn-primary btn-sm">{% trans "Create Category" %}</a>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{% trans "Title (FA)" %}</th>
+                        <th>{% trans "Title (EN)" %}</th>
+                        <th>{% trans "Title (AR)" %}</th>
+                        <th>{% trans "Actions" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                    <tr>
+                        <td>{{ category.id }}</td>
+                        <td>{{ category.fa_title }}</td>
+                        <td>{{ category.en_title }}</td>
+                        <td>{{ category.ar_title }}</td>
+                        <td>
+                            <a href="{% url 'dashboard:admin:category-edit' pk=category.id %}" class="btn btn-sm btn-info">{% trans "Edit" %}</a>
+                            <button class="btn btn-sm btn-danger delete-btn" data-id="{{ category.id }}">{% trans "Delete" %}</button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">{% trans "No categories available." %}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const token = localStorage.getItem("access");
+    const apiUrl = "/api/dashboard/admin/categories/";
+
+    document.querySelectorAll(".delete-btn").forEach(btn => {
+        btn.addEventListener("click", async () => {
+            if (!confirm("{% trans 'Are you sure you want to delete this category?' %}")) return;
+            const id = btn.dataset.id;
+            const res = await fetch(apiUrl + id + "/", {
+                method: "DELETE",
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+            if(res.ok){
+                alert("{% trans 'Category deleted successfully.' %}");
+                btn.closest("tr").remove();
+            } else {
+                const err = await res.json();
+                alert("{% trans 'Failed to delete category:' %}\n" + JSON.stringify(err, null, 2));
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
