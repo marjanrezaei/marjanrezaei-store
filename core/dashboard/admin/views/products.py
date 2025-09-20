@@ -1,20 +1,14 @@
 from django.views.generic import (
-    UpdateView, 
     ListView, 
-    DeleteView, 
-    CreateView
+    DeleteView  
     )
 from django.contrib.auth.mixins import LoginRequiredMixin
 from dashboard.permissions import AdminRequiredMixin
-from dashboard.admin.forms import  ProductForm
 from django.urls import reverse_lazy
-from django.shortcuts import redirect
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import FieldError
 
-from shop.models import ProductModel, ProductCategoryModel, ProductImageModel
-from core.utils.liara_upload import upload_to_liara
-from core.utils.image_utils import handle_product_main_image,  handle_product_extra_images
+from shop.models import ProductModel, ProductCategoryModel
 
 
 class AdminProductListView(AdminRequiredMixin, LoginRequiredMixin, ListView):
@@ -51,78 +45,10 @@ class AdminProductListView(AdminRequiredMixin, LoginRequiredMixin, ListView):
         return context
 
 
-class AdminProductCreateView(AdminRequiredMixin, LoginRequiredMixin, SuccessMessageMixin, CreateView):
-    template_name = "dashboard/admin/products/product-create.html"
-    queryset = ProductModel.objects.all()
-    form_class = ProductForm
-    success_message = "ایجاد محصول با موفقیت انجام شد"
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        host = self.request.get_host()
-        product = form.instance
-
-        main_image = self.request.FILES.get("image")
-        handle_product_main_image(product, main_image, host)
-
-        extra_images = self.request.FILES.getlist("extra_images")
-        handle_product_extra_images(product, extra_images, host)
-
-    def get_success_url(self):
-        return reverse_lazy("dashboard:admin:product-edit", kwargs={"pk": self.object.pk})
-
-
-class AdminProductEditView(SuccessMessageMixin, UpdateView):
-    model = ProductModel
-    form_class = ProductForm
-    template_name = "dashboard/admin/products/product-edit.html"
-    success_message = "ویرایش محصول با موفقیت انجام شد"
-
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-
-        # حذف تصویر اصلی اگر تیک حذف زده شده باشد
-        if 'delete_image' in request.POST:
-            if self.object.image:
-                self.object.image.delete(save=False)
-            self.object.image_url = None
-            self.object.image = None
-            self.object.save()
-
-        # حذف تصاویر اضافی
-        delete_extra_ids = request.POST.getlist('delete_extra_images')
-        if delete_extra_ids:
-            extra_images = ProductImageModel.objects.filter(id__in=delete_extra_ids, product=self.object)
-            for img in extra_images:
-                img.delete_image()
-                img.delete()
-
-        return super().post(request, *args, **kwargs)
-
-    def form_valid(self, form):
-        product = form.instance
-        host = self.request.get_host()
-        
-        main_image = self.request.FILES.get("image")
-        handle_product_main_image(product, main_image, host)
-
-        extra_images = self.request.FILES.getlist("extra_images")
-        handle_product_extra_images(product, extra_images, host)
-
-    def get_success_url(self):
-        return reverse_lazy("dashboard:admin:product-edit", kwargs={"pk": self.object.pk})
-
-
 class AdminProductDeleteView(AdminRequiredMixin, LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     template_name = "dashboard/admin/products/product-delete.html"
     queryset = ProductModel.objects.all()
     success_url = reverse_lazy("dashboard:admin:product-list")
-    success_message = "حذف محصول با  موفقیت انجام شد"  
+    success_message = "Sucsessfull delete product" 
 
     
-class AdminProductImageDeleteView(AdminRequiredMixin, LoginRequiredMixin, DeleteView):
-    model = ProductImageModel
-    success_message = "تصویر حذف شد"
-
-    def get_success_url(self):
-        return reverse_lazy("dashboard:admin:product-edit", kwargs={"pk": self.object.product.pk})

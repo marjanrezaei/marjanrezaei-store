@@ -9,6 +9,7 @@ class ProductImageInline(admin.TabularInline):
     model = ProductImageModel
     extra = 1
     readonly_fields = ('file_preview',)
+    fields = ('file', 'url', 'file_preview',)
 
     def file_preview(self, obj):
         if obj.url:
