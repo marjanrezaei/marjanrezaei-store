@@ -88,6 +88,17 @@ class ProductModel(TranslatableModel):
 
     def __str__(self):
         return self.safe_translation_getter("title", any_language=True)
+    
+    def get_price(self):
+        discount_amount = self.price * Decimal(self.discount_percent / 100)
+        final_price = self.price - discount_amount
+        return round(final_price)
+
+    def is_discounted(self):
+        return self.discount_percent != 0
+
+    def is_published(self):
+        return self.status == ProductStatusType.publish.value
 
 
 class ProductImageModel(models.Model):
