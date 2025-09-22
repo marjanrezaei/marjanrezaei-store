@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 15:36+0000\n"
+"POT-Creation-Date: 2025-09-22 18:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic <LL@li.org>\n"
@@ -44,15 +44,15 @@ msgstr "تم إرسال رابط إعادة تعيين كلمة المرور إ�
 msgid "Your password was changed successfully. Please log in."
 msgstr "تم تغيير كلمة المرور بنجاح. الرجاء تسجيل الدخول"
 
-#: core/settings.py:121
+#: core/settings.py:123
 msgid "فارسی"
 msgstr "الفارسية"
 
-#: core/settings.py:122
+#: core/settings.py:124
 msgid "English"
 msgstr "الإنجليزية"
 
-#: core/settings.py:123
+#: core/settings.py:125
 msgid "العربية"
 msgstr "العربية"
 
@@ -81,7 +81,7 @@ msgid "وضعیت نامعتبر"
 msgstr ""
 
 #: templates/accounts/login.html:6 templates/accounts/login.html:20
-#: templates/base.html:118
+#: templates/partials/header.html:102
 msgid "Login"
 msgstr "تسجيل الدخول"
 
@@ -200,32 +200,6 @@ msgid ""
 "Registration successful! Please check your email to activate your account."
 msgstr "تم التسجيل بنجاح! يرجى التحقق من بريدك الإلكتروني لتفعيل الحساب."
 
-#: templates/base.html:86
-msgid "Home"
-msgstr "الرئيسية"
-
-#: templates/base.html:88 templates/includes/latest-products.html:94
-msgid "Product List"
-msgstr "قائمة المنتجات"
-
-#: templates/base.html:90
-msgid "About Us"
-msgstr "معلومات عنا"
-
-#: templates/base.html:92
-msgid "Contact Us"
-msgstr "اتصل بنا"
-
-#: templates/base.html:114
-#, fuzzy
-#| msgid "profile"
-msgid "Profile"
-msgstr "الملف الشخصي"
-
-#: templates/base.html:115
-msgid "Exit"
-msgstr ""
-
 #: templates/cart/cart-summary.html:10
 msgid "Shopping Cart"
 msgstr "سلة التسوق"
@@ -286,6 +260,93 @@ msgstr "حدث خطأ أثناء إزالة المنتج."
 msgid "Unit Price"
 msgstr "سعر الوحدة"
 
+#: templates/dashboard/admin/categories/category-form.html:7
+#: templates/dashboard/admin/categories/category-list.html:7
+msgid "Account"
+msgstr ""
+
+#: templates/dashboard/admin/categories/category-form.html:8
+#: templates/dashboard/admin/categories/category-list.html:8
+msgid "Admin Dashboard"
+msgstr ""
+
+#: templates/dashboard/admin/categories/category-form.html:10
+#: templates/dashboard/admin/categories/category-form.html:19
+#, fuzzy
+#| msgid "Category"
+msgid "Edit Category"
+msgstr "الفئة"
+
+#: templates/dashboard/admin/categories/category-form.html:10
+#: templates/dashboard/admin/categories/category-form.html:19
+#: templates/dashboard/admin/categories/category-list.html:17
+#, fuzzy
+#| msgid "Select Category"
+msgid "Create Category"
+msgstr "اختر الفئة"
+
+#: templates/dashboard/admin/categories/category-form.html:37
+msgid "Title"
+msgstr ""
+
+#: templates/dashboard/admin/categories/category-form.html:41
+msgid "Slug"
+msgstr ""
+
+#: templates/dashboard/admin/categories/category-form.html:49
+#, fuzzy
+#| msgid "Select Category"
+msgid "Save Category"
+msgstr "اختر الفئة"
+
+#: templates/dashboard/admin/categories/category-list.html:16
+#, fuzzy
+#| msgid "Category"
+msgid "Categories"
+msgstr "الفئة"
+
+#: templates/dashboard/admin/categories/category-list.html:26
+msgid "Title (FA)"
+msgstr ""
+
+#: templates/dashboard/admin/categories/category-list.html:27
+msgid "Title (EN)"
+msgstr ""
+
+#: templates/dashboard/admin/categories/category-list.html:28
+msgid "Title (AR)"
+msgstr ""
+
+#: templates/dashboard/admin/categories/category-list.html:29
+msgid "Actions"
+msgstr ""
+
+#: templates/dashboard/admin/categories/category-list.html:40
+msgid "Edit"
+msgstr ""
+
+#: templates/dashboard/admin/categories/category-list.html:41
+msgid "Delete"
+msgstr ""
+
+#: templates/dashboard/admin/categories/category-list.html:46
+#, fuzzy
+#| msgid "No products available"
+msgid "No categories available."
+msgstr "لا توجد منتجات متاحة"
+
+#: templates/dashboard/admin/categories/category-list.html:64
+msgid "Are you sure you want to delete this category?"
+msgstr ""
+
+#: templates/dashboard/admin/categories/category-list.html:71
+msgid "Category deleted successfully."
+msgstr ""
+
+#: templates/dashboard/admin/categories/category-list.html:75
+msgid "Failed to delete category:"
+msgstr ""
+
 #: templates/includes/latest-products.html:7
 msgid "Latest Products"
 msgstr "أحدث المنتجات"
@@ -296,6 +357,58 @@ msgstr "أحدث المنتجات"
 #: templates/shop/product-grid.html:199
 msgid "Add to Cart"
 msgstr "أضف إلى السلة"
+
+#: templates/includes/latest-products.html:94 templates/partials/header.html:70
+msgid "Product List"
+msgstr "قائمة المنتجات"
+
+#: templates/partials/header.html:68
+msgid "Home"
+msgstr "الرئيسية"
+
+#: templates/partials/header.html:72
+msgid "About Us"
+msgstr "معلومات عنا"
+
+#: templates/partials/header.html:74
+msgid "Contact Us"
+msgstr "اتصل بنا"
+
+#: templates/partials/header.html:98
+#, fuzzy
+#| msgid "profile"
+msgid "Profile"
+msgstr "الملف الشخصي"
+
+#: templates/partials/header.html:99
+msgid "Exit"
+msgstr ""
+
+#: templates/partials/secondary_contents.html:9
+msgid "Close"
+msgstr "إغلاق"
+
+#: templates/partials/secondary_contents.html:22
+#: templates/partials/secondary_contents.html:23
+msgid "Search products"
+msgstr "ابحث عن المنتجات"
+
+#: templates/partials/secondary_contents.html:27
+msgid "Search"
+msgstr "بحث"
+
+#: templates/partials/secondary_contents.html:62
+msgid "No products found."
+msgstr "لم يتم العثور على منتجات."
+
+#: templates/partials/secondary_contents.html:71
+#: templates/shop/product-grid.html:37
+msgid "Price"
+msgstr "السعر"
+
+#: templates/partials/secondary_contents.html:78
+msgid "An error occurred while fetching results."
+msgstr "حدث خطأ أثناء جلب النتائج."
 
 #: templates/shop/product-detail.html:26 templates/shop/product-detail.html:28
 msgid "Extra Image"
@@ -366,10 +479,6 @@ msgstr "ابحث عن منتج"
 #: templates/shop/product-grid.html:33
 msgid "Enter search term"
 msgstr "أدخل مصطلح البحث"
-
-#: templates/shop/product-grid.html:37
-msgid "Price"
-msgstr "السعر"
 
 #: templates/shop/product-grid.html:38
 msgid "Min Price"

@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import FieldError
 from django.http import JsonResponse
+from django.utils.translation import get_language
 from parler.views import TranslatableSlugMixin
 
 from .models import (
@@ -22,6 +23,7 @@ class ShopProductGridView(ListView):
         return self.request.GET.get('page_size', self.paginate_by)
 
     def get_queryset(self):
+
         queryset = ProductModel.objects.filter(status=ProductStatusType.publish.value)
 
         search_q = self.request.GET.get("q")
@@ -31,7 +33,7 @@ class ShopProductGridView(ListView):
         order_by = self.request.GET.get("order_by")
 
         if search_q:
-            queryset = queryset.filter(title__icontains=search_q)
+            queryset = queryset.filter(translations__title__icontains=search_q)
 
         if category_id:
             queryset = queryset.filter(category__id=category_id)
@@ -62,7 +64,7 @@ class ShopProductGridView(ListView):
         if user.is_authenticated:
             return WishlistProductModel.objects.filter(user=user).values_list('product__id', flat=True)
         return []
-
+    
 
 class ShopProductDetailView(TranslatableSlugMixin, DetailView):
     template_name = "shop/product-detail.html"
