@@ -1,22 +1,25 @@
 {% extends 'dashboard/admin/base.html' %}
+{% load i18n %}
+
 {% block Breadcrumb %}
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb breadcrumb-light mb-0">
-        <li class="breadcrumb-item">حساب</li>
-        <li class="breadcrumb-item">داشبورد ادمین</li>
-        <li class="breadcrumb-item">کوپن ها</li>
+        <li class="breadcrumb-item">{% trans "Account" %}</li>
+        <li class="breadcrumb-item">{% trans "Admin Dashboard" %}</li>
+        <li class="breadcrumb-item">{% trans "Coupons" %}</li>
         <li class="breadcrumb-item active" aria-current="page">
-            حذف کوپن
+            {% trans "Delete Coupon" %}
         </li>
     </ol>
 </nav>
 {% endblock %}
+
 {% block dashboard_content %}
 <!-- Card -->
 <div class="card">
     <!-- Header -->
     <div class="card-header border-bottom">
-        <h5 class="card-header-title">حذف کوپن</h5>
+        <h5 class="card-header-title">{% trans "Delete Coupon" %}</h5>
     </div>
     <!-- End Header -->
 
@@ -24,19 +27,21 @@
     <form action="." method="post">
         {% csrf_token %}
         <div class="card-body">
-            <div class="row d-flex ">
-                <p>آیا از حذف کوپن زیر اطمینان دارید؟</p>
+            <div class="row d-flex">
+                <p>{% trans "Are you sure you want to delete the following coupon?" %}</p>
                 <div class="row">
-                    <span> شناسه کوپن: {{object.id}}</span>
-                    <span>کد کوپن : {{object.code}}</span>
+                    <span>{% trans "Coupon ID" %}: {{object.id}}</span>
+                    <span>{% trans "Coupon Code" %}: {{object.code}}</span>
                 </div>
             </div>
-
         </div>
+
         <div class="card-footer">
-            <div class=" d-flex pt-5 justify-content-end">
-                <button type="submit" class="btn btn-danger ms-3">تایید حذف</button>
-                <a class="btn btn-secondary ms-3" href="{% url 'dashboard:admin:coupon-edit' pk=object.pk %}">بازگشت</a>
+            <div class="d-flex pt-5 justify-content-end">
+                <button type="submit" class="btn btn-danger ms-3">{% trans "Confirm Delete" %}</button>
+                <a class="btn btn-secondary ms-3" href="{% url 'dashboard:admin:coupon-edit' pk=object.pk %}">
+                    {% trans "Back" %}
+                </a>
             </div>
         </div>
     </form>

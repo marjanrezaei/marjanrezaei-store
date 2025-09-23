@@ -4,10 +4,10 @@
 {% block Breadcrumb %}
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb breadcrumb-light mb-0">
-        <li class="breadcrumb-item">حساب</li>
-        <li class="breadcrumb-item">داشبورد ادمین</li>
+        <li class="breadcrumb-item">{% trans "Account" %}</li>
+        <li class="breadcrumb-item">{% trans "Admin Dashboard" %}</li>
         <li class="breadcrumb-item active" aria-current="page">
-            کاربران استفاده کننده از کوپن
+            {% trans "Coupon Usage by Users" %}
         </li>
     </ol>
 </nav>
@@ -20,29 +20,31 @@
     <div class="card-body">
         <div class="container pb-5">
             <form action="." class="row" method="get">
-                <!-- Input Card -->
+                <!-- Search Input -->
                 <div class="col-md-3 py-1">
-                    <input type="text" class="form-control" placeholder="جستجوی کوپن" name="q" id="search-query-filter">
+                    <input type="text" class="form-control" placeholder="{% trans 'Search Coupon' %}" name="q" id="search-query-filter">
                 </div>
-                <!-- End Input Card -->
+                <!-- Sorting -->
                 <div class="col-md-3 py-1">
                     <select class="form-select form-select-sm" id="order-by-filter" name="order_by">
-                        <option value="" selected>مرتب سازی</option>
-                        <option value="-created_at">جدیدترین</option>
-                        <option value="created_at">قدیمی ترین</option>
-                        <option value="-discount_percent">بیشترین تخفیف</option>
-                        <option value="discount_percent">کمترین تخفیف</option>
+                        <option value="" selected>{% trans "Sort By" %}</option>
+                        <option value="-created_at">{% trans "Newest" %}</option>
+                        <option value="created_at">{% trans "Oldest" %}</option>
+                        <option value="-discount_percent">{% trans "Highest Discount" %}</option>
+                        <option value="discount_percent">{% trans "Lowest Discount" %}</option>
                     </select>
                 </div>
+                <!-- Page size -->
                 <div class="col-md-2 py-1">
                     <select class="form-select form-select-sm" id="page-size-filter">
-                        <option value="" selected>تعداد</option>
+                        <option value="" selected>{% trans "Page Size" %}</option>
                         <option value="5">5</option>
                         <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="50">50</option>
                     </select>
                 </div>
+                <!-- Submit -->
                 <div class="col-md-1 py-1">
                     <button type="submit" class="btn btn-primary btn-search"><i class="bi-search"></i></button>
                 </div>
@@ -56,12 +58,11 @@
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">کد کوپن</th>
-                            <th scope="col">تخفیف</th>
-                            <th scope="col">تعداد</th>
-                            <th scope="col">تعداد استفاده</th>
-                            <th scope="col">کاربران استفاده کننده</th>
-
+                            <th scope="col">{% trans "Coupon Code" %}</th>
+                            <th scope="col">{% trans "Discount" %}</th>
+                            <th scope="col">{% trans "Usage Limit" %}</th>
+                            <th scope="col">{% trans "Times Used" %}</th>
+                            <th scope="col">{% trans "Used By" %}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -69,7 +70,7 @@
                         <tr>
                             <th scope="row">{{ object.id }}</th>
                             <td>{{ object.code }}</td>
-                            <td>{{ object.discount_percent }}</td>
+                            <td>{{ object.discount_percent }}%</td>
                             <td>{{ object.max_limit_usage }}</td>
                             <td>{{ object.used_by.count }}</td>
                             <td>{{ object.used_by_list }}</td>
@@ -80,64 +81,59 @@
             </div>
             <!-- End Table -->
 
-
-
             <!-- Pagination -->
             {% if page_obj.has_other_pages %}
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
                     {% if page_obj.has_previous %}
                     <li class="page-item">
-                        <button class="page-link" onclick="changePage('{{ page_obj.previous_page_number }}')"
-                            aria-label="Previous">
-                            <i class="bi-chevron-double-right small"></i>
+                        <button class="page-link" onclick="changePage('{{ page_obj.previous_page_number }}')" aria-label="{% trans 'Previous' %}">
+                            <i class="bi-chevron-double-left small"></i>
                         </button>
                     </li>
                     {% endif %}
 
                     {% for num in page_obj.paginator.page_range %}
-                    {% if num == page_obj.number %}
-                    <li class="page-item active">
-                        <button class="page-link" onclick="changePage('{{num}}')">{{ num }}</button>
-                    </li>
-                    {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %} <li class="page-item">
-                        <button class="page-link" onclick="changePage('{{num}}')">{{ num }}</button>
+                        {% if num == page_obj.number %}
+                        <li class="page-item active">
+                            <button class="page-link" onclick="changePage('{{num}}')">{{ num }}</button>
                         </li>
-                        {% endif %}
-                        {% endfor %}
-
-                        {% if page_obj.has_next %}
+                        {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %}
                         <li class="page-item">
-                            <button class="page-link" onclick="changePage('{{ page_obj.next_page_number }}')"
-                                aria-label="Next">
-                                <i class="bi-chevron-double-left small"></i>
-                            </button>
+                            <button class="page-link" onclick="changePage('{{num}}')">{{ num }}</button>
                         </li>
                         {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <button class="page-link" onclick="changePage('{{ page_obj.next_page_number }}')" aria-label="{% trans 'Next' %}">
+                            <i class="bi-chevron-double-right small"></i>
+                        </button>
+                    </li>
+                    {% endif %}
                 </ul>
             </nav>
             {% endif %}
-
             <!-- End Pagination -->
 
         </div>
         <!-- End Row -->
-
     </div>
     <!-- End Body -->
 </div>
 <!-- End Card -->
 {% endblock %}
-{% block extra_js %}
 
+{% block extra_js %}
 <script>
     $(document).ready(function () {
         let current_url_params = new URLSearchParams(window.location.search)
         $("#page-size-filter").val(current_url_params.get('page_size') || "")
         $("#search-query-filter").val(current_url_params.get('q') || "")
         $("#order-by-filter").val(current_url_params.get('order_by') || "")
-
     });
+
     $('#page-size-filter').change(function () {
         let current_url_params = new URLSearchParams(window.location.search)
         var selectedValue = $(this).val();
@@ -146,6 +142,7 @@
         let new_url = window.location.pathname + "?" + current_url_params.toString()
         window.location.href = new_url
     });
+
     $("#search-query-filter").change(function () {
         let current_url_params = new URLSearchParams(window.location.search)
         var selectedValue = $(this).val();
@@ -154,6 +151,7 @@
         let new_url = window.location.pathname + "?" + current_url_params.toString()
         window.location.href = new_url
     });
+
     $('#order-by-filter').change(function () {
         let current_url_params = new URLSearchParams(window.location.search)
         var selectedValue = $(this).val();
@@ -163,6 +161,4 @@
         window.location.href = new_url
     });
 </script>
-
-
 {% endblock extra_js %}

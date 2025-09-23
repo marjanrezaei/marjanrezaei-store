@@ -1,22 +1,25 @@
 {% extends 'dashboard/admin/base.html' %}
+{% load i18n %}
+
 {% block Breadcrumb %}
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb breadcrumb-light mb-0">
-        <li class="breadcrumb-item">حساب</li>
-        <li class="breadcrumb-item">داشبورد ادمین</li>
-        <li class="breadcrumb-item">کوپن ها</li>
+        <li class="breadcrumb-item">{% trans "Account" %}</li>
+        <li class="breadcrumb-item">{% trans "Admin Dashboard" %}</li>
+        <li class="breadcrumb-item">{% trans "Coupons" %}</li>
         <li class="breadcrumb-item active" aria-current="page">
-            ایجاد کوپن
+            {% trans "Create Coupon" %}
         </li>
     </ol>
 </nav>
 {% endblock %}
+
 {% block dashboard_content %}
 <!-- Card -->
 <div class="card">
     <!-- Header -->
     <div class="card-header border-bottom">
-        <h5 class="card-header-title">ایجاد کوپن</h5>
+        <h5 class="card-header-title">{% trans "Create Coupon" %}</h5>
     </div>
     <!-- End Header -->
 
@@ -26,28 +29,30 @@
         <div class="card-body">
             <div class="row d-flex ">
                 <div class="col-md-6 mb-3">
-                    <label>کد کوپن</label>
+                    <label>{% trans "Coupon Code" %}</label>
                     {{form.code}}
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label>مقدار تخفیف</label>
+                    <label>{% trans "Discount Percent" %}</label>
                     {{form.discount_percent}}
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label>تعداد </label>
+                    <label>{% trans "Usage Limit" %}</label>
                     {{form.max_limit_usage}}
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label>زمان انقضا</label>
+                    <label>{% trans "Expiration Date" %}</label>
                     {{form.expiration_date}}
                 </div>
             </div>
-
         </div>
+
         <div class="card-footer">
             <div class=" d-flex pt-5 justify-content-end">
-                <a class="btn btn-secondary ms-3" href="{% url 'dashboard:admin:coupon-list' %}">بازگشت</a>
-                <button class="btn btn-primary ms-3" type="submit">ایجاد کوپن</button>
+                <a class="btn btn-secondary ms-3" href="{% url 'dashboard:admin:coupon-list' %}">
+                    {% trans "Back" %}
+                </a>
+                <button class="btn btn-primary ms-3" type="submit">{% trans "Create Coupon" %}</button>
             </div>
         </div>
     </form>

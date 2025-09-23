@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-22 18:15+0000\n"
+"POT-Creation-Date: 2025-09-23 11:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Farsi <LL@li.org>\n"
@@ -266,13 +266,23 @@ msgstr "قیمت واحد"
 
 #: templates/dashboard/admin/categories/category-form.html:7
 #: templates/dashboard/admin/categories/category-list.html:7
+#: templates/dashboard/admin/coupon/coupon-create.html:7
+#: templates/dashboard/admin/coupon/coupon-delete.html:7
+#: templates/dashboard/admin/coupon/coupon-edit.html:7
+#: templates/dashboard/admin/coupon/coupon-list.html:7
+#: templates/dashboard/admin/coupon/coupon-used.html:7
 msgid "Account"
-msgstr ""
+msgstr "حساب"
 
 #: templates/dashboard/admin/categories/category-form.html:8
 #: templates/dashboard/admin/categories/category-list.html:8
+#: templates/dashboard/admin/coupon/coupon-create.html:8
+#: templates/dashboard/admin/coupon/coupon-delete.html:8
+#: templates/dashboard/admin/coupon/coupon-edit.html:8
+#: templates/dashboard/admin/coupon/coupon-list.html:8
+#: templates/dashboard/admin/coupon/coupon-used.html:8
 msgid "Admin Dashboard"
-msgstr ""
+msgstr "داشبورد ادمین"
 
 #: templates/dashboard/admin/categories/category-form.html:10
 #: templates/dashboard/admin/categories/category-form.html:19
@@ -322,16 +332,20 @@ msgid "Title (AR)"
 msgstr ""
 
 #: templates/dashboard/admin/categories/category-list.html:29
+#: templates/dashboard/admin/coupon/coupon-list.html:81
 msgid "Actions"
-msgstr ""
+msgstr "عملیات"
 
 #: templates/dashboard/admin/categories/category-list.html:40
 msgid "Edit"
 msgstr ""
 
 #: templates/dashboard/admin/categories/category-list.html:41
+#: templates/dashboard/admin/coupon/coupon-edit.html:52
+#, fuzzy
+#| msgid "Delete Coupon"
 msgid "Delete"
-msgstr ""
+msgstr "حذف کوپن"
 
 #: templates/dashboard/admin/categories/category-list.html:46
 #, fuzzy
@@ -350,6 +364,169 @@ msgstr ""
 #: templates/dashboard/admin/categories/category-list.html:75
 msgid "Failed to delete category:"
 msgstr ""
+
+#: templates/dashboard/admin/coupon/coupon-create.html:9
+#: templates/dashboard/admin/coupon/coupon-delete.html:9
+#: templates/dashboard/admin/coupon/coupon-edit.html:9
+msgid "Coupons"
+msgstr "کوپن‌ها"
+
+#: templates/dashboard/admin/coupon/coupon-create.html:11
+#: templates/dashboard/admin/coupon/coupon-create.html:22
+#: templates/dashboard/admin/coupon/coupon-create.html:55
+#: templates/dashboard/admin/coupon/coupon-list.html:24
+msgid "Create Coupon"
+msgstr "ایجاد کوپن"
+
+#: templates/dashboard/admin/coupon/coupon-create.html:32
+#: templates/dashboard/admin/coupon/coupon-delete.html:34
+#: templates/dashboard/admin/coupon/coupon-edit.html:32
+#: templates/dashboard/admin/coupon/coupon-list.html:76
+#: templates/dashboard/admin/coupon/coupon-used.html:61
+msgid "Coupon Code"
+msgstr "کد کوپن"
+
+#: templates/dashboard/admin/coupon/coupon-create.html:36
+#: templates/dashboard/admin/coupon/coupon-edit.html:36
+msgid "Discount Percent"
+msgstr "تخفیف"
+
+#: templates/dashboard/admin/coupon/coupon-create.html:40
+#: templates/dashboard/admin/coupon/coupon-edit.html:40
+#: templates/dashboard/admin/coupon/coupon-list.html:78
+msgid "Usage Limit"
+msgstr "تعداد"
+
+#: templates/dashboard/admin/coupon/coupon-create.html:44
+#: templates/dashboard/admin/coupon/coupon-edit.html:44
+#: templates/dashboard/admin/coupon/coupon-list.html:80
+msgid "Expiration Date"
+msgstr "تاریخ انقضا"
+
+#: templates/dashboard/admin/coupon/coupon-create.html:53
+#: templates/dashboard/admin/coupon/coupon-delete.html:43
+#: templates/dashboard/admin/coupon/coupon-edit.html:55
+msgid "Back"
+msgstr "بازگشت"
+
+#: templates/dashboard/admin/coupon/coupon-delete.html:11
+#: templates/dashboard/admin/coupon/coupon-delete.html:22
+msgid "Delete Coupon"
+msgstr "حذف کوپن"
+
+#: templates/dashboard/admin/coupon/coupon-delete.html:31
+#, fuzzy
+#| msgid "Are you sure you want to delete this coupon?"
+msgid "Are you sure you want to delete the following coupon?"
+msgstr "آیا مطمئن هستید که می‌خواهید این کوپن را حذف کنید؟"
+
+#: templates/dashboard/admin/coupon/coupon-delete.html:33
+#, fuzzy
+#| msgid "Coupons"
+msgid "Coupon ID"
+msgstr "کوپن‌ها"
+
+#: templates/dashboard/admin/coupon/coupon-delete.html:41
+msgid "Confirm Delete"
+msgstr "تایید حذف"
+
+#: templates/dashboard/admin/coupon/coupon-edit.html:11
+#: templates/dashboard/admin/coupon/coupon-edit.html:22
+msgid "Edit Coupon"
+msgstr "ویرایش کوپن"
+
+#: templates/dashboard/admin/coupon/coupon-edit.html:58
+msgid "Save Changes"
+msgstr "ذخیره تغییرات"
+
+#: templates/dashboard/admin/coupon/coupon-list.html:10
+#: templates/dashboard/admin/coupon/coupon-list.html:22
+msgid "Coupon List"
+msgstr "لیست کوپن‌ها"
+
+#: templates/dashboard/admin/coupon/coupon-list.html:27
+msgid "Users Who Used Coupons"
+msgstr "کاربران استفاده‌کننده از کوپن"
+
+#: templates/dashboard/admin/coupon/coupon-list.html:39
+msgid "Search Coupon"
+msgstr "جستجوی کوپن"
+
+#: templates/dashboard/admin/coupon/coupon-list.html:45
+#: templates/dashboard/admin/coupon/coupon-used.html:30
+#: templates/shop/product-grid.html:61
+msgid "Sort By"
+msgstr "مرتب‌سازی بر اساس"
+
+#: templates/dashboard/admin/coupon/coupon-list.html:46
+#: templates/dashboard/admin/coupon/coupon-used.html:31
+#: templates/shop/product-grid.html:62
+msgid "Newest"
+msgstr "جدیدترین"
+
+#: templates/dashboard/admin/coupon/coupon-list.html:47
+#: templates/dashboard/admin/coupon/coupon-used.html:32
+#: templates/shop/product-grid.html:63
+msgid "Oldest"
+msgstr "قدیمی‌ترین"
+
+#: templates/dashboard/admin/coupon/coupon-list.html:48
+#: templates/dashboard/admin/coupon/coupon-used.html:33
+msgid "Highest Discount"
+msgstr "بیشترین تخفیف"
+
+#: templates/dashboard/admin/coupon/coupon-list.html:49
+#: templates/dashboard/admin/coupon/coupon-used.html:34
+msgid "Lowest Discount"
+msgstr "کمترین تخفیف"
+
+#: templates/dashboard/admin/coupon/coupon-list.html:54
+#: templates/dashboard/admin/coupon/coupon-used.html:40
+msgid "Page Size"
+msgstr "تعداد در هر صفحه"
+
+#: templates/dashboard/admin/coupon/coupon-list.html:77
+#: templates/dashboard/admin/coupon/coupon-used.html:62
+msgid "Discount"
+msgstr "تخفیف"
+
+#: templates/dashboard/admin/coupon/coupon-list.html:79
+msgid "Used"
+msgstr "استفاده‌شده"
+
+#: templates/dashboard/admin/coupon/coupon-list.html:113
+#: templates/dashboard/admin/coupon/coupon-used.html:90
+msgid "Previous"
+msgstr ""
+
+#: templates/dashboard/admin/coupon/coupon-list.html:133
+#: templates/dashboard/admin/coupon/coupon-used.html:110
+msgid "Next"
+msgstr ""
+
+#: templates/dashboard/admin/coupon/coupon-used.html:10
+msgid "Coupon Usage by Users"
+msgstr "کاربران استفاده‌کننده از کوپن"
+
+#: templates/dashboard/admin/coupon/coupon-used.html:25
+#, fuzzy
+#| msgid "Search Coupon"
+msgid "Search coupon"
+msgstr "جستجوی کوپن"
+
+#: templates/dashboard/admin/coupon/coupon-used.html:63
+#, fuzzy
+#| msgid "Usage Limit"
+msgid "Limit"
+msgstr "تعداد"
+
+#: templates/dashboard/admin/coupon/coupon-used.html:64
+msgid "Times Used"
+msgstr "تعداد استفاده"
+
+#: templates/dashboard/admin/coupon/coupon-used.html:65
+msgid "Used By"
+msgstr "استفاده‌شده توسط"
 
 #: templates/includes/latest-products.html:7
 msgid "Latest Products"
@@ -388,31 +565,18 @@ msgstr "پروفایل"
 msgid "Exit"
 msgstr ""
 
-#: templates/partials/secondary_contents.html:9
+#: templates/partials/secondary_contents.html:10
 msgid "Close"
 msgstr "بستن"
 
-#: templates/partials/secondary_contents.html:22
-#: templates/partials/secondary_contents.html:23
+#: templates/partials/secondary_contents.html:18
+#: templates/partials/secondary_contents.html:19
 msgid "Search products"
 msgstr "جستجو محصولات"
 
-#: templates/partials/secondary_contents.html:27
+#: templates/partials/secondary_contents.html:21
 msgid "Search"
 msgstr "جستجو کردن"
-
-#: templates/partials/secondary_contents.html:62
-msgid "No products found."
-msgstr "هیچ محصولی یافت نشد."
-
-#: templates/partials/secondary_contents.html:71
-#: templates/shop/product-grid.html:37
-msgid "Price"
-msgstr "قیمت"
-
-#: templates/partials/secondary_contents.html:78
-msgid "An error occurred while fetching results."
-msgstr "مشکلی در دریافت نتایج رخ داد."
 
 #: templates/shop/product-detail.html:26 templates/shop/product-detail.html:28
 msgid "Extra Image"
@@ -484,6 +648,10 @@ msgstr "جستجوی محصول"
 msgid "Enter search term"
 msgstr "عبارت مورد نظر را وارد کنید"
 
+#: templates/shop/product-grid.html:37
+msgid "Price"
+msgstr "قیمت"
+
 #: templates/shop/product-grid.html:38
 msgid "Min Price"
 msgstr "حداقل قیمت"
@@ -503,18 +671,6 @@ msgstr "انتخاب دسته‌بندی"
 #: templates/shop/product-grid.html:52
 msgid "Apply Filter"
 msgstr "اعمال فیلتر"
-
-#: templates/shop/product-grid.html:61
-msgid "Sort By"
-msgstr "مرتب‌سازی بر اساس"
-
-#: templates/shop/product-grid.html:62
-msgid "Newest"
-msgstr "جدیدترین"
-
-#: templates/shop/product-grid.html:63
-msgid "Oldest"
-msgstr "قدیمی‌ترین"
 
 #: templates/shop/product-grid.html:64
 msgid "Highest Price"
@@ -751,6 +907,12 @@ msgstr "پیام خود را اینجا بنویسید..."
 #: website/views.py:95
 msgid "Please enter valid information."
 msgstr ""
+
+#~ msgid "No products found."
+#~ msgstr "هیچ محصولی یافت نشد."
+
+#~ msgid "An error occurred while fetching results."
+#~ msgstr "مشکلی در دریافت نتایج رخ داد."
 
 #~ msgid "Share your comments and feedback"
 #~ msgstr "نظرات و انتقادات خود را بیان کنین"

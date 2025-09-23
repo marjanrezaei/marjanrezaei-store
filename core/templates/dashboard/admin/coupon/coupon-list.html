@@ -4,10 +4,10 @@
 {% block Breadcrumb %}
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb breadcrumb-light mb-0">
-        <li class="breadcrumb-item">حساب</li>
-        <li class="breadcrumb-item">داشبورد ادمین</li>
+        <li class="breadcrumb-item">{% trans "Account" %}</li>
+        <li class="breadcrumb-item">{% trans "Admin Dashboard" %}</li>
         <li class="breadcrumb-item active" aria-current="page">
-            لیست کوپن ها
+            {% trans "Coupon List" %}
         </li>
     </ol>
 </nav>
@@ -19,9 +19,13 @@
     <!-- Header -->
     <div class="card-header border-bottom">
         <div class="d-flex justify-content-between align-items-center">
-            <h5 class="">لیست کوپن ها</h5>
-            <a class="btn btn-primary" href="{% url 'dashboard:admin:coupon-create' %}"> ایجاد کوپن</a>
-            <a class="btn btn-primary" href="{% url 'dashboard:admin:coupon-used-by' %}">کاربران استفاده کننده کوپن</a>
+            <h5 class="">{% trans "Coupon List" %}</h5>
+            <a class="btn btn-primary" href="{% url 'dashboard:admin:coupon-create' %}">
+                {% trans "Create Coupon" %}
+            </a>
+            <a class="btn btn-primary" href="{% url 'dashboard:admin:coupon-used-by' %}">
+                {% trans "Users Who Used Coupons" %}
+            </a>
         </div>
     </div>
     <!-- End Header -->
@@ -32,21 +36,22 @@
             <form action="." class="row" method="get">
                 <!-- Input Card -->
                 <div class="col-md-3 py-1">
-                    <input type="text" class="form-control" placeholder="جستجوی کوپن" name="q" id="search-query-filter">
+                    <input type="text" class="form-control" placeholder="{% trans 'Search Coupon' %}" name="q"
+                        id="search-query-filter">
                 </div>
                 <!-- End Input Card -->
                 <div class="col-md-3 py-1">
                     <select class="form-select form-select-sm" id="order-by-filter" name="order_by">
-                        <option value="" selected>مرتب سازی</option>
-                        <option value="-created_at">جدیدترین</option>
-                        <option value="created_at">قدیمی ترین</option>
-                        <option value="-discount_percent">بیشترین تخفیف</option>
-                        <option value="discount_percent">کمترین تخفیف</option>
+                        <option value="" selected>{% trans "Sort By" %}</option>
+                        <option value="-created_at">{% trans "Newest" %}</option>
+                        <option value="created_at">{% trans "Oldest" %}</option>
+                        <option value="-discount_percent">{% trans "Highest Discount" %}</option>
+                        <option value="discount_percent">{% trans "Lowest Discount" %}</option>
                     </select>
                 </div>
                 <div class="col-md-2 py-1">
                     <select class="form-select form-select-sm" id="page-size-filter">
-                        <option value="" selected>تعداد</option>
+                        <option value="" selected>{% trans "Page Size" %}</option>
                         <option value="5">5</option>
                         <option value="10">10</option>
                         <option value="20">20</option>
@@ -54,7 +59,9 @@
                     </select>
                 </div>
                 <div class="col-md-1 py-1">
-                    <button type="submit" class="btn btn-primary btn-search"><i class="bi-search"></i></button>
+                    <button type="submit" class="btn btn-primary btn-search">
+                        <i class="bi-search"></i>
+                    </button>
                 </div>
             </form>
         </div>
@@ -66,12 +73,12 @@
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">کد کوپن</th>
-                            <th scope="col">تخفیف</th>
-                            <th scope="col">تعداد</th>
-                            <th scope="col">استفاده شده</th>
-                            <th scope="col">زمان انقضا</th>
-
+                            <th scope="col">{% trans "Coupon Code" %}</th>
+                            <th scope="col">{% trans "Discount" %}</th>
+                            <th scope="col">{% trans "Usage Limit" %}</th>
+                            <th scope="col">{% trans "Used" %}</th>
+                            <th scope="col">{% trans "Expiration Date" %}</th>
+                            <th scope="col">{% trans "Actions" %}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -85,8 +92,9 @@
                             <td>{{ object.expiration_date }}</td>
                             <td>
                                 <a class="btn btn-sm btn-icon btn-ghost-secondary"
-                                    href="{% url 'dashboard:admin:coupon-edit' pk=object.pk %}"><i
-                                        class="bi-pencil-square"></i></a>
+                                    href="{% url 'dashboard:admin:coupon-edit' pk=object.pk %}">
+                                    <i class="bi-pencil-square"></i>
+                                </a>
                             </td>
                         </tr>
                         {% endfor %}
@@ -95,8 +103,6 @@
             </div>
             <!-- End Table -->
 
-
-
             <!-- Pagination -->
             {% if page_obj.has_other_pages %}
             <nav aria-label="Page navigation">
@@ -104,7 +110,7 @@
                     {% if page_obj.has_previous %}
                     <li class="page-item">
                         <button class="page-link" onclick="changePage('{{ page_obj.previous_page_number }}')"
-                            aria-label="Previous">
+                            aria-label="{% trans 'Previous' %}">
                             <i class="bi-chevron-double-right small"></i>
                         </button>
                     </li>
@@ -124,7 +130,7 @@
                         {% if page_obj.has_next %}
                         <li class="page-item">
                             <button class="page-link" onclick="changePage('{{ page_obj.next_page_number }}')"
-                                aria-label="Next">
+                                aria-label="{% trans 'Next' %}">
                                 <i class="bi-chevron-double-left small"></i>
                             </button>
                         </li>
@@ -132,19 +138,15 @@
                 </ul>
             </nav>
             {% endif %}
-
             <!-- End Pagination -->
-
-
-
         </div>
         <!-- End Row -->
-
     </div>
     <!-- End Body -->
 </div>
 <!-- End Card -->
 {% endblock %}
+
 {% block extra_js %}
 
 <script>
