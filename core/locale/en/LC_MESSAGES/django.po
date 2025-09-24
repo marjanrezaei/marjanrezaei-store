@@ -215,10 +215,6 @@ msgstr "Select Category"
 msgid "Apply Filter"
 msgstr "Apply Filter"
 
-#: templates/shop/product-grid.html:61
-msgid "Sort By"
-msgstr "Sort By"
-
 #: templates/shop/product-grid.html:62
 msgid "Newest"
 msgstr "Newest"
@@ -234,10 +230,6 @@ msgstr "Highest Price"
 #: templates/shop/product-grid.html:65
 msgid "Lowest Price"
 msgstr "Lowest Price"
-
-#: templates/shop/product-grid.html:68
-msgid "Items Per Page"
-msgstr "Items Per Page"
 
 #: templates/shop/product-grid.html:147 templates/shop/product-grid.html:215
 msgid "No products available"

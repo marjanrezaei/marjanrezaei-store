@@ -4,11 +4,11 @@
 {% block breadcrumb %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb breadcrumb-light mb-0">
-    <li class="breadcrumb-item">حساب</li>
-    <li class="breadcrumb-item">داشبورد ادمین</li>
-    <li class="breadcrumb-item"> سفارشات</li>
+    <li class="breadcrumb-item">{% trans "Account" %}</li>
+    <li class="breadcrumb-item">{% trans "Admin Dashboard" %}</li>
+    <li class="breadcrumb-item">{% trans "Orders" %}</li>
     <li class="breadcrumb-item active" aria-current="page">
-      جزئیات سفارش
+      {% trans "Order Details" %}
     </li>
   </ol>
 </nav>
@@ -20,10 +20,11 @@
   <!-- Header -->
   <div class="card-header border-bottom">
     <div class="d-flex justify-content-between align-items-center">
-      <h5 class="">سفارش شماره {{object.id}}</h5>
+      <h5>{% blocktrans %}Order #{{ object.id }}{% endblocktrans %}</h5>
       {% if object.is_successful %}
-      <a class="btn btn-primary" href="{% url 'dashboard:admin:order-invoice' pk=object.pk %}" target="_blank">مشاهده
-        فاکتور</a>
+      <a class="btn btn-primary" href="{% url 'dashboard:admin:order-invoice' pk=object.pk %}" target="_blank">
+        {% trans "View Invoice" %}
+      </a>
       {% endif %}
     </div>
   </div>
@@ -39,11 +40,11 @@
           <thead class="thead-light">
             <tr>
               <th scope="col">#</th>
-              <th scope="col">تصویر</th>
-              <th scope="col">کد محصول</th>
-              <th scope="col">نام محصول</th>
-              <th scope="col">تعداد سفارش</th>
-              <th scope="col">قیمت واحد محصول</th>
+              <th scope="col">{% trans "Image" %}</th>
+              <th scope="col">{% trans "Product ID" %}</th>
+              <th scope="col">{% trans "Product Name" %}</th>
+              <th scope="col">{% trans "Quantity" %}</th>
+              <th scope="col">{% trans "Unit Price" %}</th>
             </tr>
           </thead>
           <tbody>
@@ -51,8 +52,8 @@
             <tr>
               <th scope="row">{{forloop.counter}}</th>
               <td>
-                <span class="avatar ">
-                  <img class="avatar-img" src="{{order_item.product.image.url}}" alt="Image Description">
+                <span class="avatar">
+                  <img class="avatar-img" src="{{order_item.product.image.url}}" alt="{% trans 'Image' %}">
                 </span>
               </td>
               <td>{{order_item.product.pk}}</td>
@@ -65,46 +66,46 @@
         </table>
       </div>
       <!-- End Table -->
-
     </div>
     <!-- End Row -->
 
-
   </div>
+
   <div class="card-footer row pt-5 mt-5">
     <form>
       <div class="row mb-3 align-items-center">
-        <dt class="col-md-3">سفارش دهنده:</dt>
+        <dt class="col-md-3">{% trans "Customer" %}:</dt>
         <dl class="col-md-3">{{request.user.user_profile.get_fullname}}</dl>
-        <dt class="col-md-3">وضعیت سفارش:</dt>
-        <dl class="col-md-3 ">{{object.get_status.label}}</dl>
+        <dt class="col-md-3">{% trans "Order Status" %}:</dt>
+        <dl class="col-md-3">{{object.get_status.label}}</dl>
       </div>
       <div class="row mb-3">
-        <dt class="col-md-3"> تاریخ سفارش:</dt>
+        <dt class="col-md-3">{% trans "Order Date" %}:</dt>
         <dl class="col-md-3">{{object.created_at|date:"Y-m-d h:i"}}</dl>
-        <dt class="col-md-3">قیمت قبل از تخفیف</dt>
-        <dl class="col-md-3" >{{object.calculate_total_price}}</dl>
-        <dt class= "col-md-3" >مالیات 9 درصد</dt>
+        <dt class="col-md-3">{% trans "Price Before Discount" %}</dt>
+        <dl class="col-md-3">{{object.calculate_total_price}}</dl>
+        <dt class="col-md-3">{% trans "Tax 9%" %}</dt>
         <dl class="col-md-3">{{object.calculate_tax}}</dl>
       </div>
       {% if object.coupon %}
       <div class="row mb-3">
-        <dt class="col-md-3">تخفیف</dt>
+        <dt class="col-md-3">{% trans "Discount" %}</dt>
         <dl class="col-md-3">{{object.coupon.discount_percent}}%</dl>
       </div>
       {% endif %}
       <!-- End Row -->
       <div class="row mb-3">
-        <dt class="col-md-3">قیمت نهایی </dt>
+        <dt class="col-md-3">{% trans "Final Price" %}</dt>
         <dl class="col-md-3">{{object.final_price_with_tax}}</dl>
-        <dt class="col-md-3"> آدرس:</dt>
+        <dt class="col-md-3">{% trans "Address" %}:</dt>
         <dl class="col-md-3">{{object.get_full_address}}</dl>
-        <dt class="col-md-3"> کد پستی:</dt>
+        <dt class="col-md-3">{% trans "Postal Code" %}:</dt>
         <dl class="col-md-3">{{object.zip_code}}</dl>
       </div>
-      <div class=" d-flex pt-5 justify-content-end">
-        <a class="btn btn-secondary ms-3" href="{% url 'dashboard:admin:order-list' %}">بازگشت</a>
-
+      <div class="d-flex pt-5 justify-content-end">
+        <a class="btn btn-secondary ms-3" href="{% url 'dashboard:admin:order-list' %}">
+          {% trans "Back" %}
+        </a>
       </div>
     </form>
   </div>

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-23 11:59+0000\n"
+"POT-Creation-Date: 2025-09-24 12:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Farsi <LL@li.org>\n"
@@ -90,8 +90,9 @@ msgid "Login"
 msgstr "ورود"
 
 #: templates/accounts/login.html:10 templates/accounts/password_reset.html:12
-#: templates/accounts/signup.html:11 website/api_views.py:35
-#: website/views.py:84
+#: templates/accounts/signup.html:11
+#: templates/dashboard/admin/profile/profile-edit.html:73
+#: website/api_views.py:35 website/views.py:84
 msgid "Email"
 msgstr "ایمیل"
 
@@ -158,6 +159,7 @@ msgid "Enter your new password below."
 msgstr "رمز عبور جدید خود را وارد کنید."
 
 #: templates/accounts/password_reset_confirm.html:12
+#: templates/dashboard/admin/profile/security-edit.html:41
 msgid "New Password"
 msgstr "رمز عبور جدید"
 
@@ -261,8 +263,24 @@ msgid "Error removing product."
 msgstr "خطا در حذف محصول."
 
 #: templates/cart/cart-summary.html:89
+#: templates/dashboard/admin/orders/order-detail.html:47
+#: templates/dashboard/admin/orders/order-invoice.html:92
 msgid "Unit Price"
-msgstr "قیمت واحد"
+msgstr "قیمت واحد محصول"
+
+#: templates/dashboard/admin/base.html:12
+#: templates/dashboard/admin/sidebar.html:26
+msgid "Dashboard"
+msgstr "داشبورد"
+
+#: templates/dashboard/admin/base.html:21
+#: templates/dashboard/admin/sidebar.html:103
+msgid "Logout"
+msgstr "خروج"
+
+#: templates/dashboard/admin/base.html:25
+msgid " Toggle navigation"
+msgstr ""
 
 #: templates/dashboard/admin/categories/category-form.html:7
 #: templates/dashboard/admin/categories/category-list.html:7
@@ -271,6 +289,16 @@ msgstr "قیمت واحد"
 #: templates/dashboard/admin/coupon/coupon-edit.html:7
 #: templates/dashboard/admin/coupon/coupon-list.html:7
 #: templates/dashboard/admin/coupon/coupon-used.html:7
+#: templates/dashboard/admin/home.html:7
+#: templates/dashboard/admin/orders/order-detail.html:7
+#: templates/dashboard/admin/orders/order-list.html:23
+#: templates/dashboard/admin/products/product-delete.html:7
+#: templates/dashboard/admin/products/product-list.html:7
+#: templates/dashboard/admin/profile/profile-edit.html:7
+#: templates/dashboard/admin/profile/security-edit.html:7
+#: templates/dashboard/admin/reviews/review-edit.html:7
+#: templates/dashboard/admin/reviews/review-list.html:21
+#: templates/dashboard/admin/sidebar.html:20
 msgid "Account"
 msgstr "حساب"
 
@@ -281,6 +309,15 @@ msgstr "حساب"
 #: templates/dashboard/admin/coupon/coupon-edit.html:8
 #: templates/dashboard/admin/coupon/coupon-list.html:8
 #: templates/dashboard/admin/coupon/coupon-used.html:8
+#: templates/dashboard/admin/home.html:9
+#: templates/dashboard/admin/orders/order-detail.html:8
+#: templates/dashboard/admin/orders/order-list.html:24
+#: templates/dashboard/admin/products/product-delete.html:8
+#: templates/dashboard/admin/products/product-list.html:9
+#: templates/dashboard/admin/profile/profile-edit.html:8
+#: templates/dashboard/admin/profile/security-edit.html:8
+#: templates/dashboard/admin/reviews/review-edit.html:8
+#: templates/dashboard/admin/reviews/review-list.html:22
 msgid "Admin Dashboard"
 msgstr "داشبورد ادمین"
 
@@ -294,8 +331,6 @@ msgstr "دسته‌بندی"
 #: templates/dashboard/admin/categories/category-form.html:10
 #: templates/dashboard/admin/categories/category-form.html:19
 #: templates/dashboard/admin/categories/category-list.html:17
-#, fuzzy
-#| msgid "Select Category"
 msgid "Create Category"
 msgstr "انتخاب دسته‌بندی"
 
@@ -314,31 +349,32 @@ msgid "Save Category"
 msgstr "انتخاب دسته‌بندی"
 
 #: templates/dashboard/admin/categories/category-list.html:16
-#, fuzzy
-#| msgid "Category"
+#: templates/dashboard/admin/sidebar.html:54
 msgid "Categories"
 msgstr "دسته‌بندی"
 
 #: templates/dashboard/admin/categories/category-list.html:26
 msgid "Title (FA)"
-msgstr ""
+msgstr " عنوان فارسی"
 
 #: templates/dashboard/admin/categories/category-list.html:27
 msgid "Title (EN)"
-msgstr ""
+msgstr "عنوان انگلیسی"
 
 #: templates/dashboard/admin/categories/category-list.html:28
 msgid "Title (AR)"
-msgstr ""
+msgstr "عنوان عربی"
 
 #: templates/dashboard/admin/categories/category-list.html:29
 #: templates/dashboard/admin/coupon/coupon-list.html:81
+#: templates/dashboard/admin/products/product-list.html:83
+#: templates/dashboard/admin/reviews/review-list.html:105
 msgid "Actions"
 msgstr "عملیات"
 
 #: templates/dashboard/admin/categories/category-list.html:40
 msgid "Edit"
-msgstr ""
+msgstr "ویرایش"
 
 #: templates/dashboard/admin/categories/category-list.html:41
 #: templates/dashboard/admin/coupon/coupon-edit.html:52
@@ -368,6 +404,7 @@ msgstr ""
 #: templates/dashboard/admin/coupon/coupon-create.html:9
 #: templates/dashboard/admin/coupon/coupon-delete.html:9
 #: templates/dashboard/admin/coupon/coupon-edit.html:9
+#: templates/dashboard/admin/sidebar.html:69
 msgid "Coupons"
 msgstr "کوپن‌ها"
 
@@ -394,6 +431,7 @@ msgstr "تخفیف"
 #: templates/dashboard/admin/coupon/coupon-create.html:40
 #: templates/dashboard/admin/coupon/coupon-edit.html:40
 #: templates/dashboard/admin/coupon/coupon-list.html:78
+#: templates/dashboard/admin/coupon/coupon-used.html:63
 msgid "Usage Limit"
 msgstr "تعداد"
 
@@ -406,6 +444,9 @@ msgstr "تاریخ انقضا"
 #: templates/dashboard/admin/coupon/coupon-create.html:53
 #: templates/dashboard/admin/coupon/coupon-delete.html:43
 #: templates/dashboard/admin/coupon/coupon-edit.html:55
+#: templates/dashboard/admin/orders/order-detail.html:107
+#: templates/dashboard/admin/products/product-delete.html:48
+#: templates/dashboard/admin/reviews/review-edit.html:67
 msgid "Back"
 msgstr "بازگشت"
 
@@ -427,6 +468,7 @@ msgid "Coupon ID"
 msgstr "کوپن‌ها"
 
 #: templates/dashboard/admin/coupon/coupon-delete.html:41
+#: templates/dashboard/admin/products/product-delete.html:46
 msgid "Confirm Delete"
 msgstr "تایید حذف"
 
@@ -436,6 +478,8 @@ msgid "Edit Coupon"
 msgstr "ویرایش کوپن"
 
 #: templates/dashboard/admin/coupon/coupon-edit.html:58
+#: templates/dashboard/admin/profile/profile-edit.html:94
+#: templates/dashboard/admin/reviews/review-edit.html:70
 msgid "Save Changes"
 msgstr "ذخیره تغییرات"
 
@@ -449,26 +493,36 @@ msgid "Users Who Used Coupons"
 msgstr "کاربران استفاده‌کننده از کوپن"
 
 #: templates/dashboard/admin/coupon/coupon-list.html:39
+#: templates/dashboard/admin/coupon/coupon-used.html:25
 msgid "Search Coupon"
 msgstr "جستجوی کوپن"
 
 #: templates/dashboard/admin/coupon/coupon-list.html:45
 #: templates/dashboard/admin/coupon/coupon-used.html:30
+#: templates/dashboard/admin/orders/order-list.html:40
+#: templates/dashboard/admin/products/product-list.html:37
+#: templates/dashboard/admin/reviews/review-list.html:55
 #: templates/shop/product-grid.html:61
 msgid "Sort By"
-msgstr "مرتب‌سازی بر اساس"
+msgstr "مرتب سازی"
 
 #: templates/dashboard/admin/coupon/coupon-list.html:46
 #: templates/dashboard/admin/coupon/coupon-used.html:31
+#: templates/dashboard/admin/orders/order-list.html:41
+#: templates/dashboard/admin/products/product-list.html:38
+#: templates/dashboard/admin/reviews/review-list.html:56
 #: templates/shop/product-grid.html:62
 msgid "Newest"
 msgstr "جدیدترین"
 
 #: templates/dashboard/admin/coupon/coupon-list.html:47
 #: templates/dashboard/admin/coupon/coupon-used.html:32
+#: templates/dashboard/admin/orders/order-list.html:42
+#: templates/dashboard/admin/products/product-list.html:39
+#: templates/dashboard/admin/reviews/review-list.html:57
 #: templates/shop/product-grid.html:63
 msgid "Oldest"
-msgstr "قدیمی‌ترین"
+msgstr "قدیمی ترین"
 
 #: templates/dashboard/admin/coupon/coupon-list.html:48
 #: templates/dashboard/admin/coupon/coupon-used.html:33
@@ -482,11 +536,17 @@ msgstr "کمترین تخفیف"
 
 #: templates/dashboard/admin/coupon/coupon-list.html:54
 #: templates/dashboard/admin/coupon/coupon-used.html:40
+#: templates/dashboard/admin/products/product-list.html:56
+#: templates/dashboard/admin/reviews/review-list.html:64
 msgid "Page Size"
-msgstr "تعداد در هر صفحه"
+msgstr "تعداد"
 
 #: templates/dashboard/admin/coupon/coupon-list.html:77
 #: templates/dashboard/admin/coupon/coupon-used.html:62
+#: templates/dashboard/admin/orders/order-detail.html:92
+#: templates/dashboard/admin/orders/order-invoice.html:120
+#: templates/dashboard/admin/orders/order-invoice.html:129
+#: templates/dashboard/admin/products/product-list.html:82
 msgid "Discount"
 msgstr "تخفیف"
 
@@ -496,29 +556,21 @@ msgstr "استفاده‌شده"
 
 #: templates/dashboard/admin/coupon/coupon-list.html:113
 #: templates/dashboard/admin/coupon/coupon-used.html:90
+#: templates/dashboard/admin/orders/order-list.html:134
+#: templates/dashboard/admin/products/product-list.html:125
 msgid "Previous"
 msgstr ""
 
 #: templates/dashboard/admin/coupon/coupon-list.html:133
 #: templates/dashboard/admin/coupon/coupon-used.html:110
+#: templates/dashboard/admin/orders/order-list.html:154
+#: templates/dashboard/admin/products/product-list.html:145
 msgid "Next"
 msgstr ""
 
 #: templates/dashboard/admin/coupon/coupon-used.html:10
 msgid "Coupon Usage by Users"
 msgstr "کاربران استفاده‌کننده از کوپن"
-
-#: templates/dashboard/admin/coupon/coupon-used.html:25
-#, fuzzy
-#| msgid "Search Coupon"
-msgid "Search coupon"
-msgstr "جستجوی کوپن"
-
-#: templates/dashboard/admin/coupon/coupon-used.html:63
-#, fuzzy
-#| msgid "Usage Limit"
-msgid "Limit"
-msgstr "تعداد"
 
 #: templates/dashboard/admin/coupon/coupon-used.html:64
 msgid "Times Used"
@@ -527,6 +579,466 @@ msgstr "تعداد استفاده"
 #: templates/dashboard/admin/coupon/coupon-used.html:65
 msgid "Used By"
 msgstr "استفاده‌شده توسط"
+
+#: templates/dashboard/admin/home.html:20
+msgid "Dashboard Summary"
+msgstr "داشبورد"
+
+#: templates/dashboard/admin/home.html:41
+msgid "Access token not found"
+msgstr ""
+
+#: templates/dashboard/admin/home.html:54
+msgid "Error fetching dashboard data:"
+msgstr ""
+
+#: templates/dashboard/admin/home.html:66
+#, fuzzy
+#| msgid "Users Who Used Coupons"
+msgid "Users Count"
+msgstr "کاربران استفاده‌کننده از کوپن"
+
+#: templates/dashboard/admin/home.html:74
+#, fuzzy
+#| msgid "Product Code"
+msgid "Products Count"
+msgstr "کد محصول"
+
+#: templates/dashboard/admin/home.html:82
+#, fuzzy
+#| msgid "Orders"
+msgid "Orders Count"
+msgstr "سفارشات"
+
+#: templates/dashboard/admin/home.html:90
+#, fuzzy
+#| msgid "Coupon Code"
+msgid "Coupons Count"
+msgstr "کد کوپن"
+
+#: templates/dashboard/admin/home.html:97
+msgid "Error:"
+msgstr ""
+
+#: templates/dashboard/admin/home.html:99
+msgid "Unable to load dashboard data."
+msgstr ""
+
+#: templates/dashboard/admin/orders/order-detail.html:9
+#: templates/dashboard/admin/orders/order-list.html:26
+#: templates/dashboard/admin/sidebar.html:59
+msgid "Orders"
+msgstr "سفارشات"
+
+#: templates/dashboard/admin/orders/order-detail.html:11
+msgid "Order Details"
+msgstr "جزئیات سفارش"
+
+#: templates/dashboard/admin/orders/order-detail.html:23
+#, fuzzy, python-format
+#| msgid "Order Details"
+msgid "Order #%(object.id)s"
+msgstr "جزئیات سفارش"
+
+#: templates/dashboard/admin/orders/order-detail.html:26
+msgid "View Invoice"
+msgstr "مشاهده فاکتور"
+
+#: templates/dashboard/admin/orders/order-detail.html:43
+#: templates/dashboard/admin/orders/order-detail.html:56
+#: templates/shop/product-detail.html:51 templates/shop/product-detail.html:54
+msgid "Image"
+msgstr "تصویر"
+
+#: templates/dashboard/admin/orders/order-detail.html:44
+#: templates/dashboard/admin/orders/order-invoice.html:89
+#: templates/dashboard/admin/products/product-delete.html:33
+#, fuzzy
+#| msgid "Product Image"
+msgid "Product ID"
+msgstr "تصویر محصول"
+
+#: templates/dashboard/admin/orders/order-detail.html:45
+#: templates/dashboard/admin/products/product-delete.html:34
+#: templates/dashboard/admin/products/product-list.html:77
+#: templates/dashboard/admin/reviews/review-edit.html:33
+msgid "Product Name"
+msgstr "نام محصول"
+
+#: templates/dashboard/admin/orders/order-detail.html:46
+#: templates/dashboard/admin/orders/order-invoice.html:91
+msgid "Quantity"
+msgstr "تعداد سفارش"
+
+#: templates/dashboard/admin/orders/order-detail.html:77
+#: templates/dashboard/admin/orders/order-list.html:99
+msgid "Customer"
+msgstr "سفارش دهنده"
+
+#: templates/dashboard/admin/orders/order-detail.html:79
+msgid "Order Status"
+msgstr "وضعیت سفارش"
+
+#: templates/dashboard/admin/orders/order-detail.html:83
+#: templates/dashboard/admin/orders/order-invoice.html:75
+msgid "Order Date"
+msgstr "تاریخ سفارش"
+
+#: templates/dashboard/admin/orders/order-detail.html:85
+#, fuzzy
+#| msgid "Total Price Before Discount"
+msgid "Price Before Discount"
+msgstr "قیمت قبل از تخفیف"
+
+#: templates/dashboard/admin/orders/order-detail.html:87
+#: templates/dashboard/admin/orders/order-invoice.html:117
+#, python-format
+msgid "Tax 9%%"
+msgstr ""
+
+#: templates/dashboard/admin/orders/order-detail.html:98
+msgid "Final Price"
+msgstr "قیمت نهایی"
+
+#: templates/dashboard/admin/orders/order-detail.html:100
+#: templates/dashboard/admin/orders/order-invoice.html:67
+msgid "Address"
+msgstr "آدرس"
+
+#: templates/dashboard/admin/orders/order-detail.html:102
+msgid "Postal Code"
+msgstr "کد پستی"
+
+#: templates/dashboard/admin/orders/order-invoice.html:12
+#, fuzzy
+#| msgid "View Invoice"
+msgid "Order Invoice"
+msgstr "مشاهده فاکتور"
+
+#: templates/dashboard/admin/orders/order-invoice.html:43
+#, fuzzy
+#| msgid "View Invoice"
+msgid "Invoice No."
+msgstr "مشاهده فاکتور"
+
+#: templates/dashboard/admin/orders/order-invoice.html:51
+#, fuzzy
+#| msgid "Logout"
+msgid "Logo"
+msgstr "خروج"
+
+#: templates/dashboard/admin/orders/order-invoice.html:63
+#, fuzzy
+#| msgid "Customer"
+msgid "Customer Name"
+msgstr "سفارش دهنده"
+
+#: templates/dashboard/admin/orders/order-invoice.html:90
+#: templates/dashboard/admin/reviews/review-list.html:100
+msgid "Product"
+msgstr "محصولات"
+
+#: templates/dashboard/admin/orders/order-invoice.html:115
+#: templates/dashboard/admin/orders/order-list.html:100
+msgid "Total Price"
+msgstr "قیمت کل"
+
+#: templates/dashboard/admin/orders/order-invoice.html:122
+#, python-format
+msgid ""
+"\n"
+"                                        With %(discount)s%% discount "
+"applied\n"
+"                                    "
+msgstr ""
+
+#: templates/dashboard/admin/orders/order-invoice.html:126
+#, fuzzy
+#| msgid "Total Price Before Discount"
+msgid "Final Price with Discount"
+msgstr "قیمت قبل از تخفیف"
+
+#: templates/dashboard/admin/orders/order-invoice.html:144
+#, fuzzy
+#| msgid "View Invoice"
+msgid "Print Invoice"
+msgstr "مشاهده فاکتور"
+
+#: templates/dashboard/admin/orders/order-list.html:47
+#: templates/dashboard/admin/orders/order-list.html:102
+#: templates/dashboard/admin/products/product-list.html:81
+#: templates/dashboard/admin/reviews/review-edit.html:51
+#: templates/dashboard/admin/reviews/review-list.html:45
+#: templates/dashboard/admin/reviews/review-list.html:104
+msgid "Status"
+msgstr "وضعیت"
+
+#: templates/dashboard/admin/orders/order-list.html:55
+#: templates/shop/product-grid.html:68
+msgid "Items per page"
+msgstr "تعداد آیتم در هر صفحه"
+
+#: templates/dashboard/admin/orders/order-list.html:84
+#, python-format
+msgid ""
+"\n"
+"                                <strong class=\"text-dark\">%(total)s "
+"orders</strong>\n"
+"                            "
+msgstr ""
+
+#: templates/dashboard/admin/orders/order-list.html:98
+msgid "Order ID"
+msgstr "شماره سفارش"
+
+#: templates/dashboard/admin/orders/order-list.html:101
+#: templates/dashboard/admin/reviews/review-list.html:103
+msgid "Created At"
+msgstr "تاريخ سفارش"
+
+#: templates/dashboard/admin/products/product-delete.html:9
+#: templates/dashboard/admin/sidebar.html:49
+#: templates/shop/product-grid.html:16 templates/shop/product-grid.html:58
+msgid "Products"
+msgstr "محصولات"
+
+#: templates/dashboard/admin/products/product-delete.html:11
+#: templates/dashboard/admin/products/product-delete.html:22
+msgid "Delete Product"
+msgstr "حذف محصول"
+
+#: templates/dashboard/admin/products/product-delete.html:31
+#, fuzzy
+#| msgid "Are you sure you want to delete this coupon?"
+msgid "Are you sure you want to delete the following product?"
+msgstr "آیا مطمئن هستید که می‌خواهید این کوپن را حذف کنید؟"
+
+#: templates/dashboard/admin/products/product-delete.html:39
+msgid "Product Image"
+msgstr "تصویر محصول"
+
+#: templates/dashboard/admin/products/product-list.html:21
+#: templates/includes/latest-products.html:94 templates/partials/header.html:70
+msgid "Product List"
+msgstr "لیست محصولات"
+
+#: templates/dashboard/admin/products/product-list.html:32
+#: templates/shop/product-grid.html:32
+msgid "Search Product"
+msgstr "جستجوی محصول"
+
+#: templates/dashboard/admin/products/product-list.html:40
+#: templates/shop/product-grid.html:64
+msgid "Highest Price"
+msgstr "بیشترین قیمت"
+
+#: templates/dashboard/admin/products/product-list.html:41
+#: templates/shop/product-grid.html:65
+msgid "Lowest Price"
+msgstr "کمترین قیمت"
+
+#: templates/dashboard/admin/products/product-list.html:47
+#: templates/dashboard/admin/products/product-list.html:78
+#: templates/shop/product-grid.html:43
+msgid "Category"
+msgstr "دسته‌بندی"
+
+#: templates/dashboard/admin/products/product-list.html:79
+#: templates/shop/product-grid.html:37
+msgid "Price"
+msgstr "قیمت"
+
+#: templates/dashboard/admin/products/product-list.html:80
+msgid "Stock"
+msgstr "تعداد"
+
+#: templates/dashboard/admin/products/product-list.html:100
+msgid "Published"
+msgstr "نشر شده"
+
+#: templates/dashboard/admin/products/product-list.html:102
+msgid "Draft"
+msgstr ""
+
+#: templates/dashboard/admin/profile/profile-edit.html:10
+msgid "Edit Profile"
+msgstr "ویرایش پروفایل"
+
+#: templates/dashboard/admin/profile/profile-edit.html:20
+msgid "Edit Image"
+msgstr "ویرایش تصویر"
+
+#: templates/dashboard/admin/profile/profile-edit.html:26
+msgid "Profile Picture"
+msgstr "عکس پروفایل"
+
+#: templates/dashboard/admin/profile/profile-edit.html:33
+#: templates/dashboard/admin/sidebar.html:11
+#, fuzzy
+#| msgid "Description"
+msgid "Image Description"
+msgstr "توضیحات"
+
+#: templates/dashboard/admin/profile/profile-edit.html:38
+msgid "Upload Image"
+msgstr "آپلود عکس"
+
+#: templates/dashboard/admin/profile/profile-edit.html:42
+msgid "Submit"
+msgstr "ارسال"
+
+#: templates/dashboard/admin/profile/profile-edit.html:54
+msgid "Basic Information"
+msgstr "اطلاعات پایه"
+
+#: templates/dashboard/admin/profile/profile-edit.html:62
+#: templates/dashboard/admin/reviews/review-list.html:101
+msgid "Full Name"
+msgstr "نام و نام خانوادگی"
+
+#: templates/dashboard/admin/profile/profile-edit.html:81
+#: website/api_views.py:36 website/views.py:85
+msgid "Phone"
+msgstr "تلفن"
+
+#: templates/dashboard/admin/profile/profile-edit.html:93
+msgid "Cancel"
+msgstr "لغو"
+
+#: templates/dashboard/admin/profile/security-edit.html:10
+msgid "Security Settings"
+msgstr "تنظیمات امنیتی"
+
+#: templates/dashboard/admin/profile/security-edit.html:21
+msgid "Change Password"
+msgstr "تغییر رمزعبور"
+
+#: templates/dashboard/admin/profile/security-edit.html:31
+msgid "Current Password"
+msgstr "رمز عبور فعلی"
+
+#: templates/dashboard/admin/profile/security-edit.html:51
+msgid "Confirm New Password"
+msgstr "رمز عبور جدید را تایید کنید"
+
+#: templates/dashboard/admin/profile/security-edit.html:58
+msgid "Password requirements:"
+msgstr "الزامات رمز عبور"
+
+#: templates/dashboard/admin/profile/security-edit.html:59
+msgid "Make sure the following conditions are met:"
+msgstr "مطمئن شوید شرایط زیر رعایت شده‌اند:"
+
+#: templates/dashboard/admin/profile/security-edit.html:62
+msgid "At least 8 characters (longer is better)"
+msgstr "حداقل یک نویسه کوچک"
+
+#: templates/dashboard/admin/profile/security-edit.html:63
+msgid "At least one lowercase letter"
+msgstr "حداقل یک نویسه کوچک"
+
+#: templates/dashboard/admin/profile/security-edit.html:64
+msgid "At least one uppercase letter"
+msgstr "حداقل یک کاراکتر بزرگ"
+
+#: templates/dashboard/admin/profile/security-edit.html:65
+msgid "At least one number, symbol, or whitespace character"
+msgstr "حداقل یک عدد، نماد یا نویسه فضای خالی"
+
+#: templates/dashboard/admin/profile/security-edit.html:71
+msgid "Update"
+msgstr "بروزرسانی"
+
+#: templates/dashboard/admin/profile/security-edit.html:81
+msgid "Connected Accounts"
+msgstr "حساب‌های متصل"
+
+#: templates/dashboard/admin/profile/security-edit.html:86
+msgid ""
+"Integrated account features make it easier to collaborate with people you "
+"know in Front."
+msgstr "ویژگی‌های حساب یکپارچه، همکاری با افرادی که در Front می‌شناسید را آسان‌تر می‌کند."
+
+#: templates/dashboard/admin/profile/security-edit.html:97
+msgid "Google Icon"
+msgstr ""
+
+#: templates/dashboard/admin/profile/security-edit.html:103
+msgid "Google"
+msgstr "گوگل"
+
+#: templates/dashboard/admin/profile/security-edit.html:104
+msgid "Calendar and Contacts"
+msgstr "تقویم و مخاطبین"
+
+#: templates/dashboard/admin/reviews/review-edit.html:9
+#: templates/dashboard/admin/reviews/review-list.html:24
+#: templates/dashboard/admin/sidebar.html:64
+msgid "Reviews"
+msgstr "نظرات"
+
+#: templates/dashboard/admin/reviews/review-edit.html:11
+#: templates/dashboard/admin/reviews/review-edit.html:21
+msgid "Edit Review"
+msgstr "ویرایش نظر"
+
+#: templates/dashboard/admin/reviews/review-edit.html:39
+msgid "User"
+msgstr ""
+
+#: templates/dashboard/admin/reviews/review-edit.html:45
+#: templates/dashboard/admin/reviews/review-list.html:102
+msgid "Rating"
+msgstr "امتیاز"
+
+#: templates/dashboard/admin/reviews/review-edit.html:57
+msgid "Description"
+msgstr "توضیحات"
+
+#: templates/dashboard/admin/reviews/review-list.html:38
+msgid "Search Reviews"
+msgstr "جستجوی نظرات"
+
+#: templates/dashboard/admin/reviews/review-list.html:89
+#, fuzzy
+#| msgid "Reviews"
+msgid "reviews"
+msgstr "نظرات"
+
+#: templates/dashboard/admin/reviews/review-list.html:131
+#, fuzzy
+#| msgid "No products found."
+msgid "No reviews found."
+msgstr "هیچ محصولی یافت نشد."
+
+#: templates/dashboard/admin/sidebar.html:31
+msgid "Security"
+msgstr "تنظیمات امنیتی"
+
+#: templates/dashboard/admin/sidebar.html:37
+msgid "Profile Settings"
+msgstr "تنظیمات پروفایل"
+
+#: templates/dashboard/admin/sidebar.html:43
+#: templates/shop/product-grid.html:15
+msgid "Shop"
+msgstr "فروشگاه"
+
+#: templates/dashboard/admin/sidebar.html:74
+msgid "Tickets"
+msgstr "تیکت"
+
+#: templates/dashboard/admin/sidebar.html:79
+msgid "Users"
+msgstr "کاربران"
+
+#: templates/dashboard/admin/sidebar.html:85
+msgid "User List"
+msgstr "لیست کاربران"
+
+#: templates/dashboard/admin/sidebar.html:90
+msgid "Newsletter"
+msgstr "خبر نامه"
 
 #: templates/includes/latest-products.html:7
 msgid "Latest Products"
@@ -538,10 +1050,6 @@ msgstr "جدیدترین محصولات"
 #: templates/shop/product-grid.html:199
 msgid "Add to Cart"
 msgstr "افزودن به سبد خرید"
-
-#: templates/includes/latest-products.html:94 templates/partials/header.html:70
-msgid "Product List"
-msgstr "لیست محصولات"
 
 #: templates/partials/header.html:68
 msgid "Home"
@@ -581,10 +1089,6 @@ msgstr "جستجو کردن"
 #: templates/shop/product-detail.html:26 templates/shop/product-detail.html:28
 msgid "Extra Image"
 msgstr "تصویر اضافه"
-
-#: templates/shop/product-detail.html:51 templates/shop/product-detail.html:54
-msgid "Image"
-msgstr "تصویر"
 
 #: templates/shop/product-detail.html:81 templates/shop/product-grid.html:204
 msgid "Add to Wishlist"
@@ -628,29 +1132,13 @@ msgstr "مواد و نگهداری"
 msgid "Product Grid"
 msgstr "شبکه محصولات"
 
-#: templates/shop/product-grid.html:15
-msgid "Shop"
-msgstr "فروشگاه"
-
-#: templates/shop/product-grid.html:16 templates/shop/product-grid.html:58
-msgid "Products"
-msgstr "محصولات"
-
 #: templates/shop/product-grid.html:17
 msgid "Grid"
 msgstr "شبکه"
 
-#: templates/shop/product-grid.html:32
-msgid "Search Product"
-msgstr "جستجوی محصول"
-
 #: templates/shop/product-grid.html:33
 msgid "Enter search term"
 msgstr "عبارت مورد نظر را وارد کنید"
-
-#: templates/shop/product-grid.html:37
-msgid "Price"
-msgstr "قیمت"
 
 #: templates/shop/product-grid.html:38
 msgid "Min Price"
@@ -660,10 +1148,6 @@ msgstr "حداقل قیمت"
 msgid "Max Price"
 msgstr "حداکثر قیمت"
 
-#: templates/shop/product-grid.html:43
-msgid "Category"
-msgstr "دسته‌بندی"
-
 #: templates/shop/product-grid.html:45
 msgid "Select Category"
 msgstr "انتخاب دسته‌بندی"
@@ -671,18 +1155,6 @@ msgstr "انتخاب دسته‌بندی"
 #: templates/shop/product-grid.html:52
 msgid "Apply Filter"
 msgstr "اعمال فیلتر"
-
-#: templates/shop/product-grid.html:64
-msgid "Highest Price"
-msgstr "بیشترین قیمت"
-
-#: templates/shop/product-grid.html:65
-msgid "Lowest Price"
-msgstr "کمترین قیمت"
-
-#: templates/shop/product-grid.html:68
-msgid "Items Per Page"
-msgstr "تعداد آیتم در هر صفحه"
 
 #: templates/shop/product-grid.html:147 templates/shop/product-grid.html:215
 msgid "No products available"
@@ -876,10 +1348,6 @@ msgstr "حمل و نقل استاندارد رایگان را به صورت خو
 msgid "Contact Request from"
 msgstr "ارتباط با ما"
 
-#: website/api_views.py:36 website/views.py:85
-msgid "Phone"
-msgstr ""
-
 #: website/api_views.py:37 website/forms.py:16 website/views.py:86
 msgid "Message"
 msgstr "پیام"
@@ -908,8 +1376,15 @@ msgstr "پیام خود را اینجا بنویسید..."
 msgid "Please enter valid information."
 msgstr ""
 
-#~ msgid "No products found."
-#~ msgstr "هیچ محصولی یافت نشد."
+#, fuzzy
+#~| msgid "Search Coupon"
+#~ msgid "Search coupon"
+#~ msgstr "جستجوی کوپن"
+
+#, fuzzy
+#~| msgid "Usage Limit"
+#~ msgid "Limit"
+#~ msgstr "تعداد"
 
 #~ msgid "An error occurred while fetching results."
 #~ msgstr "مشکلی در دریافت نتایج رخ داد."
@@ -935,5 +1410,20 @@ msgstr ""
 #~ msgid "Invalid Status"
 #~ msgstr "وضعیت نامعتبر"
 
-#~ msgid "Logout"
-#~ msgstr "خروج"
+#~ msgid "Order Number"
+#~ msgstr "سفارش شماره"
+
+#~ msgid "Tax 9 Percent"
+#~ msgstr "مالیات ۹ درصد"
+
+#~ msgid "Are you sure you want to delete this product?"
+#~ msgstr "آیا از حذف محصول زیر اطمینان دارید؟"
+
+#~ msgid "Send"
+#~ msgstr "ارسال"
+
+#~ msgid "Minimum 8 characters"
+#~ msgstr "حداقل ۸ کاراکتر - هر چه بیشتر باشد، بهتر است"
+
+#~ msgid "Saved"
+#~ msgstr "ذخیره"

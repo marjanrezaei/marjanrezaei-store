@@ -1,11 +1,12 @@
 {% extends 'dashboard/admin/base.html' %}
+{% load i18n %}
 
 {% block Breadcrumb %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb breadcrumb-light mb-0">
-    <li class="breadcrumb-item">حساب</li>
+    <li class="breadcrumb-item">{% trans "Account" %}</li>
     <li class="breadcrumb-item active" aria-current="page">
-      داشبورد ادمین
+      {% trans "Admin Dashboard" %}
     </li>
   </ol>
 </nav>
@@ -16,13 +17,13 @@
 <div class="card">
   <!-- Header -->
   <div class="card-header border-bottom">
-    <h5 class="card-header-title">خلاصه داشبورد</h5>
+    <h5 class="card-header-title">{% trans "Dashboard Summary" %}</h5>
   </div>
   <!-- End Header -->
   <!-- Body -->
   <div class="card-body">
     <div class="row" id="dashboard-summary">
-      <!-- داده‌های API اینجا نمایش داده می‌شوند -->
+
     </div>
   </div>
   <!-- End Body -->
@@ -37,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const accessToken = localStorage.getItem('access_token'); 
         if (!accessToken) {
-            console.warn("توکن دسترسی پیدا نشد");
+            console.warn("{% trans 'Access token not found' %}");
             return;
         }
 
@@ -50,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         if (!response.ok) {
-            console.error("خطا در دریافت داده‌ها:", response.status);
+            console.error("{% trans 'Error fetching dashboard data:' %}", response.status);
             return;
         }
 
@@ -62,7 +63,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="col-md-4 mb-3">
                 <div class="card text-center">
                     <div class="card-body">
-                        <h6 class="card-title">تعداد کاربران</h6>
+                        <h6 class="card-title">{% trans "Users Count" %}</h6>
                         <p class="card-text">${data.user_count || 0}</p>
                     </div>
                 </div>
@@ -70,7 +71,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="col-md-4 mb-3">
                 <div class="card text-center">
                     <div class="card-body">
-                        <h6 class="card-title">تعداد محصولات</h6>
+                        <h6 class="card-title">{% trans "Products Count" %}</h6>
                         <p class="card-text">${data.products_count || 0}</p>
                     </div>
                 </div>
@@ -78,7 +79,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="col-md-4 mb-3">
                 <div class="card text-center">
                     <div class="card-body">
-                        <h6 class="card-title">تعداد سفارش‌ها</h6>
+                        <h6 class="card-title">{% trans "Orders Count" %}</h6>
                         <p class="card-text">${data.orders_count || 0}</p>
                     </div>
                 </div>
@@ -86,16 +87,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="col-md-4 mb-3">
                 <div class="card text-center">
                     <div class="card-body">
-                        <h6 class="card-title">تعداد کوپن‌ها</h6>
+                        <h6 class="card-title">{% trans "Coupons Count" %}</h6>
                         <p class="card-text">${data.coupons_count || 0}</p>
                     </div>
                 </div>
             </div>
         `;
     } catch (err) {
-        console.error("خطا:", err);
+        console.error("{% trans 'Error:' %}", err);
         document.getElementById('dashboard-summary').innerHTML =
-            '<p class="text-danger">امکان بارگذاری داده‌های داشبورد وجود ندارد.</p>';
+            '<p class="text-danger">{% trans "Unable to load dashboard data." %}</p>';
     }
 });
 </script>

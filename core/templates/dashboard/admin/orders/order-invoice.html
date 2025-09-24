@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Title -->
-    <title>فاکتور سفارش</title>
+    <title>{% trans "Order Invoice" %}</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="/favicon.ico">
@@ -38,21 +38,18 @@
                     <div class="card-body">
                         <div class="row justify-content-lg-between">
 
-
-                            <div class="col-sm-auto  text-right mb-3">
+                            <div class="col-sm-auto text-right mb-3">
                                 <div class="mb-3">
-                                    <h2> فاکتور شماره</h2>
+                                    <h2>{% trans "Invoice No." %}</h2>
                                     <span class="d-block">{{order.id}}</span>
                                 </div>
-
                             </div>
                             <!-- End Col -->
 
-                            <div class="col-sm-auto  mb-3">
+                            <div class="col-sm-auto mb-3">
                                 <div class="mb-2">
-                                    <img class="avatar" src="{% static 'svg/logos/logo-short.svg' %}" alt="Logo">
+                                    <img class="avatar" src="{% static 'svg/logos/logo-short.svg' %}" alt="{% trans 'Logo' %}">
                                 </div>
-
                                 <h1 class="h2 text-primary">Front Inc.</h1>
                             </div>
                             <!-- End Col -->
@@ -63,22 +60,20 @@
                         <div class="row justify-content-md-between mb-3">
                             <div class="col-md">
                                 <dl class="row">
-                                    <dt class="col-sm-8">نام سفارش دهنده:</dt>
+                                    <dt class="col-sm-8">{% trans "Customer Name" %}:</dt>
                                     <dd class="col-sm-4">{{object.user.user_profile.get_fullname}}</dd>
                                 </dl>
                                 <dl>
-                                    <dt class="col-sm-4">آدرس:</dt>
+                                    <dt class="col-sm-4">{% trans "Address" %}:</dt>
                                     <dd class="col-sm-8">{{object.get_full_address}}</dd>
-
                                 </dl>
                             </div>
                             <!-- End Col -->
 
                             <div class="col-md text-md-end">
                                 <dl class="row">
-                                    <dt class="col-sm-8">زمان سفارش:</dt>
+                                    <dt class="col-sm-8">{% trans "Order Date" %}:</dt>
                                     <dd class="col-sm-4">{{object.created_at|date:"Y-m-d h:i"}}</dd>
-
                                 </dl>
                             </div>
                             <!-- End Col -->
@@ -91,10 +86,10 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th>#</th>
-                                        <th>کد کالا</th>
-                                        <th>کالا</th>
-                                        <th>تعداد</th>
-                                        <th class="table-text-end">قیمت هر واحد</th>
+                                        <th>{% trans "Product ID" %}</th>
+                                        <th>{% trans "Product" %}</th>
+                                        <th>{% trans "Quantity" %}</th>
+                                        <th class="table-text-end">{% trans "Unit Price" %}</th>
                                     </tr>
                                 </thead>
 
@@ -105,11 +100,9 @@
                                         <th>{{order_item.product.id}}</th>
                                         <th>{{order_item.product.title}}</th>
                                         <td>{{order_item.quantity}}</td>
-
                                         <td class="table-text-end">{{order_item.price}}</td>
                                     </tr>
                                     {% endfor %}
-
                                 </tbody>
                             </table>
                         </div>
@@ -119,26 +112,27 @@
 
                         <div class="row mb-3">
                             <div class="row mb-3">
-                                <dt class="col-md-3">مبلغ نهایی:</dt>
+                                <dt class="col-md-3">{% trans "Total Price" %}:</dt>
                                 <dl class="col-md-3">{{object.calculate_total_price}}</dl>
-                                <dt class="col-md-3">مالیات 9 درصد</dt>
+                                <dt class="col-md-3">{% trans "Tax 9%" %}</dt>
                                 <dl class="col-md-3">{{object.calculate_tax}}</dl>
                                 {% if object.coupon %}
-                                <dt class="col-md-3">تخفیف:</dt>
-                                <dl class="col-md-3">با اعمال {{object.coupon.discount_percent}} % تخفیف </dl>
-                                <dt class="col-md-3">مبلغ نهایی با اعمال تخفیف:</dt>
+                                <dt class="col-md-3">{% trans "Discount" %}:</dt>
+                                <dl class="col-md-3">
+                                    {% blocktrans with discount=object.coupon.discount_percent %}
+                                        With {{ discount }}% discount applied
+                                    {% endblocktrans %}
+                                </dl>
+                                <dt class="col-md-3">{% trans "Final Price with Discount" %}:</dt>
                                 <dl class="col-md-3">{{object.final_price_with_tax}}</dl>
                                 {% else %}
-                                <dl class="col-md-3 ">تخفیف</dl>
-                                <dl class="col-md-3 ">0</dl>
+                                <dt class="col-md-3">{% trans "Discount" %}</dt>
+                                <dl class="col-md-3">0</dl>
                                 {% endif %}
-
                             </div>
                             <!-- End Row -->
-
                         </div>
                         <!-- End Row -->
-
 
                     </div>
                 </div>
@@ -147,7 +141,7 @@
                 <!-- Footer -->
                 <div class="d-flex justify-content-end d-print-none gap-3">
                     <a class="btn btn-primary" href="javascript:;" onclick="window.print(); return false;">
-                        <i class="bi-printer me-1"></i>چاپ فاکتور
+                        <i class="bi-printer me-1"></i>{% trans "Print Invoice" %}
                     </a>
                 </div>
                 <!-- End Footer -->
@@ -161,5 +155,4 @@
     <script src="{% static 'js/theme.min.js' %}"></script>
     <script src="{% static 'js/custom.js' %}"></script>
 </body>
-
 </html>

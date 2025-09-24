@@ -1,23 +1,25 @@
 {% extends 'dashboard/admin/base.html' %}
 {% load static i18n %}
-{% block Breadcrumb %}
+
+{% block breadcrumb %}
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb breadcrumb-light mb-0">
-        <li class="breadcrumb-item">حساب</li>
-        <li class="breadcrumb-item">داشبورد ادمین</li>
-        <li class="breadcrumb-item">محصولات</li>
+        <li class="breadcrumb-item">{% trans "Account" %}</li>
+        <li class="breadcrumb-item">{% trans "Admin Dashboard" %}</li>
+        <li class="breadcrumb-item">{% trans "Products" %}</li>
         <li class="breadcrumb-item active" aria-current="page">
-            حذف محصولات
+            {% trans "Delete Product" %}
         </li>
     </ol>
 </nav>
 {% endblock %}
+
 {% block dashboard_content %}
 <!-- Card -->
 <div class="card">
     <!-- Header -->
     <div class="card-header border-bottom">
-        <h5 class="card-header-title">حذف محصول</h5>
+        <h5 class="card-header-title">{% trans "Delete Product" %}</h5>
     </div>
     <!-- End Header -->
 
@@ -25,23 +27,26 @@
     <form action="." method="post">
         {% csrf_token %}
         <div class="card-body">
-            <div class="row d-flex ">
-                <p>آیا از حذف محصول زیر اطمینان دارید؟</p>
+            <div class="row d-flex">
+                <p>{% trans "Are you sure you want to delete the following product?" %}</p>
                 <div class="row">
-                    <span> شناسه محصول: {{object.id}}</span>
-                    <span>نام محصول: {{object.title}}</span>
+                    <span>{% trans "Product ID" %}: {{ object.id }}</span>
+                    <span>{% trans "Product Name" %}: {{ object.title }}</span>
                 </div>
             </div>
 
             <div class="col-md-12 mb-3">
-                <labelfor="validationValidFileInput1">تصویر محصول</label>
-                    {{form.image}}
+                <label for="validationValidFileInput1">{% trans "Product Image" %}</label>
+                {{ form.image }}
             </div>
         </div>
+
         <div class="card-footer">
-            <div class=" d-flex pt-5 justify-content-end">
-                <button type="submit" class="btn btn-danger ms-3">تایید حذف</button>
-                <a class="btn btn-secondary ms-3" href="{% url 'dashboard:admin:product-edit' pk=object.pk %}">بازگشت</a>
+            <div class="d-flex pt-5 justify-content-end">
+                <button type="submit" class="btn btn-danger ms-3">{% trans "Confirm Delete" %}</button>
+                <a class="btn btn-secondary ms-3" href="{% url 'dashboard:admin:product-edit' pk=object.pk %}">
+                    {% trans "Back" %}
+                </a>
             </div>
         </div>
     </form>

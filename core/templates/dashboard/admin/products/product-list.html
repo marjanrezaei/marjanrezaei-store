@@ -1,11 +1,12 @@
 {% extends 'dashboard/admin/base.html' %}
 {% load static i18n %}
-{% block Breadcrumb %}
+
+{% block breadcrumb %}
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb breadcrumb-light mb-0">
-        <li class="breadcrumb-item">حساب</li>
+        <li class="breadcrumb-item">{% trans "Account" %}</li>
         <li class="breadcrumb-item active" aria-current="page">
-            داشبورد ادمین
+            {% trans "Admin Dashboard" %}
         </li>
     </ol>
 </nav>
@@ -17,7 +18,7 @@
     <!-- Header -->
     <div class="card-header border-bottom">
         <div class="d-flex justify-content-between align-items-center">
-            <h5 class="">لیست محصولات</h5>
+            <h5 class="">{% trans "Product List" %}</h5>
         </div>
     </div>
     <!-- End Header -->
@@ -26,37 +27,40 @@
     <div class="card-body">
         <div class="container pb-5">
             <form action="." class="row">
-                <!-- Input Card -->
+                <!-- Search -->
                 <div class="col-md-3 py-1">
-                    <input type="text" class="form-control" placeholder="جستجوی کالا" name="q" id="search-query-filter">
+                    <input type="text" class="form-control" placeholder="{% trans 'Search Product' %}" name="q" id="search-query-filter">
                 </div>
-                <!-- End Input Card -->
+                <!-- Order -->
                 <div class="col-md-3 py-1">
                     <select class="form-select form-select-sm" id="order-by-filter" name="order_by">
-                        <option value="" selected>مرتب سازی</option>
-                        <option value="-created_at">جدیدترین</option>
-                        <option value="created_at">قدیمی ترین</option>
-                        <option value="-price">بیشترین قیمت</option>
-                        <option value="price">کمترین قیمت</option>
+                        <option value="" selected>{% trans "Sort By" %}</option>
+                        <option value="-created_at">{% trans "Newest" %}</option>
+                        <option value="created_at">{% trans "Oldest" %}</option>
+                        <option value="-price">{% trans "Highest Price" %}</option>
+                        <option value="price">{% trans "Lowest Price" %}</option>
                     </select>
                 </div>
+                <!-- Category -->
                 <div class="col-md-3 py-1">
                     <select class="form-select form-select-sm" name="category_id" id="category-id-filter">
-                        <option value="" selected> دسته بندی</option>
+                        <option value="" selected>{% trans "Category" %}</option>
                         {% for category in categories %}
                         <option value="{{category.id}}"> {{category.title}} </option>
                         {% endfor %}
                     </select>
                 </div>
+                <!-- Page size -->
                 <div class="col-md-2 py-1">
                     <select class="form-select form-select-sm" id="page-size-filter">
-                        <option value="" selected>تعداد</option>
+                        <option value="" selected>{% trans "Page Size" %}</option>
                         <option value="5">5</option>
                         <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="50">50</option>
                     </select>
                 </div>
+                <!-- Search Button -->
                 <div class="col-md-1 py-1">
                     <button type="submit" class="btn btn-primary btn-search"><i class="bi-search"></i></button>
                 </div>
@@ -70,12 +74,13 @@
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">نام محصول</th>
-                            <th scope="col">دسته بندی</th>
-                            <th scope="col">قیمت</th>
-                            <th scope="col">تعداد</th>
-                            <th scope="col">وضعیت</th>
-                            <th scope="col">تخفیف</th>
+                            <th scope="col">{% trans "Product Name" %}</th>
+                            <th scope="col">{% trans "Category" %}</th>
+                            <th scope="col">{% trans "Price" %}</th>
+                            <th scope="col">{% trans "Stock" %}</th>
+                            <th scope="col">{% trans "Status" %}</th>
+                            <th scope="col">{% trans "Discount" %}</th>
+                            <th scope="col">{% trans "Actions" %}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -83,12 +88,20 @@
                         <tr>
                             <th scope="row">{{object.id}}</th>
                             <td>{{object.title}}</td>
-                            <td>{% for category in object.category.all %} {{category.title}}
-                                {% if not forloop.last%},{% endif %} {% endfor %}</td>
+                            <td>
+                                {% for category in object.category.all %}
+                                    {{category.title}}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </td>
                             <td>{{object.price}}</td>
                             <td>{{object.stock}}</td>
-                            <td>{% if object.is_published %}<span class="badge bg-success">نشر شده</span>
-                                {% else%}<span class="badge bg-danger">ذخیره</span>{% endif %} </td>
+                            <td>
+                                {% if object.is_published %}
+                                    <span class="badge bg-success">{% trans "Published" %}</span>
+                                {% else %}
+                                    <span class="badge bg-danger">{% trans "Draft" %}</span>
+                                {% endif %}
+                            </td>
                             <td>{{object.discount_percent}}</td>
                             <td>
                                 {% if object.is_published %}
@@ -103,58 +116,50 @@
             </div>
             <!-- End Table -->
 
-
-
             <!-- Pagination -->
             {% if page_obj.has_other_pages %}
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
                     {% if page_obj.has_previous %}
                     <li class="page-item">
-                        <button class="page-link" onclick="changePage('{{ page_obj.previous_page_number }}')"
-                            aria-label="Previous">
+                        <button class="page-link" onclick="changePage('{{ page_obj.previous_page_number }}')" aria-label="{% trans 'Previous' %}">
                             <i class="bi-chevron-double-right small"></i>
                         </button>
                     </li>
                     {% endif %}
 
                     {% for num in page_obj.paginator.page_range %}
-                    {% if num == page_obj.number %}
-                    <li class="page-item active">
-                        <button class="page-link" onclick="changePage('{{num}}')">{{ num }}</button>
-                    </li>
-                    {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %} <li class="page-item">
-                        <button class="page-link" onclick="changePage('{{num}}')">{{ num }}</button>
+                        {% if num == page_obj.number %}
+                        <li class="page-item active">
+                            <button class="page-link" onclick="changePage('{{num}}')">{{ num }}</button>
                         </li>
-                        {% endif %}
-                        {% endfor %}
-
-                        {% if page_obj.has_next %}
+                        {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %}
                         <li class="page-item">
-                            <button class="page-link" onclick="changePage('{{ page_obj.next_page_number }}')"
-                                aria-label="Next">
-                                <i class="bi-chevron-double-left small"></i>
-                            </button>
+                            <button class="page-link" onclick="changePage('{{num}}')">{{ num }}</button>
                         </li>
                         {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <button class="page-link" onclick="changePage('{{ page_obj.next_page_number }}')" aria-label="{% trans 'Next' %}">
+                            <i class="bi-chevron-double-left small"></i>
+                        </button>
+                    </li>
+                    {% endif %}
                 </ul>
             </nav>
             {% endif %}
-
             <!-- End Pagination -->
-
-
-
         </div>
         <!-- End Row -->
-
     </div>
     <!-- End Body -->
 </div>
 <!-- End Card -->
 {% endblock %}
-{% block extra_js %}
 
+{% block extra_js %}
 <script>
     $(document).ready(function () {
         let current_url_params = new URLSearchParams(window.location.search)
@@ -164,35 +169,14 @@
         $("#max-price-filter").val(current_url_params.get('max_price') || "")
         $("#order-by-filter").val(current_url_params.get('order_by') || "")
         $("#category-id-filter").val(current_url_params.get('category_id') || "")
-
-
     });
 
-    $('#page-size-filter').change(function() {
+    $('#page-size-filter, #order-by-filter, #category-id-filter').change(function() {
       let current_url_params = new URLSearchParams(window.location.search)
-      var selectedValue = $(this).val();
-      current_url_params.set('page_size', selectedValue)
-      current_url_params.set('page', 1); 
-      let new_url = window.location.pathname + "?" + current_url_params.toString()
-      window.location.href = new_url
-    });
-    $('#order-by-filter').change(function() {
-      let current_url_params = new URLSearchParams(window.location.search)
-      var selectedValue = $(this).val();
-      current_url_params.set('order_by', selectedValue)
-      current_url_params.set('page', 1); 
-      let new_url = window.location.pathname + "?" + current_url_params.toString()
-      window.location.href = new_url
-    });
-    $('#category-id-filter').change(function() {
-      let current_url_params = new URLSearchParams(window.location.search)
-      var selectedValue = $(this).val();
-      current_url_params.set('category_id', selectedValue)
+      current_url_params.set($(this).attr('name') || this.id.replace('-filter',''), $(this).val())
       current_url_params.set('page', 1); 
       let new_url = window.location.pathname + "?" + current_url_params.toString()
       window.location.href = new_url
     });
 </script>
-
-
 {% endblock extra_js %}
