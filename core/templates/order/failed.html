@@ -5,15 +5,15 @@
 <div class="container content-space-2 content-space-lg-3">
   <div class="w-md-75 w-lg-50 text-center mx-md-auto">
     <div class="mb-5">
-      <img class="img-fluid" src="{% static 'svg/illustrations/oc-hi-five.svg' %}" alt="Image Description" style="width: 15rem;">
+      <img class="img-fluid" src="{% static 'svg/illustrations/oc-hi-five.svg' %}" alt="{% trans "Image Description" %}" style="width: 15rem;">
     </div>
 
     <div class="mb-5">
-      <h1 class="h2" id="order_status_heading">در حال بررسی سفارش...</h1>
+      <h1 class="h2" id="order_status_heading">{% trans "Checking your order..." %}</h1>
       <p id="order_status_message"></p>
     </div>
 
-    <a class="btn btn-primary btn-transition rounded-pill px-6" href="{% url 'shop:product-list' %}">به خرید ادامه دهید</a>
+    <a class="btn btn-primary btn-transition rounded-pill px-6" href="{% url 'shop:product-list' %}">{% trans "Continue Shopping" %}</a>
   </div>
 </div>
 {% endblock %}
@@ -21,32 +21,38 @@
 {% block extra_js %}
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const orderId = "{{ order_id }}";  // Pass from Django view
+    const orderId = "{{ order_id }}";
+    if (!orderId) return;
+
     const apiUrl = `/api/order/${orderId}/status/`;
 
-    fetch(apiUrl, {
-        headers: {
-            'Authorization': 'Token {{ user.auth_token.key }}' // if using token auth
-        }
-    })
+    // توکن امن
+    const authToken = "{% if user.is_authenticated and user.auth_token %}{{ user.auth_token.key }}{% else %}{% endif %}";
+    const headers = {};
+    if (authToken) {
+        headers['Authorization'] = `Token ${authToken}`;
+    }
+
+    fetch(apiUrl, { headers })
     .then(res => res.json())
     .then(data => {
         const heading = document.getElementById('order_status_heading');
         const message = document.getElementById('order_status_message');
 
         if (data.status === 'completed') {
-            heading.textContent = 'سفارش شما تکمیل شد!';
+            heading.textContent = '{% trans "Your order is completed!" %}';
             message.innerHTML = `
-                شماره سفارش: <strong>#${data.id}</strong><br>
-                مجموع: <strong>${data.total_price} تومان</strong>
+                {% trans "Order Number" %}: <strong>#${data.id}</strong><br>
+                {% trans "Total" %}: <strong>${data.total_price} Toman</strong>
             `;
         } else {
-            heading.textContent = 'سفارش شما با مشکل مواجه شد!';
-            message.textContent = 'لطفا دوباره تلاش کنید یا با پشتیبانی تماس بگیرید.';
+            heading.textContent = '{% trans "Your order has an issue!" %}';
+            message.textContent = '{% trans "Please try again or contact support." %}';
         }
     })
     .catch(err => {
-        document.getElementById('order_status_heading').textContent = 'خطا در بارگذاری اطلاعات سفارش';
+        const heading = document.getElementById('order_status_heading');
+        heading.textContent = '{% trans "Error loading order information" %}';
         console.error(err);
     });
 });

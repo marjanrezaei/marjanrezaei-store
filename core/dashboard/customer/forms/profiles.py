@@ -7,19 +7,25 @@ from accounts.models import Profile
 class CustomerPasswordChangeForm(auth_forms.PasswordChangeForm):
     error_messages = {
         "password_incorrect": _(
-            "پسورد قبلی شما اشتباه وارد شده است. لطفا تصحیح نمایید."
+            "Your old password was entered incorrectly. Please correct it."
         ),
-        "password_mismatch": _(" دو پسورد ورودی با یکدیگر مطابقت ندارد "),
+        "password_mismatch": _("The two password fields didn't match."),
     }
-     
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['old_password'].widget.attrs['class'] = 'form-control text-center'
-        self.fields['old_password'].widget.attrs['placeholder'] = 'پسورد قبلی را وارد نمایید'
-        self.fields['new_password1'].widget.attrs['class'] = 'form-control text-center'
-        self.fields['new_password1'].widget.attrs['placeholder'] = 'پسورد جایگزین خود را وارد نمایید'
-        self.fields['new_password2'].widget.attrs['class'] = 'form-control text-center'
-        self.fields['new_password2'].widget.attrs['placeholder'] = 'پسورد جایگزین خود را مجدد وارد نمایید'
+        self.fields['old_password'].widget.attrs.update({
+            'class': 'form-control text-center',
+            'placeholder': _('Enter your old password')
+        })
+        self.fields['new_password1'].widget.attrs.update({
+            'class': 'form-control text-center',
+            'placeholder': _('Enter your new password')
+        })
+        self.fields['new_password2'].widget.attrs.update({
+            'class': 'form-control text-center',
+            'placeholder': _('Repeat your new password')
+        })
 
 
 class CustomerProfileEditForm(forms.ModelForm):
@@ -31,11 +37,16 @@ class CustomerProfileEditForm(forms.ModelForm):
             'last_name',
             'phone_number',
         ]
+        labels = {
+            'first_name': _('First Name'),
+            'last_name': _('Last Name'),
+            'phone_number': _('Phone Number'),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['first_name'].widget.attrs['class'] = 'form-control'
-        self.fields['last_name'].widget.attrs['class'] = 'form-control'
-        self.fields['phone_number'].widget.attrs['class'] = 'form-control text-center'
-     
-     
+        self.fields['first_name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['last_name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['phone_number'].widget.attrs.update({'class': 'form-control text-center'})
+
+

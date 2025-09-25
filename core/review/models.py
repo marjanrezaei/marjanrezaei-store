@@ -3,12 +3,13 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.db.models import Avg
+from django.utils.translation import gettext_lazy as _
 
 
 class ReviewStatusType(models.IntegerChoices):
-    pending = 1, "در انتظار تایید"
-    accepted = 2, "تایید شده"
-    rejected = 3, "رد شده"
+    pending = 1, _("Pending")
+    accepted = 2,  _("Accepted")
+    rejected = 3, _("Rejected")
 
 
 class ReviewModel(models.Model):

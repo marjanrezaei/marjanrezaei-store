@@ -452,10 +452,6 @@ msgstr "Return within 30 days for full refund"
 msgid "Get free standard shipping automatically on every order"
 msgstr "Get free standard shipping automatically on every order"
 
-#: website/forms.py:36
-msgid "e.g. +971501234567"
-msgstr ""
-
 #, fuzzy
 #~| msgid "Contact Us"
 #~ msgid "Contact Me"

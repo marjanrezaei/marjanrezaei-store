@@ -3,42 +3,42 @@
 
 {% block customer_content %}
 <div class="container mt-5" style="max-width: 600px;">
-  <h3 class="mb-4">آدرس‌های شما</h3>
+  <h3 class="mb-4">{% trans "Your Addresses" %}</h3>
 
-  <!-- فرم ایجاد/ویرایش آدرس -->
+  <!-- Create/Edit Address Form -->
   <form id="address-create-form" class="mb-4">
     <div class="mb-3">
-      <label for="state" class="form-label">استان</label>
-      <input type="text" id="state" class="form-control" placeholder="مثال: تهران" required>
+      <label for="state" class="form-label">{% trans "State" %}</label>
+      <input type="text" id="state" class="form-control" required>
     </div>
 
     <div class="mb-3">
-      <label for="city" class="form-label">شهر</label>
-      <input type="text" id="city" class="form-control" placeholder="مثال: تهران" required>
+      <label for="city" class="form-label">{% trans "City" %}</label>
+      <input type="text" id="city" class="form-control" required>
     </div>
 
     <div class="mb-3">
-      <label for="address" class="form-label">آدرس</label>
-      <textarea id="address" class="form-control" placeholder="آدرس کامل" rows="2" required></textarea>
+      <label for="address" class="form-label">{% trans "Address" %}</label>
+      <textarea id="address" class="form-control" rows="2" required></textarea>
     </div>
 
     <div class="mb-3">
-      <label for="zip_code" class="form-label">کد پستی</label>
-      <input type="text" id="zip_code" class="form-control" placeholder="مثال: 1234567890">
+      <label for="zip_code" class="form-label">{% trans "Zip Code" %}</label>
+      <input type="text" id="zip_code" class="form-control">
     </div>
 
-    <button type="submit" id="submit-btn" class="btn btn-primary w-100">ایجاد آدرس</button>
+    <button type="submit" id="submit-btn" class="btn btn-primary w-100">
+      {% trans "Create Address" %}
+    </button>
   </form>
 
-  <!-- لیست آدرس‌ها -->
   <div id="address-list">
-    <p class="text-center">در حال بارگذاری...</p>
+    <p class="text-center">{% trans "Loading..." %}</p>
   </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
-<!-- اسکریپت JS همانطور که قبلا آماده شد -->
 <script>
 let editingAddressId = null;
 
@@ -47,7 +47,7 @@ function loadAddresses() {
     list.innerHTML = '';
     const token = localStorage.getItem('access');
     if (!token) {
-        list.innerHTML = `<p class="text-center text-danger">شما وارد نشده‌اید</p>`;
+        list.innerHTML = `<p class="text-center text-danger">{% trans "You are not logged in" %}</p>`;
         return;
     }
 
@@ -58,7 +58,7 @@ function loadAddresses() {
     .then(res => res.json())
     .then(data => {
         if (!data.length) {
-            list.innerHTML = `<p class="text-center">آدرسی ثبت نشده است.</p>`;
+            list.innerHTML = `<p class="text-center">{% trans "No addresses found." %}</p>`;
             return;
         }
         data.forEach(addr => {
@@ -66,13 +66,13 @@ function loadAddresses() {
             div.className = 'card mb-3 shadow-sm';
             div.innerHTML = `
                 <div class="card-body">
-                  <h6 class="card-title mb-2">آدرس شماره ${addr.id}</h6>
+                  <h6 class="card-title mb-2">{% trans "Address" %} #${addr.id}</h6>
                   <p class="card-text">${addr.state}, ${addr.city}, ${addr.address}, ${addr.zip_code || ''}</p>
                   <button class="btn btn-sm btn-outline-primary me-2" onclick="startEditAddress(${addr.id}, '${addr.state}', '${addr.city}', '${addr.address}', '${addr.zip_code || ''}')">
-                    <i class="bi-pencil-fill me-1"></i> ویرایش
+                    <i class="bi-pencil-fill me-1"></i> {% trans "Edit" %}
                   </button>
                   <button class="btn btn-sm btn-outline-danger" onclick="deleteAddress(${addr.id})">
-                    <i class="bi-trash-fill me-1"></i> حذف
+                    <i class="bi-trash-fill me-1"></i> {% trans "Delete" %}
                   </button>
                 </div>
             `;
@@ -87,14 +87,14 @@ function startEditAddress(id, state, city, address, zip_code) {
     document.getElementById('city').value = city;
     document.getElementById('address').value = address;
     document.getElementById('zip_code').value = zip_code;
-    document.getElementById('submit-btn').innerText = 'ذخیره تغییرات';
+    document.getElementById('submit-btn').innerText = '{% trans "Save Changes" %}';
 }
 
-// فرم ایجاد یا ویرایش
+// Create or Update Form
 document.getElementById('address-create-form').addEventListener('submit', e => {
     e.preventDefault();
     const token = localStorage.getItem('access');
-    if (!token) { alert('لطفا وارد شوید'); return; }
+    if (!token) { alert('{% trans "Please log in" %}'); return; }
 
     const data = {
         state: document.getElementById('state').value,
@@ -122,29 +122,28 @@ document.getElementById('address-create-form').addEventListener('submit', e => {
     .then(res => res.json().then(j => ({status: res.status, body: j})))
     .then(({status, body}) => {
         if (status >= 400) {
-            alert("خطا: " + JSON.stringify(body));
+            alert("{% trans 'Error:' %} " + JSON.stringify(body));
             return;
         }
         e.target.reset();
         editingAddressId = null;
-        document.getElementById('submit-btn').innerText = 'ایجاد آدرس';
+        document.getElementById('submit-btn').innerText = '{% trans "Create Address" %}';
         loadAddresses();
     });
 });
 
-// حذف آدرس
+// Delete Address
 function deleteAddress(id) {
     const token = localStorage.getItem('access');
-    if (!token) { alert('لطفا وارد شوید'); return; }
-    if (!confirm("آیا مطمئن هستید؟")) return;
+    if (!token) { alert('{% trans "Please log in" %}'); return; }
+    if (!confirm("{% trans 'Are you sure?' %}")) return;
 
     fetch(`/api/dashboard/customer/addresses/${id}/`, {
         method: 'DELETE',
         headers: { 'Authorization': 'Bearer ' + token }
-    }).then(res => { if (res.ok) loadAddresses(); else alert("خطا در حذف"); });
+    }).then(res => { if (res.ok) loadAddresses(); else alert("{% trans 'Error deleting' %}"); });
 }
 
 document.addEventListener('DOMContentLoaded', loadAddresses);
 </script>
-
 {% endblock %}

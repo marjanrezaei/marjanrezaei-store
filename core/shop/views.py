@@ -1,8 +1,11 @@
+#########
 from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import FieldError
 from django.http import JsonResponse
 from django.utils.translation import get_language
+from django.utils.translation import gettext as _
+
 from parler.views import TranslatableSlugMixin
 
 from .models import (
@@ -97,12 +100,14 @@ class AddOrRemoveWishlistView(LoginRequiredMixin, View):
         if product_id:
             try:
                 wishlist_item = WishlistProductModel.objects.get(
-                    user=request.user, product__id=product_id)
+                    user=request.user, product__id=product_id
+                )
                 wishlist_item.delete()
-                message = "محصول از لیست علایق حذف شد"
+                message = _("Product removed from wishlist")
             except WishlistProductModel.DoesNotExist:
                 WishlistProductModel.objects.create(
-                    user=request.user, product_id=product_id)
-                message = "محصول به لیست علایق اضافه شد"
+                    user=request.user, product_id=product_id
+                )
+                message = _("Product added to wishlist")
 
         return JsonResponse({"message": message})

@@ -5,17 +5,15 @@
 <div class="container content-space-2 content-space-lg-3">
   <div class="w-md-75 w-lg-50 text-center mx-md-auto">
     <div class="mb-5">
-      <img class="img-fluid" src="{% static 'svg/illustrations/oc-hi-five.svg' %}" alt="Image Description" style="width: 15rem;">
+      <img class="img-fluid" src="{% static 'svg/illustrations/oc-hi-five.svg' %}" alt="{% trans "Image Description" %}" style="width: 15rem;">
     </div>
 
     <div class="mb-5">
-      <h1 class="h2">سفارش شما تکمیل شد!</h1>
-      <p id="order_info">
-        لطفا صبر کنید... اطلاعات سفارش در حال بارگذاری است.
-      </p>
+      <h1 class="h2">{% trans "Your order is complete!" %}</h1>
+      <p id="order_info">{% trans "Please wait... Loading order information." %}</p>
     </div>
 
-    <a class="btn btn-primary btn-transition rounded-pill px-6" href="{% url 'shop:product-list' %}">به خرید ادامه دهید</a>
+    <a class="btn btn-primary btn-transition rounded-pill px-6" href="{% url 'shop:product-list' %}">{% trans "Continue Shopping" %}</a>
   </div>
 </div>
 {% endblock %}
@@ -23,30 +21,40 @@
 {% block extra_js %}
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const orderId = "{{ order_id }}";  // Pass this from Django view
-    const apiUrl = `/api/order/${orderId}/detail/`;
+    const orderId = "{{ order_id }}";
+    if (!orderId) return;
 
-    fetch(apiUrl, {
-        headers: {
-            'Authorization': 'Token {{ user.auth_token.key }}' // if using token auth
-        }
-    })
-    .then(res => res.json())
-    .then(data => {
-        const info = document.getElementById('order_info');
-        info.innerHTML = `
-            شماره سفارش: <strong>#${data.id}</strong><br>
-            وضعیت: <strong>${data.status}</strong><br>
-            مجموع: <strong>${data.total_price} تومان</strong><br>
-            <ul>
-                ${data.items.map(item => `<li>${item.product} × ${item.quantity} - ${item.price} تومان</li>`).join('')}
-            </ul>
-        `;
-    })
-    .catch(err => {
-        document.getElementById('order_info').textContent = 'خطا در بارگذاری اطلاعات سفارش';
-        console.error(err);
-    });
+    const apiUrl = `/api/order/${orderId}/detail/`;
+    
+    const authToken = "{% if user.is_authenticated and user.auth_token %}{{ user.auth_token.key }}{% else %}{% endif %}";
+    const headers = {};
+    if (authToken) {
+        headers['Authorization'] = `Token ${authToken}`;
+    }
+
+    fetch(apiUrl, { headers })
+        .then(res => res.json())
+        .then(data => {
+            const info = document.getElementById('order_info');
+            if (!data) {
+                info.textContent = "{% trans 'No order data found.' %}";
+                return;
+            }
+            info.innerHTML = `
+                {% trans "Order Number" %}: <strong>#${data.id}</strong><br>
+                {% trans "Status" %}: <strong>${data.status}</strong><br>
+                {% trans "Total" %}: <strong>${data.total_price} تومان</strong><br>
+                <ul>
+                    ${data.items.map(item => `<li>${item.product} × ${item.quantity} - ${item.price} تومان</li>`).join('')}
+                </ul>
+            `;
+        })
+        .catch(err => {
+            const info = document.getElementById('order_info');
+            info.textContent = "{% trans 'Error loading order information.' %}";
+            console.error(err);
+        });
 });
 </script>
 {% endblock %}
+

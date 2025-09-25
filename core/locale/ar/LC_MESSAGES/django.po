@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-24 12:07+0000\n"
+"POT-Creation-Date: 2025-09-25 15:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic <LL@li.org>\n"
@@ -44,6 +44,26 @@ msgstr "تم إرسال رابط إعادة تعيين كلمة المرور إ�
 msgid "Your password was changed successfully. Please log in."
 msgstr "تم تغيير كلمة المرور بنجاح. الرجاء تسجيل الدخول"
 
+#: cart/views.py:39
+msgid "Product ID is required."
+msgstr "معرّف المنتج مطلوب."
+
+#: cart/views.py:44
+msgid "Product not found."
+msgstr "لم يتم العثور على المنتج."
+
+#: cart/views.py:48
+msgid "Error: "
+msgstr "خطأ: "
+
+#: cart/views.py:57
+msgid "Subclasses must implement this method."
+msgstr "يجب على الفئات الفرعية تنفيذ هذه الطريقة."
+
+#: cart/views.py:77
+msgid "Product quantity is required."
+msgstr "كمية المنتج مطلوبة."
+
 #: core/settings.py:123
 msgid "فارسی"
 msgstr "الفارسية"
@@ -57,12 +77,127 @@ msgid "العربية"
 msgstr "العربية"
 
 #: dashboard/admin/forms/profiles.py:10 dashboard/customer/forms/profiles.py:10
-msgid "پسورد قبلی شما اشتباه وارد شده است. لطفا تصحیح نمایید."
-msgstr ""
+msgid "Your old password was entered incorrectly. Please correct it."
+msgstr "كلمة المرور القديمة تم إدخالها بشكل غير صحيح. يرجى التصحيح."
 
 #: dashboard/admin/forms/profiles.py:12 dashboard/customer/forms/profiles.py:12
-msgid " دو پسورد ورودی با یکدیگر مطابقت ندارد "
+msgid "The two password fields didn't match."
+msgstr "كلمتا المرور غير متطابقتين."
+
+#: dashboard/admin/forms/profiles.py:19 dashboard/customer/forms/profiles.py:19
+msgid "Enter your old password"
+msgstr "أدخل كلمة المرور القديمة"
+
+#: dashboard/admin/forms/profiles.py:23 dashboard/customer/forms/profiles.py:23
+msgid "Enter your new password"
+msgstr "أدخل كلمة المرور الجديدة"
+
+#: dashboard/admin/forms/profiles.py:27 dashboard/customer/forms/profiles.py:27
+msgid "Repeat your new password"
+msgstr "أعد إدخال كلمة المرور الجديدة"
+
+#: dashboard/admin/forms/profiles.py:44 dashboard/customer/forms/profiles.py:41
+#: templates/accounts/signup.html:26 website/forms.py:12 website/forms.py:21
+msgid "First Name"
+msgstr "الاسم الأول"
+
+#: dashboard/admin/forms/profiles.py:48 dashboard/customer/forms/profiles.py:42
+#: templates/accounts/signup.html:31 website/forms.py:13 website/forms.py:26
+msgid "Last Name"
+msgstr "اسم العائلة"
+
+#: dashboard/admin/forms/profiles.py:52 dashboard/customer/forms/profiles.py:43
+#: templates/accounts/signup.html:36
+msgid "Phone Number"
+msgstr "رقم الهاتف"
+
+#: dashboard/admin/forms/profiles.py:61
+msgid "Image URL"
+msgstr "رابط الصورة"
+
+#: dashboard/admin/views/coupon.py:52
+msgid "Coupon created successfully"
+msgstr "تم إنشاء القسيمة بنجاح"
+
+#: dashboard/admin/views/coupon.py:70
+msgid "Coupon updated successfully"
+msgstr "تم تحديث القسيمة بنجاح"
+
+#: dashboard/admin/views/coupon.py:81
+msgid "Coupon deleted successfully"
+msgstr "تم حذف القسيمة بنجاح"
+
+#: dashboard/admin/views/profiles.py:23 dashboard/customer/views/profiles.py:20
+msgid "Password updated successfully"
+msgstr "تم تحديث كلمة المرور بنجاح"
+
+#: dashboard/admin/views/profiles.py:38 dashboard/customer/views/profiles.py:32
+msgid "Profile updated successfully"
+msgstr "تم تحديث الملف الشخصي بنجاح"
+
+#: dashboard/admin/views/profiles.py:59 dashboard/api_customer/api_views.py:102
+#: dashboard/customer/views/profiles.py:49
+msgid "Profile image updated successfully"
+msgstr "تم تحديث صورة الملف الشخصي بنجاح"
+
+#: dashboard/admin/views/profiles.py:71 dashboard/customer/views/profiles.py:61
+msgid "Failed to upload image. Please try again."
+msgstr "فشل في تحميل الصورة. يرجى المحاولة مرة أخرى."
+
+#: dashboard/admin/views/reviews.py:42
+msgid "Changes applied successfully"
+msgstr "تم تطبيق التغييرات بنجاح"
+
+#: dashboard/api_customer/api_views.py:56
+msgid "Invoice only available for successful orders"
 msgstr ""
+
+#: dashboard/customer/views/wishlists.py:40
+msgid "Wishlist item deleted successfully"
+msgstr "تم حذف عنصر قائمة الرغبات بنجاح"
+
+#: order/api_views.py:58
+#, fuzzy
+#| msgid "Invalid coupon code."
+msgid "Valid coupon"
+msgstr "كود الخصم غير صالح."
+
+#: order/api_views.py:58
+msgid "No coupon entered"
+msgstr ""
+
+#: order/forms.py:8 templates/dashboard/admin/orders/order-detail.html:100
+#: templates/dashboard/admin/orders/order-invoice.html:67
+#: templates/dashboard/customer/addresses/address-list.html:21
+#: templates/dashboard/customer/addresses/address-list.html:69
+#: templates/dashboard/customer/orders/order-detail.html:100
+#: templates/dashboard/customer/orders/order-invoice.html:50
+msgid "Address"
+msgstr "العنوان"
+
+#: order/forms.py:9
+msgid "Coupon"
+msgstr "كود الخصم"
+
+#: order/forms.py:22 order/serializers.py:56
+msgid "Invalid address for the requested user."
+msgstr "العنوان المحدد غير صالح للمستخدم المطلوب."
+
+#: order/forms.py:37 order/serializers.py:66
+msgid "Invalid coupon code."
+msgstr "كود الخصم غير صالح."
+
+#: order/forms.py:42 order/serializers.py:69
+msgid "Coupon usage limit reached."
+msgstr "تم الوصول إلى الحد الأقصى لاستخدام كود الخصم."
+
+#: order/forms.py:47 order/serializers.py:72
+msgid "Coupon has expired."
+msgstr "انتهت صلاحية كود الخصم."
+
+#: order/forms.py:52 order/serializers.py:75
+msgid "You have already used this coupon."
+msgstr "لقد استخدمت هذا الكود من قبل."
 
 #: order/models.py:8
 msgid "در انتظار پرداخت"
@@ -80,6 +215,82 @@ msgstr ""
 msgid "وضعیت نامعتبر"
 msgstr ""
 
+#: order/signals.py:25
+#, fuzzy, python-brace-format
+#| msgid "Not enough stock for product %(product_title)s."
+msgid "Not enough stock for product {product.title}."
+msgstr "لا توجد كمية كافية من المنتج %(product_title)s."
+
+#: payment/api_views.py:26
+msgid "Authority and status parameters are required."
+msgstr "المعاملات authority و status مطلوبة."
+
+#: payment/api_views.py:35
+msgid "Order not found for this payment."
+msgstr "لم يتم العثور على الطلب المرتبط بهذا الدفع."
+
+#: payment/api_views.py:44
+msgid "Error connecting to payment gateway. Please try again."
+msgstr "حدث خطأ عند الاتصال ببوابة الدفع. يرجى المحاولة مرة أخرى."
+
+#: payment/api_views.py:68
+msgid "Payment was successful."
+msgstr "تم الدفع بنجاح."
+
+#: payment/api_views.py:68
+msgid "Payment failed."
+msgstr "فشل الدفع."
+
+#: payment/models.py:7 review/models.py:10
+msgid "Pending"
+msgstr "في انتظار الموافقة"
+
+#: payment/models.py:8
+msgid "Payment Successful"
+msgstr "تم الدفع بنجاح"
+
+#: payment/models.py:9
+msgid "Payment Failed"
+msgstr "فشل الدفع"
+
+#: payment/views.py:33
+msgid "Error connecting to the payment gateway. Please try again."
+msgstr "خطأ في الاتصال ببوابة الدفع. يرجى المحاولة مرة أخرى."
+
+#: review/forms.py:19
+msgid "This product does not exist"
+msgstr "هذا المنتج غير موجود"
+
+#: review/models.py:11
+msgid "Accepted"
+msgstr "تمت الموافقة"
+
+#: review/models.py:12
+msgid "Rejected"
+msgstr "مرفوض"
+
+#: review/serializers.py:27
+msgid "This product does not exist or is not published."
+msgstr "هذا المنتج غير موجود أو لم يتم نشره."
+
+#: review/views.py:23
+msgid ""
+"Your review has been submitted successfully and will be displayed after "
+"approval."
+msgstr "تم إرسال مراجعتك بنجاح وسيتم عرضها بعد الموافقة"
+
+#: review/views.py:29
+msgid "An error occurred while submitting your review."
+msgstr "حدث خطأ أثناء إرسال مراجعتك"
+
+#: shop/api_views.py:73 shop/views.py:106
+msgid "Product removed from wishlist"
+msgstr "تمت إزالة المنتج من قائمة الرغبات"
+
+#: shop/api_views.py:78 shop/views.py:111
+msgid "Product added to wishlist"
+msgstr "تمت إضافة المنتج إلى قائمة الرغبات"
+
 #: templates/accounts/login.html:6 templates/accounts/login.html:20
 #: templates/partials/header.html:102
 msgid "Login"
@@ -88,6 +299,7 @@ msgstr "تسجيل الدخول"
 #: templates/accounts/login.html:10 templates/accounts/password_reset.html:12
 #: templates/accounts/signup.html:11
 #: templates/dashboard/admin/profile/profile-edit.html:73
+#: templates/dashboard/customer/profile/profile-edit.html:81
 #: website/api_views.py:35 website/views.py:84
 msgid "Email"
 msgstr "البريد الإلكتروني"
@@ -156,6 +368,7 @@ msgstr "أدخل كلمة المرور الجديدة أدناه."
 
 #: templates/accounts/password_reset_confirm.html:12
 #: templates/dashboard/admin/profile/security-edit.html:41
+#: templates/dashboard/customer/profile/security-edit.html:35
 msgid "New Password"
 msgstr "كلمة المرور الجديدة"
 
@@ -177,21 +390,9 @@ msgstr "رمز غير صالح أو مفقود."
 msgid "Server error. Try again later."
 msgstr "خطأ في الخادم. حاول مرة أخرى لاحقًا."
 
-#: templates/accounts/signup.html:26 website/forms.py:12 website/forms.py:21
-msgid "First Name"
-msgstr "الاسم الأول"
-
-#: templates/accounts/signup.html:31 website/forms.py:13 website/forms.py:26
-msgid "Last Name"
-msgstr "اسم العائلة"
-
-#: templates/accounts/signup.html:36
-msgid "Phone Number"
-msgstr "رقم الهاتف"
-
 #: templates/accounts/signup.html:37 website/forms.py:36
 msgid "e.g. +971501234567"
-msgstr "مثال: +٩٧١٥٠١٢٣٤٥٦٧"
+msgstr ""
 
 #: templates/accounts/signup.html:47
 msgid "Login to your account"
@@ -207,14 +408,17 @@ msgid "Shopping Cart"
 msgstr "سلة التسوق"
 
 #: templates/cart/cart-summary.html:14 templates/cart/cart-summary.html:75
+#: templates/dashboard/customer/addresses/address-list.html:36
 msgid "Loading..."
-msgstr "جارٍ التحميل..."
+msgstr "جار التحميل..."
 
 #: templates/cart/cart-summary.html:19
+#: templates/dashboard/customer/wishlists/wishlist-list.html:108
+#: templates/order/completed.html:16 templates/order/failed.html:16
 msgid "Continue Shopping"
 msgstr "متابعة التسوق"
 
-#: templates/cart/cart-summary.html:31
+#: templates/cart/cart-summary.html:31 templates/order/checkout.html:56
 msgid "Order Summary"
 msgstr "ملخص الطلب"
 
@@ -226,11 +430,12 @@ msgstr "الضريبة"
 msgid "Includes 9 percent at checkout"
 msgstr "يشمل ٩٪ عند الدفع"
 
-#: templates/cart/cart-summary.html:38
+#: templates/cart/cart-summary.html:38 templates/order/checkout.html:77
+#: templates/order/completed.html:46 templates/order/failed.html:46
 msgid "Total"
 msgstr "الإجمالي"
 
-#: templates/cart/cart-summary.html:43
+#: templates/cart/cart-summary.html:43 templates/order/checkout.html:95
 msgid "Place Order"
 msgstr "تأكيد الطلب"
 
@@ -261,22 +466,36 @@ msgstr "حدث خطأ أثناء إزالة المنتج."
 #: templates/cart/cart-summary.html:89
 #: templates/dashboard/admin/orders/order-detail.html:47
 #: templates/dashboard/admin/orders/order-invoice.html:92
+#: templates/dashboard/customer/orders/order-detail.html:46
+#: templates/dashboard/customer/orders/order-invoice.html:71
 msgid "Unit Price"
 msgstr "سعر الوحدة"
 
 #: templates/dashboard/admin/base.html:12
 #: templates/dashboard/admin/sidebar.html:26
+#: templates/dashboard/customer/base.html:14
+#: templates/dashboard/customer/home.html:8
+#: templates/dashboard/customer/orders/order-detail.html:7
+#: templates/dashboard/customer/orders/order-list.html:7
+#: templates/dashboard/customer/profile/profile-edit.html:7
+#: templates/dashboard/customer/profile/security-edit.html:8
+#: templates/dashboard/customer/sidebar.html:26
+#: templates/dashboard/customer/wishlists/wishlist-list.html:8
 msgid "Dashboard"
 msgstr "لوحة التحكم"
 
 #: templates/dashboard/admin/base.html:21
 #: templates/dashboard/admin/sidebar.html:103
+#: templates/dashboard/customer/base.html:24
+#: templates/dashboard/customer/sidebar.html:72
 msgid "Logout"
 msgstr "تسجيل الخروج"
 
 #: templates/dashboard/admin/base.html:25
+#, fuzzy
+#| msgid "Toggle navigation"
 msgid " Toggle navigation"
-msgstr ""
+msgstr "تبديل التنقل"
 
 #: templates/dashboard/admin/categories/category-form.html:7
 #: templates/dashboard/admin/categories/category-list.html:7
@@ -295,6 +514,13 @@ msgstr ""
 #: templates/dashboard/admin/reviews/review-edit.html:7
 #: templates/dashboard/admin/reviews/review-list.html:21
 #: templates/dashboard/admin/sidebar.html:20
+#: templates/dashboard/customer/home.html:7
+#: templates/dashboard/customer/orders/order-detail.html:6
+#: templates/dashboard/customer/orders/order-list.html:6
+#: templates/dashboard/customer/profile/profile-edit.html:6
+#: templates/dashboard/customer/profile/security-edit.html:7
+#: templates/dashboard/customer/sidebar.html:20
+#: templates/dashboard/customer/wishlists/wishlist-list.html:7
 msgid "Account"
 msgstr "الحساب"
 
@@ -331,8 +557,10 @@ msgid "Create Category"
 msgstr "اختر الفئة"
 
 #: templates/dashboard/admin/categories/category-form.html:37
+#, fuzzy
+#| msgid "Title (FA)"
 msgid "Title"
-msgstr ""
+msgstr "العنوان (الفارسية)"
 
 #: templates/dashboard/admin/categories/category-form.html:41
 msgid "Slug"
@@ -340,7 +568,7 @@ msgstr ""
 
 #: templates/dashboard/admin/categories/category-form.html:49
 #, fuzzy
-#| msgid "Select Category"
+#| msgid "Create Category"
 msgid "Save Category"
 msgstr "اختر الفئة"
 
@@ -369,27 +597,32 @@ msgid "Actions"
 msgstr "الإجراءات"
 
 #: templates/dashboard/admin/categories/category-list.html:40
+#: templates/dashboard/customer/addresses/address-list.html:72
 msgid "Edit"
 msgstr "تعديل"
 
 #: templates/dashboard/admin/categories/category-list.html:41
 #: templates/dashboard/admin/coupon/coupon-edit.html:52
+#: templates/dashboard/customer/addresses/address-list.html:75
+#: templates/dashboard/customer/wishlists/wishlist-list.html:61
 msgid "Delete"
-msgstr ""
+msgstr "حذف"
 
 #: templates/dashboard/admin/categories/category-list.html:46
-#, fuzzy
-#| msgid "No products available"
 msgid "No categories available."
 msgstr "لا توجد منتجات متاحة"
 
 #: templates/dashboard/admin/categories/category-list.html:64
+#, fuzzy
+#| msgid "Are you sure you want to delete this product?"
 msgid "Are you sure you want to delete this category?"
-msgstr ""
+msgstr "هل أنت متأكد من حذف هذا المنتج؟"
 
 #: templates/dashboard/admin/categories/category-list.html:71
+#, fuzzy
+#| msgid "Coupon deleted successfully"
 msgid "Category deleted successfully."
-msgstr ""
+msgstr "تم حذف القسيمة بنجاح"
 
 #: templates/dashboard/admin/categories/category-list.html:75
 msgid "Failed to delete category:"
@@ -414,6 +647,7 @@ msgstr "إنشاء كوبون"
 #: templates/dashboard/admin/coupon/coupon-edit.html:32
 #: templates/dashboard/admin/coupon/coupon-list.html:76
 #: templates/dashboard/admin/coupon/coupon-used.html:61
+#: templates/order/checkout.html:60 templates/order/checkout.html:61
 msgid "Coupon Code"
 msgstr "رمز الكوبون"
 
@@ -441,6 +675,7 @@ msgstr "تاريخ الانتهاء"
 #: templates/dashboard/admin/orders/order-detail.html:107
 #: templates/dashboard/admin/products/product-delete.html:48
 #: templates/dashboard/admin/reviews/review-edit.html:67
+#: templates/dashboard/customer/orders/order-detail.html:107
 msgid "Back"
 msgstr "رجوع"
 
@@ -474,6 +709,8 @@ msgstr "تعديل الكوبون"
 #: templates/dashboard/admin/coupon/coupon-edit.html:58
 #: templates/dashboard/admin/profile/profile-edit.html:94
 #: templates/dashboard/admin/reviews/review-edit.html:70
+#: templates/dashboard/customer/addresses/address-list.html:90
+#: templates/dashboard/customer/profile/profile-edit.html:103
 msgid "Save Changes"
 msgstr "حفظ التغييرات"
 
@@ -505,6 +742,7 @@ msgstr "ترتيب حسب"
 #: templates/dashboard/admin/orders/order-list.html:41
 #: templates/dashboard/admin/products/product-list.html:38
 #: templates/dashboard/admin/reviews/review-list.html:56
+#: templates/dashboard/customer/orders/order-list.html:24
 #: templates/shop/product-grid.html:62
 msgid "Newest"
 msgstr "الأحدث"
@@ -514,6 +752,7 @@ msgstr "الأحدث"
 #: templates/dashboard/admin/orders/order-list.html:42
 #: templates/dashboard/admin/products/product-list.html:39
 #: templates/dashboard/admin/reviews/review-list.html:57
+#: templates/dashboard/customer/orders/order-list.html:25
 #: templates/shop/product-grid.html:63
 msgid "Oldest"
 msgstr "الأقدم"
@@ -541,6 +780,9 @@ msgstr "عدد العناصر"
 #: templates/dashboard/admin/orders/order-invoice.html:120
 #: templates/dashboard/admin/orders/order-invoice.html:129
 #: templates/dashboard/admin/products/product-list.html:82
+#: templates/dashboard/customer/orders/order-detail.html:83
+#: templates/dashboard/customer/orders/order-invoice.html:97
+#: templates/dashboard/customer/orders/order-invoice.html:100
 msgid "Discount"
 msgstr "الخصم"
 
@@ -552,15 +794,19 @@ msgstr "تم الاستخدام"
 #: templates/dashboard/admin/coupon/coupon-used.html:90
 #: templates/dashboard/admin/orders/order-list.html:134
 #: templates/dashboard/admin/products/product-list.html:125
+#: templates/dashboard/customer/orders/order-list.html:139
+#: templates/dashboard/customer/wishlists/wishlist-list.html:80
 msgid "Previous"
-msgstr ""
+msgstr "السابق"
 
 #: templates/dashboard/admin/coupon/coupon-list.html:133
 #: templates/dashboard/admin/coupon/coupon-used.html:110
 #: templates/dashboard/admin/orders/order-list.html:154
 #: templates/dashboard/admin/products/product-list.html:145
+#: templates/dashboard/customer/orders/order-list.html:159
+#: templates/dashboard/customer/wishlists/wishlist-list.html:98
 msgid "Next"
-msgstr ""
+msgstr "التالي"
 
 #: templates/dashboard/admin/coupon/coupon-used.html:10
 msgid "Coupon Usage by Users"
@@ -575,12 +821,15 @@ msgid "Used By"
 msgstr "تم الاستخدام بواسطة"
 
 #: templates/dashboard/admin/home.html:20
+#: templates/dashboard/customer/home.html:18
 msgid "Dashboard Summary"
-msgstr "لوحة التحكم"
+msgstr "ملخص لوحة التحكم"
 
 #: templates/dashboard/admin/home.html:41
+#, fuzzy
+#| msgid "Product not found."
 msgid "Access token not found"
-msgstr ""
+msgstr "لم يتم العثور على المنتج."
 
 #: templates/dashboard/admin/home.html:54
 msgid "Error fetching dashboard data:"
@@ -588,9 +837,9 @@ msgstr ""
 
 #: templates/dashboard/admin/home.html:66
 #, fuzzy
-#| msgid "Users Who Used Coupons"
+#| msgid "Users"
 msgid "Users Count"
-msgstr "المستخدمون الذين استخدموا الكوبون"
+msgstr "المستخدمون"
 
 #: templates/dashboard/admin/home.html:74
 #, fuzzy
@@ -600,9 +849,9 @@ msgstr "رمز المنتج"
 
 #: templates/dashboard/admin/home.html:82
 #, fuzzy
-#| msgid "Orders"
+#| msgid "Order Amount"
 msgid "Orders Count"
-msgstr "الطلبات"
+msgstr "قيمة الطلب"
 
 #: templates/dashboard/admin/home.html:90
 #, fuzzy
@@ -611,8 +860,9 @@ msgid "Coupons Count"
 msgstr "رمز الكوبون"
 
 #: templates/dashboard/admin/home.html:97
+#: templates/dashboard/customer/addresses/address-list.html:125
 msgid "Error:"
-msgstr ""
+msgstr "خطأ:"
 
 #: templates/dashboard/admin/home.html:99
 msgid "Unable to load dashboard data."
@@ -621,10 +871,13 @@ msgstr ""
 #: templates/dashboard/admin/orders/order-detail.html:9
 #: templates/dashboard/admin/orders/order-list.html:26
 #: templates/dashboard/admin/sidebar.html:59
+#: templates/dashboard/customer/orders/order-detail.html:8
+#: templates/dashboard/customer/orders/order-list.html:9
 msgid "Orders"
 msgstr "الطلبات"
 
 #: templates/dashboard/admin/orders/order-detail.html:11
+#: templates/dashboard/customer/orders/order-detail.html:10
 msgid "Order Details"
 msgstr "تفاصيل الطلب"
 
@@ -635,85 +888,92 @@ msgid "Order #%(object.id)s"
 msgstr "تفاصيل الطلب"
 
 #: templates/dashboard/admin/orders/order-detail.html:26
+#: templates/dashboard/customer/orders/order-detail.html:25
+#: templates/dashboard/customer/orders/order-list.html:119
 msgid "View Invoice"
 msgstr "عرض الفاتورة"
 
 #: templates/dashboard/admin/orders/order-detail.html:43
 #: templates/dashboard/admin/orders/order-detail.html:56
+#: templates/dashboard/customer/orders/order-detail.html:42
 #: templates/shop/product-detail.html:51 templates/shop/product-detail.html:54
 msgid "Image"
-msgstr "صورة"
+msgstr "الصورة"
 
 #: templates/dashboard/admin/orders/order-detail.html:44
 #: templates/dashboard/admin/orders/order-invoice.html:89
 #: templates/dashboard/admin/products/product-delete.html:33
 #, fuzzy
-#| msgid "Product Image"
+#| msgid "Product"
 msgid "Product ID"
-msgstr "صورة المنتج"
+msgstr "المنتج"
 
 #: templates/dashboard/admin/orders/order-detail.html:45
 #: templates/dashboard/admin/products/product-delete.html:34
 #: templates/dashboard/admin/products/product-list.html:77
 #: templates/dashboard/admin/reviews/review-edit.html:33
+#: templates/dashboard/customer/orders/order-detail.html:44
 msgid "Product Name"
 msgstr "اسم المنتج"
 
 #: templates/dashboard/admin/orders/order-detail.html:46
 #: templates/dashboard/admin/orders/order-invoice.html:91
+#: templates/dashboard/customer/orders/order-detail.html:45
+#: templates/dashboard/customer/orders/order-invoice.html:70
 msgid "Quantity"
 msgstr "الكمية"
 
 #: templates/dashboard/admin/orders/order-detail.html:77
 #: templates/dashboard/admin/orders/order-list.html:99
+#: templates/dashboard/customer/orders/order-detail.html:76
 msgid "Customer"
 msgstr "العميل"
 
 #: templates/dashboard/admin/orders/order-detail.html:79
+#: templates/dashboard/customer/orders/order-detail.html:78
 msgid "Order Status"
 msgstr "حالة الطلب"
 
 #: templates/dashboard/admin/orders/order-detail.html:83
 #: templates/dashboard/admin/orders/order-invoice.html:75
+#: templates/dashboard/customer/orders/order-detail.html:94
+#: templates/dashboard/customer/orders/order-invoice.html:57
+#: templates/dashboard/customer/orders/order-list.html:94
 msgid "Order Date"
 msgstr "تاريخ الطلب"
 
 #: templates/dashboard/admin/orders/order-detail.html:85
-#, fuzzy
-#| msgid "Total Price Before Discount"
 msgid "Price Before Discount"
 msgstr "السعر قبل الخصم"
 
 #: templates/dashboard/admin/orders/order-detail.html:87
 #: templates/dashboard/admin/orders/order-invoice.html:117
-#, python-format
+#: templates/dashboard/customer/orders/order-detail.html:87
+#: templates/dashboard/customer/orders/order-invoice.html:94
+#, fuzzy, python-format
+#| msgid "Tax 9%"
 msgid "Tax 9%%"
-msgstr ""
+msgstr "ضريبة ٩٪"
 
 #: templates/dashboard/admin/orders/order-detail.html:98
+#: templates/dashboard/customer/orders/order-detail.html:92
+#: templates/dashboard/customer/orders/order-invoice.html:103
 msgid "Final Price"
 msgstr "السعر النهائي"
-
-#: templates/dashboard/admin/orders/order-detail.html:100
-#: templates/dashboard/admin/orders/order-invoice.html:67
-msgid "Address"
-msgstr "العنوان"
 
 #: templates/dashboard/admin/orders/order-detail.html:102
 msgid "Postal Code"
 msgstr "الرمز البريدي"
 
 #: templates/dashboard/admin/orders/order-invoice.html:12
-#, fuzzy
-#| msgid "View Invoice"
+#: templates/dashboard/customer/orders/order-invoice.html:10
 msgid "Order Invoice"
-msgstr "عرض الفاتورة"
+msgstr "فاتورة الطلب"
 
 #: templates/dashboard/admin/orders/order-invoice.html:43
-#, fuzzy
-#| msgid "View Invoice"
+#: templates/dashboard/customer/orders/order-invoice.html:30
 msgid "Invoice No."
-msgstr "عرض الفاتورة"
+msgstr "رقم الفاتورة"
 
 #: templates/dashboard/admin/orders/order-invoice.html:51
 #, fuzzy
@@ -722,15 +982,15 @@ msgid "Logo"
 msgstr "تسجيل الخروج"
 
 #: templates/dashboard/admin/orders/order-invoice.html:63
-#, fuzzy
-#| msgid "Customer"
+#: templates/dashboard/customer/orders/order-invoice.html:46
 msgid "Customer Name"
-msgstr "العميل"
+msgstr "اسم العميل"
 
 #: templates/dashboard/admin/orders/order-invoice.html:90
 #: templates/dashboard/admin/reviews/review-list.html:100
+#: templates/dashboard/customer/orders/order-invoice.html:69
 msgid "Product"
-msgstr "المنتجات"
+msgstr "المنتج"
 
 #: templates/dashboard/admin/orders/order-invoice.html:115
 #: templates/dashboard/admin/orders/order-list.html:100
@@ -753,10 +1013,9 @@ msgid "Final Price with Discount"
 msgstr "السعر قبل الخصم"
 
 #: templates/dashboard/admin/orders/order-invoice.html:144
-#, fuzzy
-#| msgid "View Invoice"
+#: templates/dashboard/customer/orders/order-invoice.html:111
 msgid "Print Invoice"
-msgstr "عرض الفاتورة"
+msgstr "طباعة الفاتورة"
 
 #: templates/dashboard/admin/orders/order-list.html:47
 #: templates/dashboard/admin/orders/order-list.html:102
@@ -764,6 +1023,9 @@ msgstr "عرض الفاتورة"
 #: templates/dashboard/admin/reviews/review-edit.html:51
 #: templates/dashboard/admin/reviews/review-list.html:45
 #: templates/dashboard/admin/reviews/review-list.html:104
+#: templates/dashboard/customer/orders/order-list.html:32
+#: templates/dashboard/customer/orders/order-list.html:82
+#: templates/order/completed.html:45
 msgid "Status"
 msgstr "الحالة"
 
@@ -802,12 +1064,12 @@ msgid "Delete Product"
 msgstr "حذف المنتج"
 
 #: templates/dashboard/admin/products/product-delete.html:31
-#, fuzzy
-#| msgid "Are you sure you want to delete this coupon?"
 msgid "Are you sure you want to delete the following product?"
 msgstr "هل أنت متأكد أنك تريد حذف هذا الكوبون؟"
 
 #: templates/dashboard/admin/products/product-delete.html:39
+#: templates/dashboard/customer/orders/order-detail.html:55
+#: templates/dashboard/customer/orders/order-list.html:108
 msgid "Product Image"
 msgstr "صورة المنتج"
 
@@ -822,14 +1084,16 @@ msgid "Search Product"
 msgstr "ابحث عن منتج"
 
 #: templates/dashboard/admin/products/product-list.html:40
+#: templates/dashboard/customer/orders/order-list.html:26
 #: templates/shop/product-grid.html:64
 msgid "Highest Price"
-msgstr "أعلى سعر"
+msgstr "الأعلى سعراً"
 
 #: templates/dashboard/admin/products/product-list.html:41
+#: templates/dashboard/customer/orders/order-list.html:27
 #: templates/shop/product-grid.html:65
 msgid "Lowest Price"
-msgstr "أقل سعر"
+msgstr "الأدنى سعراً"
 
 #: templates/dashboard/admin/products/product-list.html:47
 #: templates/dashboard/admin/products/product-list.html:78
@@ -855,68 +1119,84 @@ msgid "Draft"
 msgstr ""
 
 #: templates/dashboard/admin/profile/profile-edit.html:10
+#: templates/dashboard/customer/profile/profile-edit.html:9
 msgid "Edit Profile"
 msgstr "تعديل الملف الشخصي"
 
 #: templates/dashboard/admin/profile/profile-edit.html:20
+#: templates/dashboard/customer/profile/profile-edit.html:19
 msgid "Edit Image"
 msgstr "تعديل الصورة"
 
 #: templates/dashboard/admin/profile/profile-edit.html:26
+#: templates/dashboard/customer/profile/profile-edit.html:26
 msgid "Profile Picture"
 msgstr "صورة الملف الشخصي"
 
 #: templates/dashboard/admin/profile/profile-edit.html:33
 #: templates/dashboard/admin/sidebar.html:11
-#, fuzzy
-#| msgid "Description"
+#: templates/dashboard/customer/profile/profile-edit.html:36
+#: templates/dashboard/customer/sidebar.html:11
+#: templates/order/completed.html:8 templates/order/failed.html:8
 msgid "Image Description"
-msgstr "الوصف"
+msgstr "وصف الصورة"
 
 #: templates/dashboard/admin/profile/profile-edit.html:38
+#: templates/dashboard/customer/profile/profile-edit.html:40
 msgid "Upload Image"
 msgstr "رفع الصورة"
 
 #: templates/dashboard/admin/profile/profile-edit.html:42
+#: templates/dashboard/customer/profile/profile-edit.html:46
 msgid "Submit"
 msgstr "إرسال"
 
 #: templates/dashboard/admin/profile/profile-edit.html:54
+#: templates/dashboard/customer/profile/profile-edit.html:60
 msgid "Basic Information"
 msgstr "المعلومات الأساسية"
 
 #: templates/dashboard/admin/profile/profile-edit.html:62
 #: templates/dashboard/admin/reviews/review-list.html:101
+#: templates/dashboard/customer/profile/profile-edit.html:68
 msgid "Full Name"
 msgstr "الاسم الكامل"
 
 #: templates/dashboard/admin/profile/profile-edit.html:81
+#: templates/dashboard/customer/profile/profile-edit.html:91
 #: website/api_views.py:36 website/views.py:85
 msgid "Phone"
 msgstr "الهاتف"
 
 #: templates/dashboard/admin/profile/profile-edit.html:93
+#: templates/dashboard/customer/profile/profile-edit.html:102
+#: templates/shop/product-detail.html:336
 msgid "Cancel"
 msgstr "إلغاء"
 
 #: templates/dashboard/admin/profile/security-edit.html:10
+#: templates/dashboard/customer/profile/security-edit.html:9
 msgid "Security Settings"
 msgstr "إعدادات الأمان"
 
 #: templates/dashboard/admin/profile/security-edit.html:21
+#: templates/dashboard/customer/profile/security-edit.html:20
 msgid "Change Password"
 msgstr "تغيير كلمة المرور"
 
 #: templates/dashboard/admin/profile/security-edit.html:31
+#: templates/dashboard/customer/profile/security-edit.html:28
 msgid "Current Password"
 msgstr "كلمة المرور الحالية"
 
 #: templates/dashboard/admin/profile/security-edit.html:51
+#: templates/dashboard/customer/profile/security-edit.html:42
 msgid "Confirm New Password"
 msgstr "تأكيد كلمة المرور الجديدة"
 
 #: templates/dashboard/admin/profile/security-edit.html:58
-msgid "Password requirements:"
+#: templates/dashboard/customer/profile/security-edit.html:46
+msgid "Password Requirements:"
 msgstr "متطلبات كلمة المرور"
 
 #: templates/dashboard/admin/profile/security-edit.html:59
@@ -928,22 +1208,27 @@ msgid "At least 8 characters (longer is better)"
 msgstr "حرف صغير واحد على الأقل"
 
 #: templates/dashboard/admin/profile/security-edit.html:63
+#: templates/dashboard/customer/profile/security-edit.html:51
 msgid "At least one lowercase letter"
 msgstr "حرف صغير واحد على الأقل"
 
 #: templates/dashboard/admin/profile/security-edit.html:64
+#: templates/dashboard/customer/profile/security-edit.html:52
 msgid "At least one uppercase letter"
 msgstr "حرف كبير واحد على الأقل"
 
 #: templates/dashboard/admin/profile/security-edit.html:65
+#: templates/dashboard/customer/profile/security-edit.html:53
 msgid "At least one number, symbol, or whitespace character"
 msgstr "رقم واحد أو رمز أو مسافة على الأقل"
 
 #: templates/dashboard/admin/profile/security-edit.html:71
+#: templates/dashboard/customer/profile/security-edit.html:59
 msgid "Update"
 msgstr "تحديث"
 
 #: templates/dashboard/admin/profile/security-edit.html:81
+#: templates/dashboard/customer/profile/security-edit.html:68
 msgid "Connected Accounts"
 msgstr "الحسابات المتصلة"
 
@@ -951,13 +1236,18 @@ msgstr "الحسابات المتصلة"
 msgid ""
 "Integrated account features make it easier to collaborate with people you "
 "know in Front."
-msgstr "تجعل ميزات الحساب الموحّد من الأسهل التعاون مع الأشخاص الذين تعرفهم في Front."
+msgstr ""
+"تجعل ميزات الحساب الموحّد من الأسهل التعاون مع الأشخاص الذين تعرفهم في Front."
 
 #: templates/dashboard/admin/profile/security-edit.html:97
+#, fuzzy
+#| msgid "Google"
 msgid "Google Icon"
-msgstr ""
+msgstr "جوجل"
 
 #: templates/dashboard/admin/profile/security-edit.html:103
+#: templates/dashboard/customer/profile/security-edit.html:79
+#: templates/dashboard/customer/profile/security-edit.html:85
 msgid "Google"
 msgstr "جوجل"
 
@@ -977,8 +1267,10 @@ msgid "Edit Review"
 msgstr "تعديل التعليق"
 
 #: templates/dashboard/admin/reviews/review-edit.html:39
+#, fuzzy
+#| msgid "Users"
 msgid "User"
-msgstr ""
+msgstr "المستخدمون"
 
 #: templates/dashboard/admin/reviews/review-edit.html:45
 #: templates/dashboard/admin/reviews/review-list.html:102
@@ -994,8 +1286,7 @@ msgid "Search Reviews"
 msgstr "بحث التعليقات"
 
 #: templates/dashboard/admin/reviews/review-list.html:89
-#, fuzzy
-#| msgid "Reviews"
+#: templates/shop/product-detail.html:276
 msgid "reviews"
 msgstr "التعليقات"
 
@@ -1006,10 +1297,12 @@ msgid "No reviews found."
 msgstr "لم يتم العثور على منتجات."
 
 #: templates/dashboard/admin/sidebar.html:31
+#: templates/dashboard/customer/sidebar.html:31
 msgid "Security"
-msgstr "إعدادات الأمان"
+msgstr "الأمان"
 
 #: templates/dashboard/admin/sidebar.html:37
+#: templates/dashboard/customer/sidebar.html:36
 msgid "Profile Settings"
 msgstr "إعدادات الملف الشخصي"
 
@@ -1034,16 +1327,301 @@ msgstr "قائمة المستخدمين"
 msgid "Newsletter"
 msgstr "النشرة الإخبارية"
 
+#: templates/dashboard/customer/addresses/address-list.html:6
+msgid "Your Addresses"
+msgstr "عناوينك"
+
+#: templates/dashboard/customer/addresses/address-list.html:11
+msgid "State"
+msgstr "الولاية"
+
+#: templates/dashboard/customer/addresses/address-list.html:16
+msgid "City"
+msgstr "المدينة"
+
+#: templates/dashboard/customer/addresses/address-list.html:26
+#: templates/dashboard/customer/orders/order-detail.html:102
+msgid "Zip Code"
+msgstr "الرمز البريدي"
+
+#: templates/dashboard/customer/addresses/address-list.html:31
+#: templates/dashboard/customer/addresses/address-list.html:130
+msgid "Create Address"
+msgstr "إنشاء عنوان"
+
+#: templates/dashboard/customer/addresses/address-list.html:50
+msgid "You are not logged in"
+msgstr "لم تقم بتسجيل الدخول"
+
+#: templates/dashboard/customer/addresses/address-list.html:61
+msgid "No addresses found."
+msgstr "لم يتم العثور على عناوين."
+
+#: templates/dashboard/customer/addresses/address-list.html:97
+#: templates/dashboard/customer/addresses/address-list.html:138
+msgid "Please log in"
+msgstr "يرجى تسجيل الدخول"
+
+#: templates/dashboard/customer/addresses/address-list.html:139
+msgid "Are you sure?"
+msgstr "هل أنت متأكد؟"
+
+#: templates/dashboard/customer/addresses/address-list.html:144
+msgid "Error deleting"
+msgstr "خطأ في الحذف"
+
+#: templates/dashboard/customer/base.html:29
+msgid "Toggle navigation"
+msgstr "تبديل التنقل"
+
+#: templates/dashboard/customer/orders/order-detail.html:22
+msgid "Order No."
+msgstr "طلب رقم"
+
+#: templates/dashboard/customer/orders/order-detail.html:43
+#: templates/dashboard/customer/orders/order-invoice.html:68
+msgid "Product Code"
+msgstr "رمز المنتج"
+
+#: templates/dashboard/customer/orders/order-detail.html:85
+#: templates/dashboard/customer/orders/order-invoice.html:92
+msgid "Price before discount"
+msgstr "السعر قبل الخصم"
+
+#: templates/dashboard/customer/orders/order-invoice.html:98
+#, fuzzy, python-format
+#| msgid "With %(object.coupon.discount_percent)s% discount"
+msgid "With %(object.coupon.discount_percent)s%% discount"
+msgstr "مع خصم %(object.coupon.discount_percent)s%"
+
+#: templates/dashboard/customer/orders/order-list.html:23
+msgid "Sort by"
+msgstr "ترتيب حسب"
+
+#: templates/dashboard/customer/orders/order-list.html:40
+msgid "Page size"
+msgstr "عدد العناصر في الصفحة"
+
+#: templates/dashboard/customer/orders/order-list.html:64
+msgid "orders"
+msgstr "طلب"
+
+#: templates/dashboard/customer/orders/order-list.html:76
+msgid "Order Amount"
+msgstr "قيمة الطلب"
+
+#: templates/dashboard/customer/orders/order-list.html:88
+#: templates/order/completed.html:44 templates/order/failed.html:45
+msgid "Order Number"
+msgstr "رقم الطلب"
+
+#: templates/dashboard/customer/orders/order-list.html:123
+msgid "View Order"
+msgstr "عرض الطلب"
+
+#: templates/dashboard/customer/profile/security-edit.html:47
+msgid "Make sure your password meets the following criteria:"
+msgstr "هل أنت متأكد أنك تريد حذف هذا الكوبون؟"
+
+#: templates/dashboard/customer/profile/security-edit.html:50
+msgid "At least 8 characters – more is better"
+msgstr "حرف صغير واحد على الأقل"
+
+#: templates/dashboard/customer/profile/security-edit.html:72
+msgid ""
+"Connecting these accounts makes it easier to collaborate with people you "
+"know on Front."
+msgstr ""
+"تجعل ميزات الحساب الموحّد من الأسهل التعاون مع الأشخاص الذين تعرفهم في Front."
+
+#: templates/dashboard/customer/profile/security-edit.html:86
+msgid "Calendar & Contacts"
+msgstr "التقويم وجهات الاتصال"
+
+#: templates/dashboard/customer/sidebar.html:42
+msgid "Shopping"
+msgstr "التسوق"
+
+#: templates/dashboard/customer/sidebar.html:48
+msgid "Your Orders"
+msgstr "طلباته"
+
+#: templates/dashboard/customer/sidebar.html:53
+#: templates/dashboard/customer/wishlists/wishlist-list.html:9
+msgid "Wishlist"
+msgstr "قائمة المفضلات"
+
+#: templates/dashboard/customer/sidebar.html:59
+msgid "Addresses"
+msgstr "العناوين"
+
+#: templates/dashboard/customer/wishlists/wishlist-list.html:17
+msgid "Wishlist Items"
+msgstr "عناصر قائمة المفضلات"
+
+#: templates/dashboard/customer/wishlists/wishlist-list.html:18
+msgid "Item(s)"
+msgstr "عنصر/عناصر"
+
+#: templates/dashboard/customer/wishlists/wishlist-list.html:32
+msgid "No image available"
+msgstr "لا توجد صورة"
+
+#: templates/dashboard/customer/wishlists/wishlist-list.html:46
+msgid "Category:"
+msgstr "الفئة:"
+
 #: templates/includes/latest-products.html:7
 msgid "Latest Products"
 msgstr "أحدث المنتجات"
 
 #: templates/includes/latest-products.html:76
-#: templates/includes/similar-products.html:76
+#: templates/includes/similar-products.html:73
 #: templates/shop/product-detail.html:202 templates/shop/product-grid.html:142
 #: templates/shop/product-grid.html:199
 msgid "Add to Cart"
 msgstr "أضف إلى السلة"
+
+#: templates/includes/review-summary.html:4
+msgid "Rating Breakdown"
+msgstr "توزيع التقييم"
+
+#: templates/includes/review-summary.html:10
+msgid "star"
+msgstr "نجمة"
+
+#: templates/includes/similar-products.html:7
+msgid "Just for you"
+msgstr "فقط لك"
+
+#: templates/includes/similar-products.html:22
+msgid "No image"
+msgstr "لا توجد صورة"
+
+#: templates/includes/similar-products.html:29
+#: templates/shop/product-detail.html:81 templates/shop/product-grid.html:204
+msgid "Add to Wishlist"
+msgstr "أضف إلى المفضلة"
+
+#: templates/includes/similar-products.html:81
+msgid "No products available to display"
+msgstr "لا توجد منتجات للعرض"
+
+#: templates/order/checkout.html:9
+msgid "Select Address"
+msgstr "اختر العنوان"
+
+#: templates/order/checkout.html:31
+msgid "Manage Addresses"
+msgstr "إدارة العناوين"
+
+#: templates/order/checkout.html:40
+msgid "Back to Cart"
+msgstr "العودة إلى السلة"
+
+#: templates/order/checkout.html:62 templates/order/checkout.html:190
+msgid "Check"
+msgstr "تحقق"
+
+#: templates/order/checkout.html:68
+msgid "Shipping Cost"
+msgstr "تكلفة الشحن"
+
+#: templates/order/checkout.html:69
+msgid "For Tehran and suburbs: 35,000 Toman"
+msgstr ""
+
+#: templates/order/checkout.html:70
+msgid "For other cities: 50,000 Toman"
+msgstr ""
+
+#: templates/order/checkout.html:81
+msgid "Discounted Price"
+msgstr "الخصم"
+
+#: templates/order/checkout.html:85
+#, fuzzy, python-format
+#| msgid "Tax (9%)"
+msgid "Tax (9%%)"
+msgstr "الضريبة (٩٪)"
+
+#: templates/order/checkout.html:89
+msgid "Final Payable Amount"
+msgstr "المبلغ النهائي المستحق"
+
+#: templates/order/checkout.html:109 templates/shop/product-detail.html:220
+msgid "Need support?"
+msgstr "هل تحتاج إلى دعم؟"
+
+#: templates/order/checkout.html:110
+msgid "Submit Ticket"
+msgstr "إرسال تذكرة"
+
+#: templates/order/checkout.html:136
+#, fuzzy
+#| msgid "Please enter the coupon code."
+msgid "Please enter coupon code."
+msgstr "يرجى إدخال رمز الخصم."
+
+#: templates/order/checkout.html:145
+#, fuzzy
+#| msgid "Checking your order..."
+msgid "Checking..."
+msgstr "جاري التحقق من طلبك..."
+
+#: templates/order/checkout.html:156
+#, fuzzy
+#| msgid "Coupon has expired."
+msgid "Coupon applied."
+msgstr "انتهت صلاحية كود الخصم."
+
+#: templates/order/checkout.html:177
+msgid "An error occurred."
+msgstr "حدث خطأ."
+
+#: templates/order/completed.html:12
+#, fuzzy
+#| msgid "Your order is completed!"
+msgid "Your order is complete!"
+msgstr "تم إكمال طلبك!"
+
+#: templates/order/completed.html:13
+#, fuzzy
+#| msgid "Error loading order information"
+msgid "Please wait... Loading order information."
+msgstr "خطأ في تحميل معلومات الطلب"
+
+#: templates/order/completed.html:40
+#, fuzzy
+#| msgid "No products found."
+msgid "No order data found."
+msgstr "لم يتم العثور على منتجات."
+
+#: templates/order/completed.html:54
+#, fuzzy
+#| msgid "Error loading order information"
+msgid "Error loading order information."
+msgstr "خطأ في تحميل معلومات الطلب"
+
+#: templates/order/failed.html:12
+msgid "Checking your order..."
+msgstr "جاري التحقق من طلبك..."
+
+#: templates/order/failed.html:43
+msgid "Your order is completed!"
+msgstr "تم إكمال طلبك!"
+
+#: templates/order/failed.html:49
+msgid "Your order has an issue!"
+msgstr "هناك مشكلة في طلبك!"
+
+#: templates/order/failed.html:50
+msgid "Please try again or contact support."
+msgstr "يرجى المحاولة مرة أخرى أو الاتصال بالدعم."
+
+#: templates/order/failed.html:55
+msgid "Error loading order information"
+msgstr "خطأ في تحميل معلومات الطلب"
 
 #: templates/partials/header.html:68
 msgid "Home"
@@ -1058,8 +1636,6 @@ msgid "Contact Us"
 msgstr "اتصل بنا"
 
 #: templates/partials/header.html:98
-#, fuzzy
-#| msgid "profile"
 msgid "Profile"
 msgstr "الملف الشخصي"
 
@@ -1068,6 +1644,7 @@ msgid "Exit"
 msgstr ""
 
 #: templates/partials/secondary_contents.html:10
+#: templates/shop/product-detail.html:310
 msgid "Close"
 msgstr "إغلاق"
 
@@ -1083,10 +1660,6 @@ msgstr "بحث"
 #: templates/shop/product-detail.html:26 templates/shop/product-detail.html:28
 msgid "Extra Image"
 msgstr "صورة إضافية"
-
-#: templates/shop/product-detail.html:81 templates/shop/product-grid.html:204
-msgid "Add to Wishlist"
-msgstr "أضف إلى قائمة الرغبات"
 
 #: templates/shop/product-detail.html:98
 msgid "Total Price:"
@@ -1114,13 +1687,35 @@ msgstr "إرجاع خلال 30 يومًا"
 msgid "Return within 30 days for full refund..."
 msgstr "الإرجاع خلال 30 يومًا لاسترداد كامل"
 
+#: templates/shop/product-detail.html:221
+msgid "Submit a Ticket"
+msgstr "إرسال تذكرة"
+
 #: templates/shop/product-detail.html:236
 msgid "Details"
-msgstr "تفاصيل"
+msgstr "التفاصيل"
 
-#: templates/shop/product-detail.html:243
-msgid "Materials & Care"
-msgstr "المواد والعناية"
+#: templates/shop/product-detail.html:298
+#: templates/shop/product-detail.html:309
+#: templates/shop/product-detail.html:337
+msgid "Submit Review"
+msgstr "إرسال تقييم"
+
+#: templates/shop/product-detail.html:318
+msgid "Your Rating:"
+msgstr "تقييمك:"
+
+#: templates/shop/product-detail.html:329
+msgid "Review Text:"
+msgstr "نص التقييم:"
+
+#: templates/shop/product-detail.html:331
+msgid "Write your review..."
+msgstr "اكتب تقييمك..."
+
+#: templates/shop/product-detail.html:450 templates/shop/product-grid.html:389
+msgid "Error adding product to cart."
+msgstr "حدث خطأ أثناء إضافة المنتج إلى سلة التسوق."
 
 #: templates/shop/product-grid.html:10
 msgid "Product Grid"
@@ -1324,12 +1919,18 @@ msgid "Guaranteed Secure Checkout"
 msgstr "إتمام شراء آمن مضمون"
 
 #: templates/website/index.html:126
+#, fuzzy
+#| msgid "Return within 30 days for full refund"
 msgid "Return within 30 days for full refund"
 msgstr "الإرجاع خلال 30 يومًا لاسترداد كامل"
 
 #: templates/website/index.html:146
 msgid "Get free standard shipping automatically on every order"
 msgstr "احصل على شحن قياسي مجاني تلقائيًا مع كل طلب"
+
+#: website/api_views.py:20 website/views.py:105
+msgid "Your email has been registered successfully."
+msgstr "تم تسجيل بريدك الإلكتروني بنجاح."
 
 #: website/api_views.py:34 website/views.py:83
 #, fuzzy
@@ -1341,9 +1942,9 @@ msgstr "اتصل بنا"
 msgid "Message"
 msgstr "الرسالة"
 
-#: website/api_views.py:43 website/views.py:91
+#: website/api_views.py:43 website/tests.py:24 website/views.py:91
 msgid "Your message was sent successfully!"
-msgstr ""
+msgstr "تم إرسال رسالتك بنجاح!"
 
 #: website/forms.py:14
 msgid "Email Address"
@@ -1363,17 +1964,19 @@ msgstr "اكتب رسالتك هنا..."
 
 #: website/views.py:95
 msgid "Please enter valid information."
-msgstr ""
+msgstr "يرجى إدخال معلومات صالحة."
+
+#: website/views.py:109
+msgid "Please enter a valid email address."
+msgstr "يرجى إدخال عنوان بريد إلكتروني صالح."
+
+#~ msgid "Materials & Care"
+#~ msgstr "المواد والعناية"
 
 #, fuzzy
 #~| msgid "Search Coupon"
 #~ msgid "Search coupon"
 #~ msgstr "بحث عن كوبون"
-
-#, fuzzy
-#~| msgid "Usage Limit"
-#~ msgid "Limit"
-#~ msgstr "الحد"
 
 #~ msgid "An error occurred while fetching results."
 #~ msgstr "حدث خطأ أثناء جلب النتائج."
@@ -1384,14 +1987,8 @@ msgstr ""
 #~ msgid "Includes 9% at checkout"
 #~ msgstr "يشمل ٩٪ عند الدفع"
 
-#~ msgid "Order Number"
-#~ msgstr "رقم الطلب"
-
 #~ msgid "Tax 9 Percent"
 #~ msgstr "الضريبة ٩٪"
-
-#~ msgid "Are you sure you want to delete this product?"
-#~ msgstr "هل أنت متأكد من حذف هذا المنتج؟"
 
 #~ msgid "Send"
 #~ msgstr "إرسال"
@@ -1401,3 +1998,21 @@ msgstr ""
 
 #~ msgid "Saved"
 #~ msgstr "محفوظ"
+
+#~ msgid "items"
+#~ msgstr "عنصر"
+
+#~ msgid "Discount Code"
+#~ msgstr "كود الخصم"
+
+#~ msgid "Discounted Amount"
+#~ msgstr "المبلغ بعد الخصم"
+
+#~ msgid "Coupon applied successfully."
+#~ msgstr "تم تطبيق رمز الخصم بنجاح."
+
+#~ msgid "User Avatar"
+#~ msgstr "صورة المستخدم"
+
+#~ msgid "Limit"
+#~ msgstr "الحد"

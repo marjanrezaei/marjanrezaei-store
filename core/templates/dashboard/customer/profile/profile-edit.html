@@ -3,10 +3,10 @@
 {% block Breadcrumb %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb breadcrumb-light mb-0">
-    <li class="breadcrumb-item">حساب</li>
-    <li class="breadcrumb-item">داشبورد</li>
+    <li class="breadcrumb-item">{% trans "Account" %}</li>
+    <li class="breadcrumb-item">{% trans "Dashboard" %}</li>
     <li class="breadcrumb-item active" aria-current="page">
-      ویرایش پروفایل
+      {% trans "Edit Profile" %}
     </li>
   </ol>
 </nav>
@@ -16,14 +16,14 @@
 <!-- Card -->
 <div class="card mb-3">
   <div class="card-header border-bottom">
-    <h4 class="card-header-title">ویرایش تصویر</h4>
+    <h4 class="card-header-title">{% trans "Edit Image" %}</h4>
   </div>
 
   <!-- Body -->
   <div class="card-body">
     <!-- Form -->
     <div class="row mb-4">
-      <label class="col-sm-3 col-form-label form-label">عکس پروفایل</label>
+      <label class="col-sm-3 col-form-label form-label">{% trans "Profile Picture" %}</label>
 
       <div class="col-sm-9">
         <!-- Media -->
@@ -33,17 +33,17 @@
           <!-- Avatar -->
           <label class="avatar avatar-xl avatar-circle" for="avatarUploader">
             <img id="avatarImg" class="avatar-img" src="{{request.user.user_profile.get_image}}"
-              alt="Image Description">
+              alt="{% trans 'Image Description' %}">
           </label>
 
           <div class="d-grid d-sm-flex gap-2 me-4">
-            <div class="form-attachment-btn btn btn-primary btn-sm">آپلود عکس
+            <div class="form-attachment-btn btn btn-primary btn-sm">{% trans "Upload Image" %}
               <input type="file" class="js-file-attach form-attachment-btn-label" id="avatarUploader" name="image"
                 accept="image/png, image/jpeg, image/jpeg">
             </div>
             <!-- End Avatar -->
 
-            <button type="submit" class="js-file-attach-reset-img btn btn-white btn-sm">ارسال</button>
+            <button type="submit" class="js-file-attach-reset-img btn btn-white btn-sm">{% trans "Submit" %}</button>
           </div>
         </form>
         <!-- End Media -->
@@ -53,10 +53,11 @@
   </div>
 </div>
 <!-- End Card -->
+
 <!-- Card -->
 <div class="card mb-3">
   <div class="card-header border-bottom">
-    <h4 class="card-header-title">اطلاعات پایه</h4>
+    <h4 class="card-header-title">{% trans "Basic Information" %}</h4>
   </div>
   <form action="." method="post">
     <!-- Body -->
@@ -64,13 +65,12 @@
       {% csrf_token %}
       <!-- Form -->
       <div class="row mb-4">
-        <label for="firstNameLabel" class="col-sm-3 col-form-label form-label">نام و نام خانوادگی</label>
+        <label for="firstNameLabel" class="col-sm-3 col-form-label form-label">{% trans "Full Name" %}</label>
 
         <div class="col-sm-9">
           <div class="input-group">
             {{form.first_name}}
             {{form.last_name}}
-
           </div>
         </div>
       </div>
@@ -78,7 +78,7 @@
 
       <!-- Form -->
       <div class="row mb-4">
-        <label for="emailLabel" class="col-sm-3 col-form-label form-label">ایمیل</label>
+        <label for="emailLabel" class="col-sm-3 col-form-label form-label">{% trans "Email" %}</label>
 
         <div class="col-sm-9">
           <input type="email" class="form-control text-center" value="{{request.user.email}}" disabled>
@@ -88,7 +88,7 @@
 
       <!-- Form -->
       <div class="row mb-4">
-        <label for="phoneLabel" class="col-sm-3 col-form-label form-label">تلفن</label>
+        <label for="phoneLabel" class="col-sm-3 col-form-label form-label">{% trans "Phone" %}</label>
 
         <div class="col-sm-9">
           <div class="input-group">
@@ -99,18 +99,12 @@
     </div>
     <div class="card-footer pt-0">
       <div class="d-flex justify-content-end gap-3">
-        <a class="btn btn-danger">لغو</a>
-        <button class="btn btn-primary" type="submit">ذخیره تغییرات</button>
+        <a class="btn btn-danger">{% trans "Cancel" %}</a>
+        <button class="btn btn-primary" type="submit">{% trans "Save Changes" %}</button>
       </div>
     </div>
 </div>
 <!-- End Body -->
-
-<!-- Footer -->
-
-<!-- End Form -->
 </form>
-<!-- End Footer -->
-</div>
 <!-- End Card -->
 {% endblock %}

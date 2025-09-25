@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status as drf_status
 from django.shortcuts import get_object_or_404
+from django.utils.translation import gettext_lazy as _
 
 from payment.models import PaymentModel, PaymentStatusType
 from order.models import OrderStatusType
@@ -22,7 +23,7 @@ class PaymentVerifyAPIView(APIView):
 
         if not authority_id or not status:
             return Response(
-                {"detail": "authority and status parameters are required"},
+                {"detail": _("Authority and status parameters are required.")},
                 status=drf_status.HTTP_400_BAD_REQUEST
             )
 
@@ -31,7 +32,7 @@ class PaymentVerifyAPIView(APIView):
 
         if not order:
             return Response(
-                {"detail": "Order not found for this payment"},
+                {"detail": _("Order not found for this payment.")},
                 status=drf_status.HTTP_404_NOT_FOUND
             )
 
@@ -40,7 +41,7 @@ class PaymentVerifyAPIView(APIView):
             response = zarinpal.payment_verify(int(payment.amount), payment.authority_id)
         except Exception:
             return Response(
-                {"detail": "خطا در ارتباط با درگاه پرداخت. لطفاً دوباره تلاش کنید."},
+                {"detail": _("Error connecting to payment gateway. Please try again.")},
                 status=drf_status.HTTP_502_BAD_GATEWAY
             )
 
@@ -63,5 +64,6 @@ class PaymentVerifyAPIView(APIView):
         return Response({
             "payment": payment_data,
             "order": order_data,
-            "is_success": is_success
+            "is_success": is_success,
+            "message": _("Payment was successful.") if is_success else _("Payment failed.")
         }, status=drf_status.HTTP_200_OK if is_success else drf_status.HTTP_400_BAD_REQUEST)

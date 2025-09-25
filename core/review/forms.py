@@ -1,4 +1,6 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
+
 from .models import ReviewModel
 from shop.models import ProductModel, ProductStatusType
 
@@ -14,6 +16,6 @@ class SubmitReviewForm(forms.ModelForm):
         try: 
             ProductModel.objects.get(id=product.id, status=ProductStatusType.publish.value)
         except ProductModel.DoesNotExist:
-            raise forms.ValidationError('این محصول وجود ندارد')
+           raise forms.ValidationError(_("This product does not exist"))
         
         return cleaned_data

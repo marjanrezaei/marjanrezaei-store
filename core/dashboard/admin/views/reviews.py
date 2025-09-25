@@ -1,6 +1,7 @@
 from django.views.generic import UpdateView,ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from dashboard.permissions import AdminRequiredMixin
+from django.utils.translation import gettext_lazy as _
 
 from dashboard.admin.forms import *
 from django.contrib.messages.views import SuccessMessageMixin
@@ -38,7 +39,7 @@ class AdminReviewEditView(LoginRequiredMixin, AdminRequiredMixin,SuccessMessageM
     template_name = "dashboard/admin/reviews/review-edit.html"
     queryset = ReviewModel.objects.all()
     form_class = ReviewForm
-    success_message = "تغییرات با موفقیت اعمال شد"
+    success_message = _("Changes applied successfully")
     
     def get_success_url(self) -> str:
         return reverse_lazy("dashboard:admin:review-edit",kwargs={"pk":self.kwargs.get("pk")})

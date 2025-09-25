@@ -6,7 +6,6 @@ from django.shortcuts import render
 
 # ---------------- CBV Mixins ----------------
 class AdminRequiredMixin(AccessMixin):
-    """برای Django CBV معمولی"""
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return self.handle_no_permission()

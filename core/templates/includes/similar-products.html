@@ -4,7 +4,7 @@
 <div class="container content-space-2 content-space-lg-3">
   <!-- Title -->
   <div class="w-md-75 w-lg-50 text-center mx-md-auto mb-5 mb-md-9">
-    <h2>فقط برای شما</h2>
+    <h2>{% trans "Just for you" %}</h2>
   </div>
   <!-- End Title -->
 
@@ -19,14 +19,14 @@
           {% elif similar_product.image %}
           <img class="card-img-top" src="{{ similar_product.image.url }}" alt="{{ similar_product.title }}">
           {% else %}
-          <img src="{% static 'img/default.jpg' %}" alt="No image">
+          <img src="{% static 'img/default.jpg' %}" alt="{% trans "No image" %}">
           {% endif %}
 
           {% if request.user.is_authenticated %}
           <div class="card-pinned-top-end">
             <button type="button"
               class="btn btn-outline-secondary btn-xs btn-icon rounded-circle {% if similar_product.id in wishlist_items %} active {% endif %}"
-              data-bs-toggle="tooltip" data-bs-placement="top" title="افزودن به علایق"
+              data-bs-toggle="tooltip" data-bs-placement="top" title="{% trans 'Add to Wishlist' %}"
               onclick="addToWishlist(this,`{{similar_product.id}}`)">
               <i class="bi-heart"></i>
             </button>
@@ -37,22 +37,18 @@
         <div class="card-body">
           <div class="mb-2">
             {% for category in similar_product.category.all %}
-            <a class="link-sm link-secondary" href="#"> {{category.title}} </a>
-            {% if not forloop.last %}
-            ,
-            {% endif %}
+            <a class="link-sm link-secondary" href="#">{{ category.title }}</a>{% if not forloop.last %},{% endif %}
             {% endfor %}
           </div>
 
           <h4 class="card-title">
-            <a class="text-dark"
-              href="{{ similar_product.get_absolute_url }}">{{similar_product.title}}</a>
+            <a class="text-dark" href="{{ similar_product.get_absolute_url }}">{{ similar_product.title }}</a>
           </h4>
           {% if similar_product.is_discounted %}
-          <h3 class="card-text text-dark">{{similar_product.get_price}}</h3>
-          <span class="text-body ms-1 text-decoration-line-through">{{similar_product.price}}</span>
+          <h3 class="card-text text-dark">{{ similar_product.get_price }}</h3>
+          <span class="text-body ms-1 text-decoration-line-through">{{ similar_product.price }}</span>
           {% else %}
-          <h3 class="card-text text-dark">{{similar_product.price}}</h3>
+          <h3 class="card-text text-dark">{{ similar_product.price }}</h3>
           {% endif %}
         </div>
 
@@ -61,19 +57,20 @@
           <a class="d-inline-flex align-items-center mb-3" href="#">
             <div class="d-flex gap-1 mb-2">
               {% for i in "12345" %}
-              {% if i|add:0 <= similar_product.avg_rate %} <span><i class="bi bi-star-fill text-warning"></i></span>
+                {% if i|add:0 <= similar_product.avg_rate %}
+                  <span><i class="bi bi-star-fill text-warning"></i></span>
                 {% else %}
-                <i class="bi bi-star text-warning"></i>
+                  <i class="bi bi-star text-warning"></i>
                 {% endif %}
-                {% endfor %}
+              {% endfor %}
             </div>
-            <span class="ms-1">{{similar_product.avg_rate}}/5</span>
+            <span class="ms-1">{{ similar_product.avg_rate }}/5</span>
           </a>
           <!-- End Rating -->
 
           <button class="btn btn-outline-primary btn-sm btn-transition rounded-pill btn-add-to-cart"
             data-product-id="{{ similar_product.id }}">
-           {% trans "Add to Cart" %}
+            {% trans "Add to Cart" %}
           </button>
         </div>
       </div>
@@ -81,11 +78,9 @@
     </div>
     {% empty %}
     <div class="row text-center w-100 py-5">
-      <p class="text-center"> هیج کالایی برای نمایش وجود ندارد</p>
+      <p class="text-center">{% trans "No products available to display" %}</p>
     </div>
-    <!-- End Col -->
     {% endfor %}
-
   </div>
   <!-- End Row -->
 </div>

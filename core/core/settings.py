@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ========================
-# امنیت و محیط
+# Security and Environment
 # ========================
 SECRET_KEY = config('SECRET_KEY', default='replace-this-key-for-dev')
 DEBUG = config('DEBUG', default=False, cast=bool)
@@ -22,7 +22,7 @@ CSRF_TRUSTED_ORIGINS = config(
 )
 
 # ========================
-# اپلیکیشن‌ها
+# Installed Applications
 # ========================
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -84,7 +84,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 # ========================
-# دیتابیس
+# Database
 # ========================
 # Get DATABASE_URL from environment or use local default
 ENVIRONMENT = os.getenv("ENV", "local")
@@ -100,7 +100,7 @@ DATABASES = {
 LIARA_UPLOAD_ENABLED = ENVIRONMENT == "production"
 
 # ========================
-# رمز عبور
+# Password Validators
 # ========================
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -110,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # ========================
-# بین‌المللی سازی
+# Internationalization
 # ========================
 LANGUAGE_CODE = 'en'
 
@@ -142,8 +142,9 @@ PARLER_LANGUAGES = {
         'hide_untranslated': False,
     }
 }
+
 # ========================
-# استاتیک و مدیا
+# Static and Media Files
 # ========================
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -154,14 +155,14 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # ========================
-# کاربر سفارشی
+# Custom User
 # ========================
 AUTH_USER_MODEL = 'accounts.User'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 # ========================
-# ایمیل
+# Email Configuration
 # ========================
 if DEBUG:
     EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
@@ -181,10 +182,10 @@ else:
     EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD") 
     DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default=EMAIL_HOST_USER)
 
-
 FRONTEND_URL = config('FRONTEND_URL', default='http://127.0.0.1:8000' if DEBUG else 'https://marjanrezaei-store.onrender.com')
+
 # ========================
-# Liara object storage
+# Liara Object Storage
 # ========================
 LIARA_OBJECT_STORAGE = {
     'bucket_name': 'marjan',
@@ -193,14 +194,14 @@ LIARA_OBJECT_STORAGE = {
 }
 
 # ========================
-# Celery
+# Celery Configuration
 # ========================
 CELERY_BROKER_URL = config('CELERY_BROKER_URL', default="redis://127.0.0.1:6379/0")
 CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND', default="redis://127.0.0.1:6379/0")
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
 # ========================
-# پرداخت
+# Payment Gateway
 # ========================
 MERCHANT_ID = config('MERCHANT_ID', default='your-merchant-id')
 SANDBOX_MODE = config('SANDBOX_MODE', default=True, cast=bool)
@@ -224,7 +225,6 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
-
 
 LOGGING = {
     'version': 1,

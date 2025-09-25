@@ -159,9 +159,6 @@ class PasswordResetAPI(APIView):
 
 
 class PasswordResetConfirmJWTAPI(APIView):
-    """
-    دریافت JWT از query params و تغییر پسورد کاربر.
-    """
     permission_classes = []  
     def post(self, request):
         token = request.query_params.get("token")  

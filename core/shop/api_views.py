@@ -1,10 +1,11 @@
-# shop/api_views.py
+######
 from rest_framework import generics, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.core.exceptions import FieldError
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import AllowAny
+from django.utils.translation import gettext as _
 from parler.views import TranslatableSlugMixin
 
 from .models import ProductModel, ProductStatusType, WishlistProductModel
@@ -66,11 +67,13 @@ class WishlistToggleAPIView(APIView):
         if product_id:
             try:
                 wishlist_item = WishlistProductModel.objects.get(
-                    user=request.user, product__id=product_id)
+                    user=request.user, product__id=product_id
+                )
                 wishlist_item.delete()
-                message = "محصول از لیست علایق حذف شد"
+                message = _("Product removed from wishlist")
             except WishlistProductModel.DoesNotExist:
                 WishlistProductModel.objects.create(
-                    user=request.user, product_id=product_id)
-                message = "محصول به لیست علایق اضافه شد"
+                    user=request.user, product_id=product_id
+                )
+                message = _("Product added to wishlist")
         return Response({"message": message}, status=status.HTTP_200_OK)

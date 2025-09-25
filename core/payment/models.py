@@ -1,11 +1,12 @@
 from django.db import models
 from django.db.models import JSONField
+from django.utils.translation import gettext_lazy as _
 
 
 class PaymentStatusType(models.IntegerChoices):
-    pending = 1 , "در انتظار"
-    success = 2 , "پرداخت موفق"
-    failed = 3 , "پرداخت ناموفق"
+    pending = 1, _("Pending")
+    success = 2, _("Payment Successful")
+    failed = 3, _("Payment Failed")
 
     
 class PaymentModel(models.Model):

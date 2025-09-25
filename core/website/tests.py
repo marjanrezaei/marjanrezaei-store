@@ -2,6 +2,8 @@ from django.test import TestCase
 from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
+from django.utils.translation import gettext as _
+
 
 class ContactAPIEnglishTest(TestCase):
     def setUp(self):
@@ -19,7 +21,7 @@ class ContactAPIEnglishTest(TestCase):
         response = self.client.post(self.url, self.valid_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertIn("message", response.data)
-        self.assertEqual(response.data["message"], "Your message was sent successfully!")
+        self.assertEqual(response.data["message"], _("Your message was sent successfully!"))
 
     def test_missing_email_field(self):
         invalid_data = self.valid_data.copy()

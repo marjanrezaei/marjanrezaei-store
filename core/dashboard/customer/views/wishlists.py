@@ -1,6 +1,7 @@
 from django.views.generic import UpdateView,DeleteView,CreateView,ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from dashboard.permissions import CustomerRequiredMixin
+from django.utils.translation import gettext_lazy as _
 
 from dashboard.customer.forms import *
 from django.contrib.messages.views import SuccessMessageMixin
@@ -36,6 +37,6 @@ class CustomerWishlistListView(LoginRequiredMixin, CustomerRequiredMixin, ListVi
 class CustomerWishlistDeleteView(LoginRequiredMixin, CustomerRequiredMixin, SuccessMessageMixin, DeleteView):
     http_method_names = ["post"]
     success_url = reverse_lazy("dashboard:customer:wishlist-list")
-    success_message = "Wishlist item deleted successfully"
+    success_message = _("Wishlist item deleted successfully")
     def get_queryset(self):
         return WishlistProductModel.objects.filter(user=self.request.user)

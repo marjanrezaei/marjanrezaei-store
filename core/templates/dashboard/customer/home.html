@@ -1,11 +1,11 @@
 {% extends 'dashboard/customer/base.html' %}
+{% load static i18n %}
+
 {% block Breadcrumb %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb breadcrumb-light mb-0">
-    <li class="breadcrumb-item">حساب</li>
-    <li class="breadcrumb-item active" aria-current="page">
-      داشبورد
-    </li>
+    <li class="breadcrumb-item">{% trans "Account" %}</li>
+    <li class="breadcrumb-item active" aria-current="page">{% trans "Dashboard" %}</li>
   </ol>
 </nav>
 {% endblock %}
@@ -15,7 +15,7 @@
 <div class="card">
   <!-- Header -->
   <div class="card-header border-bottom">
-    <h5 class="card-header-title">خلاصه داشبورد</h5>
+    <h5 class="card-header-title">{% trans "Dashboard Summary" %}</h5>
   </div>
   <!-- End Header -->
   <!-- Body -->

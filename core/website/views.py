@@ -102,9 +102,9 @@ class NewsletterView(FormView):
 
     def form_valid(self, form):
         form.save()
-        messages.success(self.request, "ایمیل شما با موفقعیت ثبت شد.")
+        messages.success(self.request, _("Your email has been registered successfully."))
         return redirect(self.success_url)
 
     def form_invalid(self, form):
-        messages.error(self.request, "لطفا یک ایمیل معتبر وارد نمایید.")
+        messages.error(self.request, _("Please enter a valid email address."))
         return redirect(self.success_url)

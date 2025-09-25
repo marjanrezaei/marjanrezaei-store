@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from django.utils.translation import gettext_lazy as _
+
 from .models import ReviewModel, ReviewStatusType
 from shop.models import ProductModel, ProductStatusType
 
@@ -22,7 +24,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         if not ProductModel.objects.filter(
             id=product.id, status=ProductStatusType.publish.value
         ).exists():
-            raise serializers.ValidationError("این محصول وجود ندارد یا منتشر نشده است.")
+           raise serializers.ValidationError(_("This product does not exist or is not published."))
         return product
 
     def create(self, validated_data):

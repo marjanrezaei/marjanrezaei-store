@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.db import connection
 from django.http import HttpResponseServerError, JsonResponse
+from django.utils.translation import gettext_lazy as _
 
 from .models import PaymentModel, PaymentStatusType
 from .zarinpal_client import ZarinPalSandbox
@@ -29,7 +30,7 @@ class PaymentVerifyView(View):
         try:
             response = zarinpal.payment_verify(int(payment.amount), payment.authority_id)
         except Exception as e:
-            return HttpResponseServerError("خطا در ارتباط با درگاه پرداخت. لطفاً دوباره تلاش کنید.")
+            return HttpResponseServerError(_("Error connecting to the payment gateway. Please try again."))
 
         is_success = response.get("status") in self.SUCCESS_STATUSES
 

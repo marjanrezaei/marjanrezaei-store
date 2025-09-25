@@ -10,6 +10,7 @@ from dashboard.admin.forms import CouponForm
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.contrib.messages.views import SuccessMessageMixin
+from django.utils.translation import gettext_lazy as _
 
 from order.models import CouponModel
 
@@ -34,8 +35,6 @@ class AdminCouponListView(AdminRequiredMixin, LoginRequiredMixin, ListView):
             
         return queryset
             
-
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         coupons = context["object_list"]  
@@ -45,19 +44,22 @@ class AdminCouponListView(AdminRequiredMixin, LoginRequiredMixin, ListView):
 
         return context
      
-     
+
 class AdminCouponCreateView(AdminRequiredMixin, LoginRequiredMixin, CreateView):
     template_name = "dashboard/admin/coupon/coupon-create.html"
     queryset = CouponModel.objects.all()
     form_class = CouponForm
-    success_message = "ایجاد محصول با  موفقیت انجام شد"
-    
+    success_message = _("Coupon created successfully")  
+
     def form_valid(self, form):
+        # Assign the currently logged-in user to the coupon
         form.instance.user = self.request.user
         super().form_valid(form)
+        # Redirect to edit page after creation
         return redirect(reverse_lazy("dashboard:admin:coupon-edit", kwargs={"pk": form.instance.pk}))
-    
+
     def get_success_url(self):
+        # Fallback success URL after form submission
         return reverse_lazy("dashboard:admin:coupon-list")    
 
 
@@ -65,17 +67,18 @@ class AdminCouponEditView(AdminRequiredMixin, LoginRequiredMixin, SuccessMessage
     template_name = "dashboard/admin/coupon/coupon-edit.html"
     queryset = CouponModel.objects.all()
     form_class = CouponForm
-    success_message = "ویرایش محصول با  موفقیت انجام شد"
-    
+    success_message = _("Coupon updated successfully") 
+
     def get_success_url(self):
-        return reverse_lazy("dashboard:admin:coupon-edit", kwargs={"pk":self.get_object().pk})
+        # Return the edit page of the current coupon
+        return reverse_lazy("dashboard:admin:coupon-edit", kwargs={"pk": self.get_object().pk})
 
 
 class AdminCouponDeleteView(AdminRequiredMixin, LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     template_name = "dashboard/admin/coupon/coupon-delete.html"
     queryset = CouponModel.objects.all()
     success_url = reverse_lazy("dashboard:admin:coupon-list")
-    success_message = "حذف محصول با  موفقیت انجام شد"  
+    success_message = _("Coupon deleted successfully") 
     
 
 class CouponUsedListView(AdminRequiredMixin, LoginRequiredMixin, ListView):

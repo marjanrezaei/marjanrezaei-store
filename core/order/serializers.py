@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from order.models import UserAddressModel, CouponModel, OrderModel, OrderItemModel
 
@@ -22,6 +23,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
         model = OrderItemModel
         fields = ['product', 'quantity', 'price']
         ref_name = "OrderOrderItemSerializer"
+
 
 class OrderItemCreateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -51,7 +53,7 @@ class CheckoutSerializer(serializers.Serializer):
         try:
             address = UserAddressModel.objects.get(id=value, user=user)
         except UserAddressModel.DoesNotExist:
-            raise serializers.ValidationError("Invalid address for the requested user.")
+            raise serializers.ValidationError(_("Invalid address for the requested user."))
         return address
 
     def validate_coupon_code(self, value):
@@ -61,16 +63,16 @@ class CheckoutSerializer(serializers.Serializer):
         try:
             coupon = CouponModel.objects.get(code=value)
         except CouponModel.DoesNotExist:
-            raise serializers.ValidationError("کد تخفیف اشتباه است")
+            raise serializers.ValidationError(_("Invalid coupon code."))
 
         if coupon.used_by.count() >= coupon.max_limit_usage:
-            raise serializers.ValidationError("محدودیت در تعداد استفاده")
+            raise serializers.ValidationError(_("Coupon usage limit reached."))
 
         if coupon.expiration_date and coupon.expiration_date < timezone.now():
-            raise serializers.ValidationError("کد تخفیف منقضی شده است")
+            raise serializers.ValidationError(_("Coupon has expired."))
 
         if user in coupon.used_by.all():
-            raise serializers.ValidationError("این کد تخفیف قبلا توسط شما استفاده شده است")
+            raise serializers.ValidationError(_("You have already used this coupon."))
 
         return coupon
 

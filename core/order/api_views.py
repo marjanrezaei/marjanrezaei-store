@@ -1,6 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics, permissions
+from django.utils.translation import gettext_lazy as _
+
 from .models import OrderModel
 from .serializers import OrderSerializer, CheckoutSerializer
 from core.mixins import SwaggerSafeMixin
@@ -53,12 +55,16 @@ class ValidateCouponAPIView(APIView):
         if coupon:
             discounted_price = total_price * (1 - coupon.discount_percent / 100)
 
-        return Response({
-            "message": "کد تخفیف معتبر است" if coupon else "کدی وارد نشده است",
+        message = _("Valid coupon") if coupon else _("No coupon entered")
+
+        response_data = {
+            "message": message,
             "total_price": total_price,
             "discounted_price": discounted_price,
             "total_tax": total_price * 0.09,
-            "final_price_with_tax": discounted_price * 1.09
-        })
+            "final_price_with_tax": discounted_price * 1.09,
+        }
+
+        return Response(response_data)
 
 

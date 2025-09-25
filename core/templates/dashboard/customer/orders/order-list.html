@@ -3,10 +3,10 @@
 {% block Breadcrumb %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb breadcrumb-light mb-0">
-    <li class="breadcrumb-item">حساب</li>
-    <li class="breadcrumb-item">داشبورد</li>
+    <li class="breadcrumb-item">{% trans "Account" %}</li>
+    <li class="breadcrumb-item">{% trans "Dashboard" %}</li>
     <li class="breadcrumb-item active" aria-current="page">
-      سفارشات
+      {% trans "Orders" %}
     </li>
   </ol>
 </nav>
@@ -20,16 +20,16 @@
     <form action="." class="row">
       <div class="col-md-3 py-1">
         <select class="form-select form-select-sm" id="order-by-filter" name="order_by">
-          <option value="" selected>مرتب سازی</option>
-          <option value="-created_at">جدیدترین</option>
-          <option value="created_at">قدیمی ترین</option>
-          <option value="-total_price">بیشترین قیمت</option>
-          <option value="total_price">کمترین قیمت</option>
+          <option value="" selected>{% trans "Sort by" %}</option>
+          <option value="-created_at">{% trans "Newest" %}</option>
+          <option value="created_at">{% trans "Oldest" %}</option>
+          <option value="-total_price">{% trans "Highest Price" %}</option>
+          <option value="total_price">{% trans "Lowest Price" %}</option>
         </select>
       </div>
       <div class="col-md-3 py-1">
         <select class="form-select form-select-sm" id="status-id-filter" name="status">
-          <option value="" selected>وضعیت</option>
+          <option value="" selected>{% trans "Status" %}</option>
           {% for id, label in status_types %}
           <option value="{{id}}">{{label}}</option>
           {% endfor %}
@@ -37,7 +37,7 @@
       </div>
       <div class="col-md-2 py-1">
         <select class="form-select form-select-sm" id="page-size-filter">
-          <option value="" selected>تعداد</option>
+          <option value="" selected>{% trans "Page size" %}</option>
           <option value="5">5</option>
           <option value="10">10</option>
           <option value="20">20</option>
@@ -57,21 +57,12 @@
     <div class="tab-content" id="accountOrdersTabContent">
       <div class="tab-pane fade show active" id="accountOrdersOne" role="tabpanel"
         aria-labelledby="accountOrdersOne-tab">
+        
         <!-- Select Group -->
         <div class="d-sm-flex align-items-sm-center mb-5">
           <div class="mb-2 mb-sm-0 me-3">
-            <span><strong class="text-dark">{{ total_items }} سفارش</strong></span>
+            <span><strong class="text-dark">{{ total_items }} {% trans "orders" %}</strong></span>
           </div>
-
-          <!-- Select -->
-          <!-- <div class="tom-select-custom">
-                      <select class="js-select form-select form-select-sm">
-                        <option value="last 30 days">30 روز گذشته</option>
-                        <option value="past 6 months" selected>6 ماه گذشته</option>
-                        <option value="2019">2019</option>
-                      </select>
-                    </div> -->
-          <!-- End Select -->
         </div>
         <!-- End Select Group -->
 
@@ -82,25 +73,25 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-6 col-md mb-3 mb-md-0">
-                  <small class="card-subtitle mb-0">مبلغ سفارش</small>
+                  <small class="card-subtitle mb-0">{% trans "Order Amount" %}</small>
                   <small class="text-dark fw-semibold">{{ object.total_price }}</small>
                 </div>
                 <!-- End Col -->
 
                 <div class="col-6 col-md mb-3 mb-md-0">
-                  <small class="card-subtitle mb-0">وضعیت </small>
+                  <small class="card-subtitle mb-0">{% trans "Status" %}</small>
                   <small class="text-dark fw-semibold">{{ object.get_status.label }}</small>
                 </div>
                 <!-- End Col -->
 
                 <div class="col-6 col-md">
-                  <small class="card-subtitle mb-0">شماره سفارش.</small>
+                  <small class="card-subtitle mb-0">{% trans "Order Number" %}</small>
                   <small class="text-dark fw-semibold">{{ object.id }}</small>
                 </div>
                 <!-- End Col -->
 
                 <div class="col-6 col-md">
-                  <small class="card-subtitle mb-0">زمان سفارش:</small>
+                  <small class="card-subtitle mb-0">{% trans "Order Date" %}</small>
                   <small class="text-dark fw-semibold">{{ object.created_at|date:"Y-m-d h:i" }}</small>
                 </div>
                 <!-- End Col -->
@@ -114,11 +105,10 @@
                   <div class="row gx-2">
                     {% for order_item in object.order_items.all|slice:":4" %}
                     <div class="col">
-                      <img class="img-fluid" src="{{order_item.product.image.url}}" alt="Image Description">
+                      <img class="img-fluid" src="{{order_item.product.image.url}}" alt="{% trans 'Product Image' %}">
                     </div>
                     {% endfor %}
                   </div>
-                  <!-- End Row -->
                 </div>
 
                 <div class="col-md-4">
@@ -126,20 +116,19 @@
                     {% if object.is_successful %}
                     <a class="btn btn-white btn-sm" href="{% url 'dashboard:customer:order-invoice' pk=object.pk %}"
                       target="_blank">
-                      <i class="bi-receipt small me-2"></i> مشاهده فاکتور
+                      <i class="bi-receipt small me-2"></i> {% trans "View Invoice" %}
                     </a>
                     {% endif %}
                     <a class="btn btn-primary btn-sm"
-                      href="{% url 'dashboard:customer:order-detail' pk=object.pk %}">مشاهده سفارش</a>
+                      href="{% url 'dashboard:customer:order-detail' pk=object.pk %}">{% trans "View Order" %}</a>
                   </div>
                 </div>
               </div>
             </div>
           </li>
-          <!-- End Card -->
           {% endfor %}
-
         </ul>
+
         <!-- Pagination -->
         {% if page_obj.has_other_pages %}
         <nav aria-label="Page navigation">
@@ -147,7 +136,7 @@
             {% if page_obj.has_previous %}
             <li class="page-item">
               <button class="page-link" onclick="changePage('{{ page_obj.previous_page_number }}')"
-                aria-label="Previous">
+                aria-label="{% trans 'Previous' %}">
                 <i class="bi-chevron-double-right small"></i>
               </button>
             </li>
@@ -158,69 +147,26 @@
             <li class="page-item active">
               <button class="page-link" onclick="changePage('{{num}}')">{{ num }}</button>
             </li>
-            {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %} <li class="page-item">
+            {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %}
+            <li class="page-item">
               <button class="page-link" onclick="changePage('{{num}}')">{{ num }}</button>
-              </li>
-              {% endif %}
-              {% endfor %}
+            </li>
+            {% endif %}
+            {% endfor %}
 
-              {% if page_obj.has_next %}
-              <li class="page-item">
-                <button class="page-link" onclick="changePage('{{ page_obj.next_page_number }}')" aria-label="Next">
-                  <i class="bi-chevron-double-left small"></i>
-                </button>
-              </li>
-              {% endif %}
+            {% if page_obj.has_next %}
+            <li class="page-item">
+              <button class="page-link" onclick="changePage('{{ page_obj.next_page_number }}')" aria-label="{% trans 'Next' %}">
+                <i class="bi-chevron-double-left small"></i>
+              </button>
+            </li>
+            {% endif %}
           </ul>
         </nav>
         {% endif %}
-
         <!-- End Pagination -->
       </div>
-
     </div>
-    <!-- End Tab Content -->
   </div>
-  <!-- End Body -->
 </div>
-<!-- End Card -->
 {% endblock %}
-
-{% block extra_js %}
-
-<script>
-  $(document).ready(function () {
-    let current_url_params = new URLSearchParams(window.location.search)
-    $("#page-size-filter").val(current_url_params.get('page_size') || "")
-    $("#order-by-filter").val(current_url_params.get('order_by') || "")
-    $("#status-id-filter").val(current_url_params.get("status") || "")
-  });
-
-  $('#page-size-filter').change(function () {
-    let current_url_params = new URLSearchParams(window.location.search)
-    var selectedValue = $(this).val();
-    current_url_params.set('page_size', selectedValue)
-    current_url_params.set('page', 1);
-    let new_url = window.location.pathname + "?" + current_url_params.toString()
-    window.location.href = new_url
-  });
-  $('#order-by-filter').change(function () {
-    let current_url_params = new URLSearchParams(window.location.search)
-    var selectedValue = $(this).val();
-    current_url_params.set('order_by', selectedValue)
-    current_url_params.set('page', 1);
-    let new_url = window.location.pathname + "?" + current_url_params.toString()
-    window.location.href = new_url
-  });
-  $('#status-id-filter').change(function () {
-    let current_url_params = new URLSearchParams(window.location.search)
-    var selectedValue = $(this).val();
-    current_url_params.set('status', selectedValue)
-    current_url_params.set('page', 1);
-    let new_url = window.location.pathname + "?" + current_url_params.toString()
-    window.location.href = new_url
-  });
-</script>
-
-
-{% endblock extra_js %}

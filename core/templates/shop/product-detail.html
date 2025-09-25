@@ -217,8 +217,8 @@
           </div>
         </div>
         <div class="flex-grow-1 ms-2">
-          <span class="small me-1">نیاز به پشتیبانی دارید؟</span>
-          <a class="link small" href="#">ارسال تیکت</a>
+          <span class="small me-1">{% trans "Need support?" %}</span>
+          <a class="link small" href="#">{% trans "Submit a Ticket" %}</a>
         </div>
       </div>
       <!-- End Media -->
@@ -239,32 +239,6 @@
     </div>
     <!-- End Col -->
 
-    <div class="col-md-6 mb-5 mb-md-0">
-      <h3>{% trans "Materials & Care" %}</h3>
-      <div class="row">
-        <div class="col-sm-6">
-          <ul class="list-py-2 mb-0">
-            <li>اصلی: 100٪ پنبه</li>
-            <li>جناغی نرم</li>
-            <li>آجدار، الگوی مورب</li>
-            <li>کمی ساختار یافته است</li>
-          </ul>
-        </div>
-        <!-- End Col -->
-
-        <div class="col-sm-6">
-          <ul class="list-py-2 mb-0">
-            <li>تک سایز</li>
-            <li>وارداتی</li>
-            <li>رنگ محصول: مایل به سبز تیره</li>
-            <li>کد محصول: #1465791</li>
-          </ul>
-        </div>
-        <!-- End Col -->
-      </div>
-      <!-- End Row -->
-    </div>
-    <!-- End Col -->
   </div>
   <!-- End Row -->
 </div>
@@ -299,7 +273,7 @@
                       {% endfor %}
                   </div>
                   <!-- End Rating -->
-                  <span class="text-white">{{ reviews.count }} نظر</span>
+                  <span class="text-white">{{ reviews.count }} {% trans "reviews" %}</span>
                 </div>
               </div>
             </div>
@@ -318,26 +292,10 @@
         <!-- Heading -->
         <div class="border-bottom pb-4 mb-4">
           <div class="row align-items-center">
-            <div class="col-sm mb-2 mb-sm-0">
-              <h4 class="mb-0">مرتب سازی کنید</h4>
-            </div>
-            <!-- End Col -->
-
-            <div class="col-sm-auto">
-              <!-- Select -->
-              <select class="form-select form-select-sm">
-                <option value="mostRecent" selected>اخیرا</option>
-                <option value="relevant">مربوط</option>
-                <option value="helpful">مفید است</option>
-                <option value="newest">جدیدترین</option>
-              </select>
-              <!-- End Select -->
-            </div>
-
             <div class="col-sm-auto mb-2 text-center">
               <button type="button" class="btn btn-primary btn-transition rounded-pill" data-bs-toggle="modal"
                 data-bs-target="#submitReviewModal">
-                ثبت دیدگاه
+                {% trans "Submit Review" %}
               </button>
             </div>
 
@@ -348,8 +306,8 @@
                   <form method="post" action="{% url 'review:submit-review' %}">
                     {% csrf_token %}
                     <div class="modal-header">
-                      <h5 class="modal-title" id="reviewModalLabel">ثبت دیدگاه</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
+                      <h5 class="modal-title" id="reviewModalLabel">{% trans "Submit Review" %}</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% trans 'Close' %}"></button>
                     </div>
 
                     <!-- Hidden Product ID -->
@@ -357,7 +315,7 @@
 
                     <div class="modal-body">
                       <div class="mb-3">
-                        <label class="form-label d-block">امتیاز شما:</label>
+                        <label class="form-label d-block">{% trans "Your Rating:" %}</label>
                         <div id="starRating" class="d-flex gap-1 fs-4">
                           {% for i in "12345" %}
                           <span class="star" data-value="{{ forloop.counter }}" style="cursor:pointer;">&#9734;</span>
@@ -368,15 +326,15 @@
 
                       <!-- 📝 Description -->
                       <div class="mb-3">
-                        <label for="id_description" class="form-label">متن دیدگاه:</label>
+                        <label for="id_description" class="form-label">{% trans "Review Text:" %}</label>
                         <textarea name="description" id="id_description" rows="4" class="form-control"
-                          placeholder="دیدگاه خود را بنویسید..."></textarea>
+                          placeholder="{% trans 'Write your review...' %}"></textarea>
                       </div>
                     </div>
 
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
-                      <button type="submit" class="btn btn-success">ارسال دیدگاه</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Cancel" %}</button>
+                      <button type="submit" class="btn btn-success">{% trans "Submit Review" %}</button>
                     </div>
                   </form>
                 </div>
@@ -489,7 +447,7 @@
         }
       },
       error: function (xhr, status, error) {
-        alert("خطا در افزودن کالا به سبد خرید.");
+        alert("{% trans 'Error adding product to cart.' %}");
         console.error(error);
       }
     });

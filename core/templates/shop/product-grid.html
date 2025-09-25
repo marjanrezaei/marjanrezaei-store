@@ -339,7 +339,6 @@
 </script>
 
 <script>
-  // سوییچ بین گرید و لیست
   const gridBtn = document.getElementById('grid-view-btn');
   const listBtn = document.getElementById('list-view-btn');
   const gridView = document.getElementById('grid-view');
@@ -387,7 +386,7 @@
         }
       },
       error: function (xhr, status, error) {
-        alert("خطا در افزودن کالا به سبد خرید.");
+        alert("{% trans 'Error adding product to cart.' %}");
         console.error(error);
       }
     });
